@@ -1809,16 +1809,32 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 		String roleId = (String) session.getAttribute("role_id");
 		String region1 = (String) session.getAttribute("region");
 
-                 if(roleId.equals("7"))
-			{
-                	 dealer=dealers;
-                	 region=region1;
-			}
-			else 
-			{
-				dealer="all";
-				region="all";
-			}
+		if(roleId.equals("7"))
+		{
+			dealer=dealers;
+			region=region1;
+		}
+	    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+        {
+	    	dealer="all";
+	    	region="all";
+        }
+	    
+	    else  if((dealer!="") &&(region=="" || region==null))
+	    {
+	    	dealer= dealer;
+	    	region="all";	
+		}
+	    else  if((dealer=="" || dealer==null) &&(region!=""))
+	    {
+	    	dealer= "all";
+	    	region=region;	
+		}
+	    else 
+        {
+	    	dealer= dealer;
+	    	region=region;  
+        }
 		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
@@ -1987,17 +2003,32 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
 			String region1 = (String) session.getAttribute("region");
-
-	                 if(roleId.equals("7"))
-				{
-	                	 dealer=dealers;
-	                	 region=region1;
-				}
-				else 
-				{
-					dealer="all";
-					region="all";
-				}
+             if(roleId.equals("7"))
+			{
+				dealer=dealers;
+				region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		    	dealer="all";
+		    	region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		    	dealer= dealer;
+		    	region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		    	dealer= "all";
+		    	region=region;	
+			}
+		    else 
+	        {
+		    	dealer= dealer;
+		    	region=region;  
+	        }
 
 		
 //		if(dealer==null || dealer=="") {

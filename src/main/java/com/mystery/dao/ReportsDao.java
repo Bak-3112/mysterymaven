@@ -827,23 +827,34 @@ System.out.println(dealers+"=====");
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
+		
 		if(roleId.equals("7"))
 		{
 			did=dealers;
 			rid=region;
 		}
-		else 
+		else  if((did=="" || did==null) &&(rid=="" || rid==null))
 		{
 			did="all";
 			rid="all";
 		}
-			
-//		if(did=="" || did==null){
-//			did="all";
-//		}
-//		if(rid=="" || rid==null){
-//			rid="all";
-//		}
+		
+		else  if((did!="") &&(rid=="" || rid==null))
+		    {
+				did= did;
+				rid="all";	
+			}
+		
+		else  if((did=="" || did==null) &&(rid!=""))
+	    {
+			did= "all";
+			rid=rid;	
+		}
+	    else 
+	    {
+			did= did;
+			rid=rid;	
+		} 
 		
 		String sql = "SELECT * FROM `mst_dealer_outlet` WHERE `outlet_status`='active'  and (`dealer_id`='"+did+"' or '"+did+"'='All') and (region_id='"+rid+"' or '"+rid+"' ='All') and (brand_id='"+bid+"' or '"+bid+"' ='All')";
 		System.out.println(sql);
@@ -902,16 +913,34 @@ System.out.println(dealers+"=====");
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region1 = (String) session.getAttribute("region");
+
 		if(roleId.equals("7"))
 		{
 			dealer=dealers;
 			region=region1;
 		}
-		else 
-		{
-			dealer="all";
-			region="all";
+	    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+        {
+	    	dealer="all";
+	    	region="all";
+        }
+	    
+	    else  if((dealer!="") &&(region=="" || region==null))
+	    {
+	    	dealer= dealer;
+	    	region="all";	
 		}
+	    else  if((dealer=="" || dealer==null) &&(region!=""))
+	    {
+	    	dealer= "all";
+	    	region=region;	
+		}
+	    else 
+        {
+	    	dealer= dealer;
+	    	region=region;  
+        }
+		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
 //		 }
@@ -1015,24 +1044,33 @@ System.out.println(dealers+"=====");
 		    	System.out.println("current year in  else auto response"+year);
 		    	standard_number="1a.6";
 		    }
-		 
-//		 if(did==null || did=="") {
-//			 did="all";
-//		 }
-//		 if(rid==null || rid=="") {
-//			 rid="all";
-//		 }
 		    
 		    if(roleId.equals("7"))
 			{
 				did=dealers;
 				rid=region;
 			}
-			else 
-			{
-				did="all";
-				rid="all";
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
 			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
 		    
 		 if(bid==null || bid=="") {
 			 bid="all";
@@ -1064,16 +1102,32 @@ System.out.println(dealers+"=====");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
 
-          if(roleId.equals("7"))
+		    if(roleId.equals("7"))
 			{
 				did=dealers;
 				rid=region;
 			}
-			else 
-			{
-				did="all";
-				rid="all";
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
 			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
 		
 		
 //		if(did==null || did=="") {
@@ -1208,11 +1262,27 @@ System.out.println(dealers+"=====");
 				did=dealers;
 				rid=region;
 			}
-			else 
-			{
-				did="all";
-				rid="all";
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
 			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
 		 
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -1249,16 +1319,35 @@ System.out.println(dealers+"=====");
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
 			String region = (String) session.getAttribute("region");  
-            if(roleId.equals("7"))
-		   {
-			did=dealers;
-			rid=region;
-		  }
-		else 
-		{
-			did="all";
-			rid="all";
-		}
+            
+			if(roleId.equals("7"))
+			{
+				did=dealers;
+				rid=region;
+			}
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
+			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
+			
 			
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -1346,17 +1435,33 @@ System.out.println(dealers+"=====");
 		    HttpSession session = request.getSession(true);
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
-			String region = (String) session.getAttribute("region");
-			if(roleId.equals("7"))
-			{
-				did=dealers;
-				rid=region;
-			}
-			else 
-			{
-				did="all";
-				rid="all";
-			}
+			String region = (String) session.getAttribute("region");			
+			 if(roleId.equals("7"))
+				{
+					did=dealers;
+					rid=region;
+				}
+			    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+		        {
+		          did="all";
+		          rid="all";
+		        }
+			    
+			    else  if((did!="") &&(rid=="" || rid==null))
+			    {
+				  did= did;
+				  rid="all";	
+				}
+			    else  if((did=="" || did==null) &&(rid!=""))
+			    {
+				  did= "all";
+				  rid=rid;	
+				}
+			    else 
+		        {
+		          did= did;
+		          rid=rid;  
+		        }
 
 		
 //		 if(did==null || did=="") {
@@ -1422,16 +1527,34 @@ System.out.println(dealers+"=====");
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region1 = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			dealer=dealers;
-			region=region1;
-		}
-		else 
-		{
-			dealer="all";
-			region="all";
-		}
+		 if(roleId.equals("7"))
+			{
+			 dealer=dealers;
+			 region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		     dealer="all";
+		     region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		      dealer= dealer;
+		      region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		      dealer= "all";
+		      region=region;	
+			}
+		    else 
+	        {
+		      dealer= dealer;
+		      region=region;  
+	        }
+		
+		
 		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
@@ -1486,16 +1609,36 @@ System.out.println(dealers+"=====");
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region1 = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			dealer=dealers;
-			region=region1;
-		}
-		else 
-		{
-			dealer="all";
-			region="all";
-		}
+
+		 if(roleId.equals("7"))
+			{
+			 dealer=dealers;
+			 region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		    	dealer="all";
+		    	region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		    	dealer= dealer;
+		    	region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		    	dealer= "all";
+		    	region=region;	
+			}
+		    else 
+	        {
+		    	dealer= dealer;
+		    	region=region;  
+	        }
+		
+		
+		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
 //		 }
@@ -1582,17 +1725,36 @@ System.out.println(dealers+"=====");
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
-		String region1 = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			dealer=dealers;
-			region=region1;
-		}
-		else 
-		{
-			dealer="all";
-			region="all";
-		}
+		String region1 = (String) session.getAttribute("region");		
+		 if(roleId.equals("7"))
+			{
+			 dealer=dealers;
+			 region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		    	dealer="all";
+		    	region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		    	dealer= dealer;
+		    	region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		    	dealer= "all";
+		    	region=region;	
+			}
+		    else 
+	        {
+		    	dealer= dealer;
+		    	region=region;  
+	        }
+		
+		
+		
 		//		if(dealer==null || dealer=="") {
 //			dealer="all";
 //		 }
@@ -1696,11 +1858,29 @@ System.out.println(dealers+"=====");
 				did=dealers;
 				rid=region;
 			}
-			else 
-			{
-				did="all";
-				rid="all";
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
 			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
+			
 
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -1770,12 +1950,29 @@ System.out.println(dealers+"=====");
 			did=dealers;
 			rid=region;
 		}
-		else 
-		{
-			did="all";
-			rid="all";
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
 		}
-
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
+		
+		
 		
 //		  if(did==null || did=="") {
 //			 did="all";
@@ -1860,17 +2057,34 @@ System.out.println(dealers+"=====");
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
-
-                 if(roleId.equals("7"))
+		 if(roleId.equals("7"))
 			{
 				did=dealers;
 				rid=region;
 			}
-			else 
-			{
-				did="all";
-				rid="all";
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
 			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
+		
 		
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -2020,18 +2234,33 @@ System.out.println(dealers+"=====");
 		if(mid=="" || mid==null){
 			mid="all";
 		}
+		
 		if(roleId.equals("7"))
 		{
 			did=dealers;
 			rid=region;
 		}
-		else 
-		{
-			did="all";
-			rid="all";
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
 		}
-		
-		
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
 		
 //		if(did=="" || did==null){
 //			did="all";
@@ -2083,16 +2312,35 @@ System.out.println(dealers+"=====");
 		if(mid=="" || mid==null){
 			mid="all";
 		}
+		
 		if(roleId.equals("7"))
 		{
 			did=dealers;
 			rid=region1;
 		}
-		else 
-		{
-			did="all";
-			rid="all";
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
 		}
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
+		
+		
 		
 //		if(did=="" || did==null){
 //			did="all";
@@ -2261,17 +2509,35 @@ System.out.println(dealers+"=====");
 		    HttpSession session = request.getSession(true);
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
-			String region1 = (String) session.getAttribute("region");
-	           if(roleId.equals("7"))
-				{
-					did=dealers;
-					rid=region1;
-				}
-				else 
-				{
-					did="all";
-					rid="all";
-				}
+			String region1 = (String) session.getAttribute("region");			
+			if(roleId.equals("7"))
+			{
+				did=dealers;
+				rid=region1;
+			}
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
+			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
+			
 //		if(rid==null || rid==""){
 //			rid="All";
 //		}
@@ -2321,17 +2587,33 @@ System.out.println(dealers+"=====");
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region1 = (String) session.getAttribute("region");
-
-             if(roleId.equals("7"))
-			{
-                dealer=dealers;
-                region=region1;
-			}
-			else 
-			{
-				dealer="all";
-				region="all";
-			}
+		
+		if(roleId.equals("7"))
+		{
+		 dealer=dealers;
+		 region=region1;
+		}
+	    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+        {
+	    	dealer="all";
+	    	region="all";
+        }
+	    
+	    else  if((dealer!="") &&(region=="" || region==null))
+	    {
+	    	dealer= dealer;
+	    	region="all";	
+		}
+	    else  if((dealer=="" || dealer==null) &&(region!=""))
+	    {
+	    	dealer= "all";
+	    	region=region;	
+		}
+	    else 
+        {
+	    	dealer= dealer;
+	    	region=region;  
+        }
 		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
@@ -2387,17 +2669,33 @@ return qBean;
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region1 = (String) session.getAttribute("region");
-
-                 if(roleId.equals("7"))
-			{
-                dealer=dealers;
-                region=region1;
-			}
-			else 
-			{
-				dealer="all";
-				region="all";
-			}
+        
+		if(roleId.equals("7"))
+		{
+		 dealer=dealers;
+		 region=region1;
+		}
+	    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+        {
+	    	dealer="all";
+	    	region="all";
+        }
+	    
+	    else  if((dealer!="") &&(region=="" || region==null))
+	    {
+	    	dealer= dealer;
+	    	region="all";	
+		}
+	    else  if((dealer=="" || dealer==null) &&(region!=""))
+	    {
+	    	dealer= "all";
+	    	region=region;	
+		}
+	    else 
+        {
+	    	dealer= dealer;
+	    	region=region;  
+        }
 		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
@@ -2459,16 +2757,32 @@ return qBean;
 		String roleId = (String) session.getAttribute("role_id");
 		String region1 = (String) session.getAttribute("region");
 
-                 if(roleId.equals("7"))
-			{
-                dealer=dealers;
-				region=region1;
-			}
-			else 
-			{
-				dealer="all";
-				region="all";
-			}
+		if(roleId.equals("7"))
+		{
+			dealer=dealers;
+			region=region1;
+		}
+	    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+        {
+	    	dealer="all";
+	    	region="all";
+        }
+	    
+	    else  if((dealer!="") &&(region=="" || region==null))
+	    {
+	    	dealer= dealer;
+	    	region="all";	
+		}
+	    else  if((dealer=="" || dealer==null) &&(region!=""))
+	    {
+	    	dealer= "all";
+	    	region=region;	
+		}
+	    else 
+        {
+	    	dealer= dealer;
+	    	region=region;  
+        }
 		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
@@ -2545,17 +2859,34 @@ return qBean;
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
-
-                 if(roleId.equals("7"))
+         
+		 if(roleId.equals("7"))
 			{
 				did=dealers;
 				rid=region;
 			}
-			else 
-			{
-				did="all";
-				rid="all";
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
 			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
 //		 if(did==null || did=="") {
 //			 did="all";
 //		 }
@@ -2617,16 +2948,35 @@ return qBean;
 
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		String standard_number ="5a.1";
-		if(roleId.equals("7"))
-		{
-			did=dealers;
-			rid=region;
-		}
-		else 
-		{
-			did="all";
-			rid="all";
-		}
+		 if(roleId.equals("7"))
+			{
+				did=dealers;
+				rid=region;
+			}
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
+			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
+		
+		
 		
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -2662,17 +3012,37 @@ return qBean;
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
-		String region = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			did=dealers;
-			rid=region;
-		}
-		else 
-		{
-			did="all";
-			rid="all";
-		}
+		String region = (String) session.getAttribute("region");		
+		 if(roleId.equals("7"))
+			{
+				did=dealers;
+				rid=region;
+			}
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
+			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
+		
+		
+		
 //			 if(did==null || did=="") {
 //				 did="all";
 //			 }
@@ -2753,17 +3123,33 @@ return qBean;
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
-
-                 if(roleId.equals("7"))
+		 if(roleId.equals("7"))
 			{
 				did=dealers;
 				rid=region;
 			}
-			else 
-			{
-				did="all";
-				rid="all";
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
 			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
 		
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -2859,18 +3245,33 @@ return qBean;
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
-
-                 if(roleId.equals("7"))
+		 if(roleId.equals("7"))
 			{
 				did=dealers;
 				rid=region;
 			}
-			else 
-			{
-				did="all";
-				rid="all";
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
 			}
-		
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
 //		 if(did==null || did=="") {
 //			 did="all";
 //		 }
@@ -2944,22 +3345,39 @@ return qBean;
 	public List<GraphBean> getconfigurationprocess(GraphBean gBean, String did, String bid,
 			String rid, String oid, String month) {
 		// int year = 2019;
-		int year = Calendar.getInstance().get(Calendar.YEAR);
+		    int year = Calendar.getInstance().get(Calendar.YEAR);
 		    HttpSession session = request.getSession(true);
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
-			String region = (String) session.getAttribute("region");
-
-	                 if(roleId.equals("7"))
-				{
-					did=dealers;
-					rid=region;
-				}
-				else 
-				{
-					did="all";
-					rid="all";
-				}
+			String region = (String) session.getAttribute("region");			
+			if(roleId.equals("7"))
+			{
+				did=dealers;
+				rid=region;
+			}
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
+			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
+			
+			
 //		 if(did==null || did=="") {
 //			 did="all";
 //		 }
@@ -2990,21 +3408,37 @@ return qBean;
 	public List<GraphBean> getWhattakehomematerial(GraphBean gBean, String did, String bid,
 			String rid, String oid, String month) {
 		// int year = 2019;
-		int year = Calendar.getInstance().get(Calendar.YEAR);
+		    int year = Calendar.getInstance().get(Calendar.YEAR);
 		    HttpSession session = request.getSession(true);
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
 			String region = (String) session.getAttribute("region");
-                if(roleId.equals("7"))
-				{
-					did=dealers;
-					rid=region;
-				}
-				else 
-				{
-					did="all";
-					rid="all";
-				}
+			if(roleId.equals("7"))
+			{
+				did=dealers;
+				rid=region;
+			}
+		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+	        {
+	          did="all";
+	          rid="all";
+	        }
+		    
+		    else  if((did!="") &&(rid=="" || rid==null))
+		    {
+			  did= did;
+			  rid="all";	
+			}
+		    else  if((did=="" || did==null) &&(rid!=""))
+		    {
+			  did= "all";
+			  rid=rid;	
+			}
+		    else 
+	        {
+	          did= did;
+	          rid=rid;  
+	        }
 		
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -3040,16 +3474,32 @@ return qBean;
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
+        if(roleId.equals("7"))
 		{
 			did=dealers;
 			rid=region;
 		}
-		else 
-		{
-			did="all";
-			rid="all";
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
 		}
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
 		
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -3107,24 +3557,39 @@ return qBean;
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
 
-                 if(roleId.equals("7"))
-			{
-				did=dealers;
-				rid=region;
-			}
-			else 
-			{
-				did="all";
-				rid="all";
-			}
+		if(roleId.equals("7"))
+		{
+			did=dealers;
+			rid=region;
+		}
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
+		}
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
 
-		
-		 if(did==null || did=="") {
-			 did="all";
-		 }
-		 if(rid==null || rid=="") {
-			 rid="all";
-		 }
+//		 if(did==null || did=="") {
+//			 did="all";
+//		 }
+//		 if(rid==null || rid=="") {
+//			 rid="all";
+//		 }
 		 if(oid==null || oid=="") {
 			 oid="all";
 		 }
@@ -3190,11 +3655,27 @@ return qBean;
 			did=dealers;
 			rid=region;
 		}
-		else 
-		{
-			did="all";
-			rid="all";
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
 		}
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
 		
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -3273,18 +3754,32 @@ return qBean;
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
-
-                 if(roleId.equals("7"))
-			{
-				did=dealers;
-				rid=region;
-			}
-			else 
-			{
-				did="all";
-				rid="all";
-			}
-
+		if(roleId.equals("7"))
+		{
+			did=dealers;
+			rid=region;
+		}
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
+		}
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
 		
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -3338,18 +3833,32 @@ return qBean;
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
-
-                 if(roleId.equals("7"))
-			{
-				did=dealers;
-				rid=region;
-			}
-			else 
-			{
-				did="all";
-				rid="all";
-			}
-
+		if(roleId.equals("7"))
+		{
+			did=dealers;
+			rid=region;
+		}
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
+		}
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
 		
 //		 if(did==null || did=="") {
 //			 did="all";
@@ -4272,16 +4781,34 @@ return qBean;
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region1 = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			dealer=dealers;
-			region=region1;
-		}
-		else 
-		{
-			dealer="all";
-			region="all";
-		}
+		 if(roleId.equals("7"))
+			{
+			 dealer=dealers;
+			 region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		    	dealer="all";
+		    	region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		    	dealer= dealer;
+		    	region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		    	dealer= "all";
+		    	region=region;	
+			}
+		    else 
+	        {
+		    	dealer= dealer;
+		    	region=region;  
+	        }
+		
+		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
 //		 }
@@ -4356,17 +4883,35 @@ return qBean;
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
-		String region1 = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			dealer=dealers;
-			region=region1;
-		}
-		else 
-		{
-			dealer=dealers;
-			region=region1;
-		}
+		String region1 = (String) session.getAttribute("region");		
+		 if(roleId.equals("7"))
+			{
+			 dealer=dealers;
+			 region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		    	dealer="all";
+		    	region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		    	dealer= dealer;
+		    	region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		    	dealer= "all";
+		    	region=region;	
+			}
+		    else 
+	        {
+		    	dealer= dealer;
+		    	region=region;  
+	        }
+		
+		
 //		if(dealer==null) {
 //			dealer="all";
 //		 }
@@ -4630,15 +5175,19 @@ return qBean;
 //		 if(did==""||did==null){
 //			 did="all";
 //		 }
+		 
 		 if(roleId.equals("7"))
 			{
 				did=dealers;
 			}
-			else 
-			{
-				did="all";
-			}
-		 
+		    else  if((did=="" || did==null))
+	        {
+	          did="all";
+	        }		   
+		    else 
+	        {
+	          did= did;  
+	        }
 		if(oid == "" || oid == "all" || oid == null){
 		
 		
@@ -4744,18 +5293,34 @@ return qBean;
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
-		String region1 = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			dealer=dealers;
-			region=region1;
-		}
-		else 
-		{
-			dealer="all";
-			region="all";
-		}
-
+		String region1 = (String) session.getAttribute("region");		
+		 if(roleId.equals("7"))
+			{
+			 dealer=dealers;
+			 region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		    	dealer="all";
+		    	region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		    	dealer= dealer;
+		    	region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		    	dealer= "all";
+		    	region=region;	
+			}
+		    else 
+	        {
+		    	dealer= dealer;
+		    	region=region;  
+	        }
+			
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
 //		 }
@@ -4826,17 +5391,34 @@ return qBean;
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
-		String region1 = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			dealer=dealers;
-			region=region1;
-		}
-		else 
-		{
-			dealer="all";
-			region="all";
-		}
+		String region1 = (String) session.getAttribute("region");		
+		 if(roleId.equals("7"))
+			{
+			 dealer=dealers;
+			 region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		    	dealer="all";
+		    	region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		    	dealer= dealer;
+		    	region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		    	dealer= "all";
+		    	region=region;	
+			}
+		    else 
+	        {
+		    	dealer= dealer;
+		    	region=region;  
+	        }
+		
 		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
@@ -4881,17 +5463,35 @@ return qBean;
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
-		String region1 = (String) session.getAttribute("region");
-		if(roleId.equals("7"))
-		{
-			dealer=dealers;
-			region=region1;
-		}
-		else 
-		{
-			dealer="all";
-			region="all";
-		}
+		String region1 = (String) session.getAttribute("region");		
+		 if(roleId.equals("7"))
+			{
+			 dealer=dealers;
+			 region=region1;
+			}
+		    else  if((dealer=="" || dealer==null) &&(region=="" || region==null))
+	        {
+		    	dealer="all";
+		    	region="all";
+	        }
+		    
+		    else  if((dealer!="") &&(region=="" || region==null))
+		    {
+		    	dealer= dealer;
+		    	region="all";	
+			}
+		    else  if((dealer=="" || dealer==null) &&(region!=""))
+		    {
+		    	dealer= "all";
+		    	region=region;	
+			}
+		    else 
+	        {
+		    	dealer= dealer;
+		    	region=region;  
+	        }
+		
+		
 		
 //		if(dealer==null || dealer=="") {
 //			dealer="all";
