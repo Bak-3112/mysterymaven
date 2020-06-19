@@ -1,0 +1,237 @@
+/*====================================== reset.css is here ========================================*/
+*{margin:0; padding:0; box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box; }
+*:after,*:before{box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;}
+table {	border-collapse:collapse; border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,th,var {font-style:normal; font-weight:normal; }
+ol,ul { list-style:none;}
+caption,th {text-align:left;}
+h1,h2,h3,h4,h5,h6 {	font-size:100%;	font-weight:bold;}
+q:before,q:after {content:'';}
+abbr,acronym { border:0;}
+.clear{clear:both; font-size:1px;line-height:1px; display:block; height:0;}
+.clearfix:after{content:"";display:block;clear:both;}
+.last	{margin:0 !important;}
+.pad_last{padding:0 !important;}
+.no_bg {background:none !important;}
+.no_bor{border:0 none !important; }
+header,nav,section,article,aside,footer,hgroup,figure {display: block; }
+/**************************************************************************************/
+a {color:#000; text-decoration:none; outline:0 none !important; }
+a:hover, a:focus {color:#000;  text-decoration:none; outline:0 none !important;}
+h1 {font-size:24px;}
+h2 {font-size:22px;}
+h3 {font-size:18px;}
+h4 {font-size:16px;}
+h5 {font-size:14px;}
+h6 {font-size:12px;}
+/*---------------------------------------------------*/
+html {}
+body {color:#000000; font-family:"Arial", Verdana, Tahoma; font-size:16px;}
+
+/*Typography Page starts here*/
+
+
+/*-----------LayOut Start here-----------------------*/
+.wrapper									{margin:0 auto;}
+.container									{max-width:1170px; margin:0 auto;}
+
+
+.top-bar{padding: 15px 120px;background-color: #f3f3f3;border-bottom: 1px solid #e7e7e7;position: relative;font-size: 11px;}
+.progress{background: #fff;border-radius: 0px;}
+.progress-bar{background:#f68e56}
+.tab-pane h3{font-size: 22px;line-height: 26px;font-weight: 600;margin-bottom: 25px;}
+.form-group{position: relative;}
+.form-group span{margin: 0 0 7px 0;; display: inline-block;position: absolute;right: 0px;font-size: 12px; background: #f00;padding: 8px 10px;color: #fff;bottom: 100%;}
+.form-group span:after{content: '';border-top:10px solid #f00;border-left: 5px solid transparent;border-right: 5px solid transparent;position: absolute;left: 50%;top:100%;-webkit-transform: translateX(-50%);-moz-transform: translateX(-50%);transform: translateX(-50%);}
+.increment{width: 100px;position: relative;display: inline-block;margin: 0 15px 0 0;}
+.increment button{position: absolute;right: 2px;width: 20px;padding: 0;line-height: 22px;background: transparent;border: 0 none;border-left: 2px solid #d5d5d5;}
+.btn-increment{height: 50%;top:0px;border-bottom: 2px solid #d5d5d5 !important;}
+.btn-decrement{height: 50%;bottom:0px;}
+
+.terms span{position: relative;}
+.terms a{color:#00aeef;}
+.age{width: 100px;display: inline-block;margin: 0 40px 0 0;}
+.radio-label{margin: 0 30px 0 0px;display: inline-block;}
+.radio-label input{display: none}
+.radio-label small{font-size: 14px;line-height: 22px;font-weight: 400;}
+.radio-label small::before{content:'';display: inline-block;margin: 0 15px 0 0; width: 46px;height: 44px;background: url('../images/icons.png') no-repeat -270px 0px;display: inline-block;vertical-align: middle;}
+.radio-label input:checked+small::before{background-position: -316px 0;}
+
+.check-label{}
+.check-label input{display: none}
+.check-label small{font-size: 18px;line-height: 22px;font-weight: 400;}
+.check-label small::before{content:'';display: inline-block;width: 46px;height: 44px;background: url('../images/icons.png') no-repeat -134px 0px;display: inline-block;vertical-align: middle;margin: 0 15px 0 0;}
+.check-label input:checked+small::before{background-position: -178px 0;}
+.fa-check-square-o{color: #cacaca;margin: 0 0 10px;font-size: 160px;padding: 0;}
+.form-group.options span{left: -20px;right:auto;}
+.options li{margin: 0 0  15px 0;}
+.switch {position: relative;display: inline-block;width:80px;height:34px;}
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+/* The slider */
+.slider {position: absolute;  cursor: pointer;  top: 0;  left: 0;  right: 0;  bottom: 0;  background-color: #fafafa;border:1px solid lightgrey;  -webkit-transition: .4s;  transition: .4s;}
+.slider:before {position: absolute;content: "";height: 32px;width: 34px;left: 0px;bottom: 0px;background-color: white;-webkit-transition: .4s;transition: .4s;border: 1px solid lightgrey;}
+.slider::after{content: 'No';position: absolute;right: 14px;top: 6px;color:#868686;font-size: 15px;}
+input:checked + .slider {background-color: #53d76a;}
+input:checked + .slider::after{left: 10px;content: 'Yes';color:#fff;text-align: left;}
+input:focus + .slider {box-shadow: 0 0 1px #53d76a;}
+input:checked + .slider:before { -webkit-transform: translateX(45px);  -ms-transform: translateX(45px);  transform: translateX(45px);}
+/* Rounded sliders */
+.slider.round { border-radius: 34px;}
+.slider.round:before { border-radius: 50%;}
+
+.form-control{border:2px solid #d5d5d5;-webkit-border-radius: 0px;border-radius: 0px;/* height: 44px */;;} 
+
+.wizard label{font-size: 13px;}
+.tab-pane{border:2px solid #d5d5d5;padding: 15px 100px;}
+.btn-submit{-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;font-size: 18px;border: 2px solid #8dc63f;color: #8dc63f;padding: 15px 35px;text-decoration: none;transition: background .5s ease;-moz-transition: background .5s ease;-webkit-transition: background .5s ease;-o-transition: background .5s ease;display: inline-block;cursor: pointer;font-weight: 600;outline: 0;background: #fff;}
+.pager .previous>a,.pager .next>a{border: none;color: #fff;-moz-transition: background .5s ease;-webkit-transition: background .5s ease;-o-transition: background .5s ease;background: #282828;position: relative;}
+.pager .previous:not(.disabled)>a:hover,.pager .next:not(.disabled)>a:hover {background: #00aeef;}
+.pager .previous:not(.disabled)>a:focus,.pager .next:not(.disabled)>a:focus {background: #282828;}
+.pager .previous>a, .pager .previous>span{float: none;}
+.pager .previous.disabled>a,.pager .next.disabled>a{background: #ccc;color: #fff;}
+.pager .next>a, .pager .next>span{float: none;}
+a.navbar-brand {color:white!important;font-family: sans-serif;}
+.navbar-default .navbar-nav>li>a {
+    color:black;
+    font-size: 20px;
+}
+.bmw_text{
+    margin-top: 12px;
+    font-family: inherit;
+    float: right;
+    margin-right: 20%;
+    font-size: 20px;
+}
+.form-border{
+    /* border: 1px solid black; */
+    /* margin: 22px; */
+   /*  background-color: #d1e5f5; */
+    padding: 20px;
+}
+.navbar-default {
+    background-color: #6664f1;
+    border-color: #2a65ad;
+}
+
+.dflex{display: flex;align-items: center;flex-wrap: wrap;}
+
+.over_all{
+    padding: 40px;
+    font-size: 35px;
+}
+.bmw_text a{
+    color:white;
+}
+
+
+
+@media screen and (max-width: 767px) {
+   
+    .tab-pane {
+        border: 2px solid #d5d5d5;
+        padding: 15px 20px;
+    }
+
+    .top-bar {
+        padding: 15px 20px;
+    }    
+  }
+  .label_name{
+    font-size: 16px!important;
+    color: gray;
+    font-family: none;
+  }
+  .sub_section{
+    float: left;
+    font-size: 16px!important;
+    color: gray;
+  }
+  .section_process{
+    float: right;
+    font-size: 16px!important;
+    color: gray;
+  }
+  .question-tag{
+    text-align: -webkit-auto;
+    font-size: 16px!important;
+    color: #000;
+    margin-top: 20px;
+  }
+
+  .quest-no{
+    color: #6e6161;
+    font-family: sans-serif;
+    font-size: 16px!important;
+  }
+  .sub_quest-no{
+    color: #6e6161;
+    font-family: sans-serif;
+    font-size: 14px!important;
+  }
+  /* multple custom style */
+
+  .checkans {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkans input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.multitype {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+
+
+/* When the checkbox is checked, add a blue background */
+.checkans input:checked ~ .multitype {
+    background-color: #979ca1;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.multitype:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkans input:checked ~ .multitype:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkans .multitype:after {
+    left: 8px;
+    top: 5px;
+    width: 8px;
+    height: 14px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

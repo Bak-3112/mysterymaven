@@ -1,0 +1,53 @@
+@media(max-width:1500px){
+    .map-legend {padding: 12px 15px;max-width: 41%;width: 100%;}
+}
+@media(max-width:1200px){
+    .container{max-width: 100%;}
+}
+@media(max-width:1024px){
+   .map-legend{max-width: 75%;}
+    .map-legend ul li p{font-size: 10px;}
+}
+@media(max-width:767px){
+    .wrapper{padding: 47px 0 0 0;}
+    .sidemenu{top:47px;height: calc( 100% - 47px );}
+    .bmw-logo{width: 35px;}
+    .bmw-mini-logo{width: 70px;}
+    .map-legend{max-width: 40%;padding: 16px 15px;}
+    .btn-sidemenu{top:75px;}
+    .card-head{min-width: 200px;}
+}
+@media(max-width:575px){
+    .map-legend{display: none;}
+    .map-legend ul li p{font-size: 8px;}
+    .header .navbar{padding: 0 5px;}
+    .navbar-brand{margin-right: 5px;}
+    .navbar-dark .navbar-nav .nav-link{font-size: 10px;}
+    .col-160{-ms-flex: 0 0 100%;-webkit-flex: 0 0 100%;flex: 0 0 100%;}
+    .tab-wrap{margin:0px 0 0 0;padding-top: 60px !important;padding-left: 10px;padding-right: 10px;}
+    
+    .tab-wrap .nav-tabs{border-bottom-color: transparent}
+    .tab-wrap .nav-tabs .nav-item.show .nav-link, .tab-wrap .nav-tabs .nav-link.active{border:1px solid #000000;}
+    .tab-wrap .nav-tabs .nav-link:focus, .tab-wrap .nav-tabs .nav-link:hover{border:1px solid #000000;}
+     .wrapper{padding: 43px 0 0 0;}
+    .sidemenu{top: 43px;height: calc( 100% - 43px );}
+     .btn-sidemenu{top:55px;}
+}
+
+@media(min-width:1025px){
+    .open-sidemenu .nav-left{padding-left: 200px;width: 100%;}
+    
+}
+
+@media(min-width:1400px){
+    .table tbody tr td{padding: 5px 5px;  }
+    
+}
+@media(min-width:1500px){
+    .table tbody tr td{padding: 7px 5px;  }
+    
+}
+@media(min-width:1650px){
+    .open-sidemenu .nav-left{padding-left: 200px;width: 100%;}
+    .table tbody tr td{padding: 5px 5px; }
+}

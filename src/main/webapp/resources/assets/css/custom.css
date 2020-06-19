@@ -1,0 +1,85 @@
+@font-face{
+    font-family:'bmwTypeWebBold';
+    src:url("../fonts/bmwBold/BMWTypeWebBoldAll.20161018.eot");
+    src:url("../fonts/bmwBold/BMWTypeWebBoldAll.20161018.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/bmwBold/BMWTypeWebBoldAll.20161018.woff2") format("woff2"),
+        url("../fonts/bmwBold/BMWTypeWebBoldAll.20161018.woff") format("woff"),
+        url("../fonts/bmwBold/BMWTypeWebBoldAll.20161018.ttf") format("truetype");
+    font-display:swap}
+
+@font-face{
+    font-family:'bmwTypeWebLight';
+    src:url("../fonts/bmwLight/BMWTypeWebLightAll.20161018.eot");
+    src:url("../fonts/bmwLight/BMWTypeWebLightAll.20161018.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/bmwLight/BMWTypeWebLightAll.20161018.woff2") format("woff2"),
+        url("../fonts/bmwLight/BMWTypeWebLightAll.20161018.woff") format("woff"),
+        url("../fonts/bmwLight/BMWTypeWebLightAll.20161018.ttf") format("truetype");
+    font-display:swap}
+
+
+body{background: #fff;   font-family:'bmwTypeWebLight';}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: 'bmwTypeWebBold';
+}
+label{ font-family:'bmwTypeWebLight';}
+.page-title-box h4{color: #000000;}
+.progressbar{height: 22px;position: relative;text-align: center;margin: 0 -10px;}
+.progress-status{position: absolute;height: 100%;left: 0;top:0;background: #ccc;}
+.progressbar span{position: relative;z-index: 3;}
+.custom-table{}
+.custom-table thead tr th{color: #fff;background: #4b4b4d;font-weight: 500;font-family: 'bmwTypeWebBold';
+    font-size: 13px;}
+.custom-table  tr th{text-align: center;}
+.custom-table tbody tr td,.custom-table tbody tr th{background: #f4f8fb;color: #00336c;font-weight: normal;}
+.custom-table tbody tr:nth-child(even) td,.custom-table tbody tr:nth-child(even) th {background: #dfe8ef;}
+
+.card-box{margin-bottom:10px;}
+
+.table-spacings thead tr  td,.table-spacings thead tr  th{padding:2px 2px;}
+.table-spacings tbody tr  td,.table-spacings tbody tr  th{padding:2px 2px;}
+.card-head{background: #e6e6e6;color: #000000;position: relative;}
+.card-head.active{background: #003466;color: #fff;}
+.card-head:before{content: "";width: 10px;height: 90%;background: #333333;position: absolute;left: 5px;top:5px;bottom: 5px;}
+.card-head.active:before{background: #fff;}
+.page-logo{display: inline-block;vertical-align: top;}
+.card-head h6{font-size:14px;height:20px}
+.page-title-box{margin:0 -25px 10px -25px;padding:5px 20px;}
+/*.card-box-country{padding: 0 5px 5px 5px;}*/
+.card-box-country h4{background: #4b4b4d;color: #fff;}
+.card-box{border:1px solid #4b4b4d;}
+.header-title{background: #4b4b4d;text-transform: none;font-weight: 400;font-size: 20px;}
+.card-box .header-title{color: #fff;font-family:'bmwTypeWebLight';}
+.card-body-wrap{background: #e6e6e6;}
+
+/*completion overview*/
+.completion-row{position: relative;}
+.completion-row:before{content: "";width: 5px;left:5px;top: 10px;bottom: 10px;position: absolute;background: #a6a6a6;display: block;}
+.completion-row h6{color: #030000;}
+.completion-row p{color: #6a5856;}
+.card-select-wrap label{background: #4b4b4d;display: block;color: #fff;}
+
+.bg-grey{background: #4b4b4d;}
+.linchartlegend-wrap{padding: 0 15px;}
+.linchartlegend-wrap li{padding: 0 7px 0 0;}
+.linchartlegend-wrap li span{margin: -3px 5px 0 0; width:10px;height: 10px;display: inline-block;vertical-align: middle;background: #BB0A30;border-radius: 50%;}
+.card-box-grey{background: #4b4b4d}
+.card-box-grey label{color: #fff;}
+.border-black {border-right: 1px solid #000;}
+
+
+ .canvasjs-chart-credit{
+      display: none;
+    }
+
+.custom-table-adjst tbody tr td{color:#000110;}
+.custom-table-adjst tbody tr th{color:#000110;font-family:'bmwTypeWebBold';font-size: 13px;}
+
+.cus tr th {text-align: left;}
+.cus .progressbar{text-align: right;}
+.cus .progressbar span{padding: 0 5px;display: inline-block;}
+.filter-btn{background-color: #1890ff;border-color:#1890ff;}
+.filter-btn:hover{background-color: #1890ff;border-color:#1890ff;}
+
+body.enlarged{
+	min-height:100vh;
+}

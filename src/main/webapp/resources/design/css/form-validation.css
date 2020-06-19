@@ -1,0 +1,68 @@
+.wrap { max-width: 980px; margin: 10px auto 0; }
+        #steps { margin: 80px 0 0 0 }
+        .commands { overflow: hidden; margin-top: 30px;text-align: right; }
+        .prev {float:none;padding: 8px 40px;border: 1px solid #1890ff;background-color: #fff;color: #1890ff;}
+        .next, .submit {float:none;padding: 8px 40px;background-color: #1890ff;border: none;margin-left: 10px;}
+        .error { color: #b33; }
+        /*#progress { position: relative; height: 5px; background-color: #eee; margin-bottom: 20px; }*/
+        #progress-complete { border: 0; position: absolute; height: 5px; min-width: 10px; background-color: #337ab7; transition: width .2s ease-in-out; }
+
+        .step1{
+          border: 1px solid #e3e3e3;
+        border-radius: 50px;
+        width: fit-content;
+        padding: 10px 14px;
+        color: blue;
+        font-weight: bold;
+        }
+
+        .step2{
+          border: 1px solid #e3e3e3;
+        border-radius: 50px;
+        width: fit-content;
+        padding: 10px 14px;
+        color: rgba(0, 0, 0, 0.7);
+        }
+
+        .list-type li{
+          display: inline-table;
+          list-style-type: none;
+          margin: 0px 50px 0px -24px;
+        }
+
+        .down-arrw{
+          position: absolute;
+        top: 32px;
+        right: 21px;
+        background-color: #fff;
+        color: rgba(0, 0, 0, 0.25)
+        }
+
+        .card-form{
+            padding: 5px 65px; 
+        }
+
+        hr{
+            margin: -2px;
+        }
+
+        /*.mrg-txt{
+            margin-top: 10px;
+        }*/
+
+        .date .input-group-addon{
+                position: absolute;top: 0px;right: 0px;z-index: 5;height: 34px;width: 35px;
+            }
+
+            .input-group{
+                display: block;
+            }
+
+            /*.time .input-group-addon{
+                position: absolute;top: 0px;right: -15px;z-index: 5;height: 34px;width: 35px;
+            }
+
+            .time-width{
+                    width: 118px!important;
+                    margin-left: -14px;
+            }*/

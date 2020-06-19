@@ -1,0 +1,1517 @@
+@font-face {
+    font-family: 'bmwbold';
+    src: url('../fonts/bmwbold/bmwtypeglobalpro_bold.otf');
+}
+@font-face {
+    font-family: 'bmwlight';
+    src: url('../fonts/BMWFonts/BMWGroup_Light_Regular.ttf');
+}
+@font-face {
+    font-family: 'bmwregular';
+    src: url('../fonts/bmwregular/bmwtypeglobalpro_regular.otf');
+}
+
+@font-face {
+  font-family: 'BMWGroup-Regular';
+  src: url('../fonts/BMWGroup-Regular/BMWGroup-Regular.eot?#iefix') format('embedded-opentype'),  url('../fonts/BMWGroup-Regular/BMWGroup-Regular.woff') format('woff'), 
+      url('../fonts/BMWGroup-Regular/BMWGroup-Regular.ttf')  format('truetype'),
+      url('../fonts/BMWGroup-Regular/BMWGroup-Regular.svg#BMWGroup-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/*@import url('https://www.fontify.me/wf/d2254f0489f32ae95ad9e2560d6620a0');
+.progress-cir h4{
+  font-family: font145859;
+}*/
+
+/*@font-face{
+  font-family: font145859;
+  src: url('https://www.fontify.me/wf/d2254f0489f32ae95ad9e2560d6620a0');
+}*/
+
+.navbar-inverse {
+    background-color: #4669ce;
+    border-color: #4769cf;
+}
+
+.banner-figure{background-repeat:no-repeat;background-size:cover;background-position:center center;}
+.navbar-brand>img {
+    display: block;
+    margin-top: -10px;
+}
+.banner-figure img{/* height:330px; *//* object-fit:cover; */width:100%;max-width: 885px;margin: 0 auto;}
+.comp-ar{color: #337ab7;font-size: 14px;  font-family: sans-serif;}
+a:focus, a:hover {
+    color: #23527c;
+    text-decoration: none;
+}/*  */
+.demo1 {
+    position: relative;
+    width: 20vw;
+    height: 20vw;
+    box-sizing: border-box;
+    float:left;
+    margin:20px;
+    font-size: 10px;
+}
+.demo2 {
+    position: relative;
+    width: 20vw;
+    height: 20vw;
+    box-sizing: border-box;
+    float:left;
+    margin:20px;
+    font-size: 10px;
+}
+.sub-dash{list-style: none;float:right;}
+
+.logo{    padding:11px;}
+.bg{background-color: white;    margin-top: -10px;}
+.login-card{
+    border: 1px solid white;
+    background-color: white;
+    width: 465px;
+    height: 445px;
+    float: right;
+    padding: 100px;
+}
+.bmw-text{
+    color: #2243a5;
+    font-family: Roboto;
+    font-size: 37px;
+    font-weight: 400;
+    line-height: 134.18px;
+    font-family: unset;
+}
+.connect-text{
+    color: #666666;
+    font-family: Roboto;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 134.18px;
+    margin-left: 5%;
+}
+.user-text{
+    opacity: 0.6;
+    color: #333333;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 300;
+    /* line-height: 87.06px; */
+    letter-spacing: 0.18px
+}
+.textbox{
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 1px solid #ddd1d1;
+    width: 265px;
+    font-family: Roboto;
+font-size: 20px;
+}
+.margintop{
+    margin-top: 50px;
+}
+.loginbtn{
+    font-size: 20px;
+    color: white;
+    width: 40%;
+    margin-bottom: -70px;
+    height: 44px;
+    border-radius: 3px;
+    background-color: #2243a5;
+    margin-top: 25px;
+    outline: none;
+    border: none;
+}
+.loginbtn:hover{
+    font-size: 20px;
+    color: white;
+    margin-top: 25px;
+    width: 40%;
+    height: 44px;
+    border-radius: 3px;
+    background-color: #2243a5;
+    margin-bottom: -70px;
+    outline: none;
+    border: none;
+}
+.arrow-point{
+    margin-left: 10%;
+}
+.rightnav{padding-left: 20px;}
+ .navbar-nav>li>a {
+    color: white;
+    float: right;
+}
+.nav>li>a:hover {
+    text-decoration: none;
+  background-color: #5367df;
+}
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color:transparent;
+}
+.navbar-right{margin-top: 10px;}
+/* CSS for DASHBOARD */
+/*
+.header{
+     height: 63px; 
+  
+  background-color: #5367df;
+    color: white;
+    
+}
+*/
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+.first{
+    width: 10%;
+}
+.second{
+    background-color: white;
+    height: 54px;
+    width: 65px;
+    padding: 10px;
+    margin-top: -7px;
+   /*  position: absolute; */
+    margin-top: 0px;
+}
+.audit{
+    color: #ffffff;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 39.31px;
+    padding: 10px;
+    width: 54%;
+}
+.search{
+    width: 5%;
+}
+.audit1{
+    width: 7%;
+}
+.dash{
+    margin-top: 60px;
+}
+.dashboard{
+    opacity: 0.5;
+    color: #333333;
+    font-family: Roboto;
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'bmwbold';
+   /*  line-height: 62.83px; */
+}
+.filter{
+    color: #4d68d8;
+}
+.sales{
+    background-image: url("../images/sale.png");
+    height: 350px;
+    background-repeat: no-repeat;
+    /* background-position: center;  */
+    padding: 60px;
+    position: relative;
+   
+}
+.textsale{
+    color: #ffffff;
+    font-family: 'bmwregular';
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 81.06px;
+}
+.std-text{
+    margin-top: -10%;
+   width: 115%;
+    opacity: 0.5;
+    color: #ffffff;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 81.06px;
+}
+.dealer-text{
+    text-align: center;
+   
+    opacity: 0.3;
+    color: #ffffff;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 62.83px;
+   
+    margin-top: 85px;
+}
+.service{
+    background-image: url("../images/service.png");
+    height: 350px;
+    background-repeat: no-repeat;
+    /* background-position: center;  */
+    padding: 60px;
+    position: relative;
+}
+.performance{
+    background-image: url("../images/service.png");
+    height: 350px;
+    background-repeat: no-repeat;
+    /* background-position: center;  */
+    padding: 60px;
+    position: relative;
+}
+.improvement{
+    background-image: url("../images/improvement.png");
+    height: 350px;
+    background-repeat: no-repeat;
+    /* background-position: center;  */
+    padding: 60px;
+    position: relative;
+}
+.reddot {
+    height: 20px;
+    width: 20px;
+    background-color: #d8471e;
+    border-radius: 50%;
+    display: inline-block;
+}
+.mapcard{
+    padding: 15px;
+    border: 1px solid white;
+    height: 500px;
+    background-color: white;
+    width: 100%;
+}
+.live-audit{
+    color: #333333;
+    font-family: Roboto;
+    font-size: 35px;
+    font-weight: 500;
+    line-height: 87.49px;
+    margin-left: 4%;
+}
+.indianmap{
+    height: 377px;
+    width: 355px;
+    margin-top: 30px;
+}
+.bar{
+   margin-top: 15px;
+}
+.bodysection{
+   
+    font-family:BMWGroup-Regular!important;
+    height: 100%;
+    /*background-color: #f3f3f3;*/
+       }
+       .pertext{
+        float: right;
+        margin-top: -40px;
+        margin-right: -42px;
+       }
+       .kun-text{
+        color: #333333;
+        font-family: Roboto;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 45px;
+        font-family: "Roboto - Regular";
+        font-weight: 400;
+       }
+       .kun-text-1{
+        color: #999999;
+        font-family: "Roboto Medium";
+        font-weight: 500;
+        font-size: 18px;
+       }
+       .sched-text{
+        color: #ff9900;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 45px;
+       }
+       .datetext{
+        margin-left: 12%;
+        color: #999999;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 45px;
+       }
+       /* start dealers */
+  .audit2 {
+    width: 9%;
+  }
+  .audit3 {
+    color: #ffffff;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 39.31px;
+    padding: 10px;
+    width: 44%;
+}
+  #back-ground{
+    background-image: linear-gradient(-265deg, #4669ce 0%, #5367df 100%);
+    color: white;
+    border: none;
+  }
+  .layer_12{
+    width:100%;
+    height: 400px;
+  }
+  .card-bmw {
+    width: 100%;
+    height: 438px;
+    border: 1px solid white;
+    background-color: white;
+    position: absolute;
+    margin-top: -88px;
+  }
+  .form-option{
+      color:black;
+  }
+  .bmw-navit{
+        position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 57px;
+  }
+  .bmw-navit1{
+        position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    color: #d3c9c9;
+  }
+  .tab-contant1{
+    width: 327px;
+  }
+  .first_card {
+    width: 95% !important;
+    margin-left: 3% !important;
+    margin-right: auto;
+    margin-top: -77px;
+    border-radius: 6px;
+    background-color: #ffffff;
+    padding: 30px;
+  }
+  .tab-body {
+    overflow: hidden;
+    border-bottom: 1px solid #ebebeb;
+    background-color: white;
+    
+  }
+  .tab-body button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+  .tab-body button.active {
+    background-color: white;
+    border-bottom: 3px solid #4a48e1;
+  }
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+  }
+/* end dealers */
+  
+  /* CSS about dealer tab */
+  .bmw-mot{
+    color: #333333;
+   
+    font-size: 25px;
+    font-weight: 500;
+   
+  }
+  .addtext{
+      
+color: #333333;
+/* font-family: Poppins; */
+font-size: 16px;
+font-weight: 500;
+}
+.addtext-2{
+    width: 90%;
+   
+    opacity: 0.7;
+    color: #333333;
+   /*  font-family: Poppins; */
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 28px;
+}
+.get-direction{
+    width: 170px;
+    height: 41px;
+    border-radius: 3px;
+    border: 2px solid #4669ce;
+    background-color: white;
+    outline: none;
+    margin-top: 5%;
+}
+.map-size{
+    width: 85%;
+    height: 245px;
+}
+/* end dealer tab */
+/* start CSS for  sales tab */
+.card-motor{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.14);
+    background-color: #ffffff;
+    padding: 20PX;
+}
+.image-1{
+    width: 100%;
+    height: 189px;
+}
+.text-image{
+    color: #333333;
+    font-family: Roboto;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 43.85px;
+    margin-top: 12px;
+}
+.image-place{
+    color: #999999;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.bmw-bottom-right-btn {
+    position: absolute;
+    bottom: 171px;
+    right: 44px;
+}
+.img-top {
+    position: relative;
+  /*   text-align: center; */
+    color: white;
+}
+.loginbtn1{
+    font-size: 12px;
+    color: white;
+    width: 124%;
+    margin-bottom: -70px;
+    height: 32px;
+    border-radius: 3px;
+    background-color: #4669ce;
+    margin-top: 25px;
+    outline: none;
+    border: none;
+}
+
+/*  end css for dealer tab */
+/* start css for overview tab */
+
+.overview-colsm {
+    padding: 83px !important;
+    margin-top: -50px !important;
+  }
+  .sales-bmw{
+    opacity: 0.9;
+    color: #333333;
+    font-family: Roboto;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 67.88px;
+    letter-spacing: 0.26px;
+  }
+  .navitmotor-bmw{
+    color: #333333;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.21px;
+  }
+  .pertext1 {
+    float: right;
+    margin-top: -40px;
+    margin-right: -50px;
+  }
+ 
+  .container-bmw{
+    
+    width: 80% !important;
+  }
+.modal-title{
+    color: #333333;
+    font-family: Roboto;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 80.38px;
+    letter-spacing: 0.22px;
+}
+.modal-text-box{
+    margin-top: 50px;
+    border: none;
+    border-bottom: 1px solid gray;
+    width: 100%;
+    font-size: 14px;
+    /* width: 86px; */
+    /* height: 17px; */
+    color: #666666;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    /* line-height: 80.38px; */
+    letter-spacing: 0.16px;
+}
+.modal-start{
+    outline: none;
+    width: 30%;
+    font-size: 16px;
+    border: none;
+    margin-top: 60px;
+    height: 44px;
+    border-radius: 3px;
+    background-color: #4669ce;
+    color: white;
+}
+.get-place{
+    left: 6%;
+    position: absolute;
+    
+    top: 86%;
+}
+.logo-background{
+    background-color: white;
+    height: 54px;
+    width: 65px;
+    margin-bottom: 0px;
+    /* padding: 10px; */
+    margin-top: -7px;
+    /* position: absolute; */
+    margin-top: 0px;
+}
+.logo1{
+    padding: 9px 9px 9px 10px;
+}
+.abc{
+    display: inline;
+    color: white;
+}
+#back-ground1{
+    background-image: linear-gradient(-265deg, #4669ce 0%, #5367df 100%);
+    color: white;
+    border: none;
+    width: 118px;
+    display: inline;
+}
+.ulaligned{
+    margin-top: 13px;
+    width: 100%;
+    /*margin-left: 28%;*/
+}
+.dealans-card{
+    margin-top: 26px;
+  }
+  
+  
+/* end css for overview tab */
+/* end of dealers */
+
+/* CSS FOR CIRCLE PROGRESS BAR  */
+
+  
+  .chart {
+      position:relative;
+      width:165px;
+      height:165px;
+      margin: 0 auto;
+      font-family: 'Titillium web';
+      font-weight: 300 ;
+  
+  }
+  canvas {
+      display: block;
+      position:absolute;
+      top:0;
+      left:0;
+  }
+  span1 {
+      color:#555;
+      display:block;
+      line-height:165px;
+      text-align:center;
+      width:165px;
+      font-size:26px;
+      font-weight:300;
+      margin-left:5px;
+  }
+  .hiddenframe{
+      display: none;
+  }
+/*END   CSS FOR CIRCLE PROGRESS BAR */
+.onetwo{
+    font-size: 26px;
+    color: #d23d3d;
+}
+.ans-text{
+    font-size: 26px;
+    margin-left: 1%;
+}
+.tab-sale-text{
+    color: #c3bcbc;
+    margin-left: 10px;
+}
+.barwidth{height: 8px!important;}
+.complete-butn{
+    color: white;
+    background-color: #4d68d7;
+    height: 40px;
+    width: 110px;
+    height: 50px;
+    border: none;
+    outline: none;
+    font-family: Robot;
+    font-size: 20px;
+}
+.head-sign{
+    color: gray;
+    margin-top: 60px;
+    font-size: 16px;
+}
+.yes {
+    height: 14px;
+    width: 14px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+.no {
+    height: 14px;
+    width: 14px;
+    background-color: rgb(29, 160, 160);
+    border-radius: 50%;
+    display: inline-block;
+}
+.nill {
+    height: 14px;
+    width: 14px;
+    background-color: gray;
+    border-radius: 50%;
+    display: inline-block;
+}
+.sale-txt {
+    font-size: 18px;
+    color: gray;
+    font-family: inherit;
+}
+/* .input[type=file].image {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+    display: inline-block;
+    margin-left: -4% !important;
+    font-size: inherit !important;
+    margin-top: -152px}
+   .upload-logo{
+       margin-top: 25px;
+   } */
+@media only screen and (max-width: 600px) {
+   
+    .audit{    width: 26%;}
+    .audit1 {
+        width: 14%;
+    }
+    .tab-body button{
+        float:none;}
+       
+}
+/* start of sales area, OCS, customer area   */
+.dealans-card{
+    margin-top: 26px;
+  }
+  .line-answer{
+  }
+  .col-walls{
+    color: #333333;
+    font-family: Roboto;
+    font-size: 24px;
+    font-weight: 500;
+  
+  }
+  .col-glass{
+    color: #999999;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .col-button{
+    margin: 22px;
+    width: 107px;
+    height: 37px;
+    border-radius: 4px;
+    border: 2px solid #4669ce;
+    background-color: #ffffff;
+  }
+  .col-camera{
+    color: #333333;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 41.55px;
+    margin-left: 9px;
+  }
+  .col-sm-backcolor{
+      
+    height: 100%;
+    background-color: #ebebeb;
+  float: right !important;
+    
+  }
+  .col2-audit{
+    font-family: Roboto;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 39.31px;
+    color: black;
+  }
+  .col2-ul{
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 39.31px;
+    list-style: none;
+    color: #666666;
+  margin-top: 18px;
+  }
+  .col2-walls{
+      color: #4669ce;
+    font-family: Roboto;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 48.92px;
+  margin-left: 58px;
+  }
+  .attachment-img{
+    margin-left: 25%;
+  }
+  .file-img{
+    float: right;
+    margin-top: 12px;
+  }
+  .skip-for{
+    float: right;
+    color: #999999;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 39.31px;
+    text-decoration: underline;
+  }
+  .flagpoles{
+  
+  
+margin: -14px;
+   
+    /* width: 100%; */
+height: 58px;
+background-color: #e1e1e1;
+
+  
+  }
+  .lidot {
+      height: 8px;
+      width: 8px;
+      background-color: red;
+      border-radius: 50%;
+      display: inline-block;
+    margin-left: -29px;
+  }
+  .lidot1 {
+      height: 8px;
+      width: 8px;
+      background-color: green;
+      border-radius: 50%;
+      display: inline-block;
+     margin-left: -29px;
+         margin-top: 24px;
+
+  }
+  .lidot2 {
+      height: 8px;
+      width: 8px;
+      background-color: gray;
+      border-radius: 50%;
+      display: inline-block;
+     margin-left: -29px;
+     margin-top: 22px;
+  }
+  .col2-ul1{
+   font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 39.31px;
+    list-style: none;
+    color: #666666;
+  margin-top: -28px;
+
+  }
+  .col2-ul2{
+   font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 39.31px;
+    list-style: none;
+    color: #666666;
+  margin-top: -28px;
+
+  }
+  .col2-ul3{
+   font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 39.31px;
+    list-style: none;
+    color: #666666;
+  margin-top: -28px;
+
+  }
+ .blue-line{
+ 
+width: 2px;
+height: 623px;
+background-color: #4669ce;
+opacity: 0.3;
+ 
+ }
+ 
+ 
+.number{
+margin-left: -27px;
+
+color: #4a63c9;
+font-family: Roboto;
+font-size: 28px;
+font-weight: 700;
+line-height: 43.65px;
+}
+
+
+.blue-line-image{
+
+ margin-top: 13px;
+    width: 33px;
+    height: 23px;
+   
+    margin-left: -7px;
+    color: #4669ce;
+
+
+}
+/*  end of sales area, OCS, customer area  */
+.outlayered{
+    padding:  20px;
+    height: 100%;
+    background-color: #f3f3f3;
+}
+.audit-card{
+    background-color: white;
+    margin-top: 60px;
+}
+.audit-card-1{
+    
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.14);
+    background-color: #ffffff;
+    padding: 20PX;
+}
+/*.text-center{
+    width: 170%;    
+}*/
+
+.circle-card{
+    width: 100%;
+    height: 275px;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.14);
+    background-color: #ffffff;
+    padding: 20PX;
+}
+.chennai{
+    font-size: 16px;
+    font-family: Robot;
+}
+.no-ans{
+    font-size: 16px;
+    color: #d85050;
+}
+.ans-245{
+    font-size: 15px;
+}
+
+.find-dealers {
+    margin: 118px;
+    margin-top: 71px;
+    font-size: 23px;
+}
+
+
+.Search-dealers {
+    margin-left: 12%;
+    font-size: 23px;
+    color: #c7bdbd;
+}
+.ab-img{
+    position: absolute;
+    margin: 20px;
+}
+.back-list{
+    color: white;
+    font-size: 12px;
+}
+/* sales CSS */
+
+.col-navit{
+    font-size: 17px;
+   color: #857b7b;
+  }
+  .col-percent{
+    margin-top: -40px;
+   margin-right: -50px;
+   font-size: 14px;
+   color: #4669ce;
+  }
+  .service-rank{
+    margin-top: 71px;
+   font-size: 33px;
+   margin-left: 4%;
+   color: #b0a6a6;
+  }
+  .retailer-audit{
+        color: #b0a6a6;
+   margin-left: 16%;
+ font-weight: 500;
+  }
+  .progress-number{
+    top: -8px;
+   position: absolute;
+   text-align: center;
+   color: white;
+   border-radius: 50%;
+   background-color: #337ab7;
+   width: 28px;
+   height: 28px;
+   left: -6px;
+  }
+  .progress-sale{
+     height:14px!important;}
+  .one{
+    margin-top: 3px;
+  font-size: 18px;}
+
+
+  /*Raghu-Hegde*/
+
+  .bg-fff{
+  background-color: #fff;
+  height: 100%;
+  width: auto;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.14);  
+ }
+
+.progress-cir{
+  padding: 10px 15px;
+  position: relative;
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+
+.barOverflow{ /* Wraps the rotating .bar */
+    position: relative;
+    overflow: hidden;
+    width: 150px;
+    height: 90px;
+    margin-bottom: -14px;
+    border-radius: 9px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.bar{
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 150px;
+  height: 150px; /* full circle! */
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 15px solid #eee;     /* half gray, */
+  border-bottom-color: #6c5ce7;  /* half azure */
+  border-right-color: #6c5ce7;
+}
+
+.progressbar .bar{
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 150px;
+  height: 150px; /* full circle! */
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 15px solid #eee;     /* half gray, */
+  border-bottom-color: #26e26e;  /* half azure */
+  border-right-color: #26e26e;
+}
+
+.progressbarr .bar{
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 150px;
+  height: 150px; /* full circle! */
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 15px solid #eee;     /* half gray, */
+  border-bottom-color: #ff7517;  /* half azure */
+  border-right-color: #ff7517;
+}
+
+.progressbar-h{
+    font-size: 30px;
+    position: relative;
+    top: -20px;
+}
+
+.done-txt{
+  color: #a537a0;
+    font-size: 14px;
+    font-weight: 600;
+    position: relative;
+    top: -30px;
+}
+
+.card{
+  padding: 35px;
+}
+
+.quizwrap .card{max-width:1080px;margin:0 auto;}
+.btn-success {
+    color: #1890ff!important;
+    background-color: transparent!important;
+    border-color: #1890ff!important;
+    /*margin-right: 10px;*/
+}
+
+.btn-success{
+  padding: 8px 40px!important;
+}
+
+.btn-info{
+  padding: 8px 40px!important;
+  color: #fff;
+  background-color: #1c69d4;
+  border-color: #1c69d4;  
+  border-radius:0px;
+}
+
+.navbar-header{
+  position: relative;
+  top: -7px;
+  left: -16px;
+}
+
+.mrg-top{
+  margin-top: 8px;
+}
+
+.margin-right{
+  margin-right: 15px;
+}
+
+.mrg-left{
+  margin-left: -15px;
+}
+
+.txt-area .form-control{
+  height: 90px; 
+}
+
+.mrg-bttm{
+  margin-bottom: 20px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus  {
+          margin-bottom: 10px;
+          color: #296cd5;
+          cursor: pointer;
+          background-color: transparent;
+          border: 1px solid #ddd;
+          border-radius: 50px;
+          font-weight: bold;
+      }
+
+      .nav-tabs>li>a{
+        margin-right: 25px!important;
+        color: #555;
+      }
+
+      .nav-tabs>li>a:hover {
+          margin-right: 25px;         
+          border: 1px solid transparent;          
+          background-color: transparent!important; 
+          border-radius: 50px;         
+      }
+
+      .nav-tabs>li.active>a{
+          color: #296cd5!important;
+          cursor: default;
+          background-color: transparent!important; 
+          border: 1px solid #ddd;
+          border-bottom-color: #ddd!important; 
+          border-radius: 50px;
+      }
+
+      .h-txt h4{
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.7);
+      }
+
+      .h-txt p{
+         color: rgba(0, 0, 0, 0.7);
+      }
+
+
+        
+
+
+
+
+/* end sales CSS */
+@media only screen and (min-width: 1024px) {
+    .Search-dealers {
+        margin-left: 36%;
+    }
+    .circle-card{
+width: 65%;
+    }
+   /* .text-center{
+        width: 155%;
+    }*/
+    .bmw-bottom-right-btn{
+        bottom: 120px;
+    }
+    .ulaligned{
+      /*margin-left: 35%;*/
+    }
+
+
+}
+@media only screen and (max-width: 767px) {
+    .text-center {
+      /*  width: 108%;*/
+      
+    }
+    .bmw-bottom-right-btn{
+        bottom: 120px;
+    }
+    .bmw-navit1{
+        top: 41%;
+       
+    }
+    .bmw-navit{
+        top: 50%;
+        font-size: 14px;
+    }
+    .nav{
+    position: relative;
+    top: -49px;
+  }
+}
+
+@media only screen and (max-width: 425px){
+  .nav{
+    position: relative;
+    top: -49px;
+  }
+
+
+      .nav-tabs li{
+        margin: 30px 0px;
+      }
+
+      /*.nav{
+        margin-bottom: 0px;
+      }*/
+}
+
+@media only screen and (max-width: 375px){
+  .center{
+    text-align: center;
+  }
+}
+
+h2{font-size: 24px;}
+h3{font-size: 20px;}
+
+.d-f{display: -webkit-flex;display: -ms-flexbox;display: flex;}
+.f-w{-webkit-flex-wrap: wrap;flex-wrap: wrap;}
+.fd-column{-webkit-flex-direction: column;flex-direction: column;}
+.jc-center{-webkit-justify-content: center;justify-content: center;}
+.bg-white{background: #fff;}
+.fig-wrap{padding-left:0px;padding-right:0px;}
+.quizwrap{/* min-height: 100vh;*/ margin:50px 0 0 0;padding-left:50px;padding-right:50px;}
+.count-wrap{font-size: 20px;}
+.quizwrap h3{margin: 0 0  10px 0;padding: 0 15px}
+.quizwrap h6{padding: 0 15px;}
+.quizwrap p{margin: 0;color: #827676;padding: 0 15px;display:inline-block;}
+.bg-gradient{background: rgba(52,46,211,1);
+background: -moz-linear-gradient(top, rgba(52,46,211,1) 0%, rgba(24,21,92,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(52,46,211,1)), color-stop(100%, rgba(24,21,92,1)));
+background: -webkit-linear-gradient(top, rgba(52,46,211,1) 0%, rgba(24,21,92,1) 100%);
+background: -o-linear-gradient(top, rgba(52,46,211,1) 0%, rgba(24,21,92,1) 100%);
+background: -ms-linear-gradient(top, rgba(52,46,211,1) 0%, rgba(24,21,92,1) 100%);
+background: linear-gradient(to bottom, rgba(52,46,211,1) 0%, rgba(24,21,92,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#342ed3', endColorstr='#18155c', GradientType=0 );}
+.btn-primary{background-color: #1c69d4;border-color: #0653b6;}
+.btn-primary:hover,.btn-primary:focus,.btn-primary:active{background-color: #0653b6;}
+.header{/*position: absolute;*/left: 0;top: 0;right: 0;z-index: 1000;background:#8e8e8e;/* margin:0 30px; */}
+.logo{margin: 0 0 0 50px;}
+.logo a{display: inline-block;margin: 0 5px;}
+.radio-label {font-weight: 400;margin: 0 10px 0 0;display: inline-block;}
+.radio-label input {display: none;}
+.radio-label span{display: inline-block;padding: 2px 0 2px 20px;background: url('../images/radio-uncheck.png') no-repeat 0px 2px;background-size: 19px auto;}
+.radio-label input:checked + span{background-image: url('../images/radio-check.png');}
+#SignupForm  .radio-label{margin-top: 5px;}
+.animate-shape-wrap svg {width: 600px;display: block;position: absolute;}
+.btn-upload{ background: #5367df;position: relative;transition: 0.4s ease-out;outline: none;color: #fff;font-weight: bold;letter-spacing: 0px;margin: 0px 15px;border:1px solid #5367df;font-size:12px;border-radius:0px;}
+ .btn-upload:focus,.btn-upload:hover,.btn-upload:active{background: #5367df;color: #fff; }
+ 
+.quiz-status{height: 400px;width: 700px;position: relative;margin: 0 auto;}
+.quiz-status svg{position: absolute;}
+.ball {
+  width: 36px;height: 17px;background: url(../images/car.png) 0 0 no-repeat;background-size: 36px auto;
+  offset: path("M20 135 L95 135 M100 150 L100 250 Q 160 300 210 250 L 210 150 Q 260 100 310 150 L310 250 Q360 300 410 250 L410 150 Q460 100 510 150 L510 250 Q560 310 610 250 L610 150 L680 150");offset-distance: 0%;transition: ease-in-out 0.5s;motion-offset: 0%;offset-distance: 00%;-webkit-transform: rotate(180deg) translateY(5px);-moz-transform: rotate(180deg) translateY(5px);transform: rotate(180deg) translateY(0px);
+}
+.start{position: absolute;bottom: 100%;}
+.finish{position: absolute;bottom: 26px;left: 92%;}
+
+.button-wrap{width: 400px;display: block;margin: 0 auto;color: #343434;font-size:12px;}
+.button-wrap span{padding: 0 0 0px 0;display: inline-block;}
+.button-wrap .btn{margin: 10px 0;padding: 9px 10px 9px 10px;min-width: 190px;}
+
+.fileupload-label{padding: 8px 10px;background: #5367df;color: #fff;cursor: pointer;min-width: 70px;text-align: center;width:100%;font-size:12px;}
+
+.check-label input{display: none;}
+.check-label span{padding: 3px 0 3px 15px;position: relative;font-size:12px;color:#262626;}
+/* .check-label span:before{content: "";width: 13px;height: 13px;display: inline-block;border:1px solid #000;position: absolute;left: 0;top: 5px;}
+.check-label input:checked + span:before{background: #00ea04;border-color: transparent;}
+.error .check-label span:before{background: #ea4242;border-color: transparent;}
+.success .check-label span:before{background: #00ea04;border-color: transparent;} */
+
+
+.rmve-dot{list-style: none;padding-left:25px;}
+.select-wrap{position: relative;}
+.select-wrap .down-arrw1{position: absolute;right: 20px;top: 7px;background: #fff;pointer-events: none;}
+
+.comment-area .form-control{height: 34px;resize: none;}
+.time .form-control{float: none;}
+.date .form-control{float: none;}
+.time .input-group-addon{position: absolute;right: 0;top:0;z-index: 3;width: 34px;padding: 9px 1px;}
+
+.checkbox-label{}
+.checkbox-label input{display: none;}
+.checkbox-label span{padding: 3px 5px 3px 25px;background: url(../images/untick.png) no-repeat 0 2px; background-size: 18px auto;}
+.checkbox-label input:checked +span{background-image: url(../images/tick.png);}
+ 
+
+.datetime-row{padding-left: 25px;}
+.check-row{padding-left: 40px;}
+.comment-row{padding-left: 25px;}
+.btnwrap {padding-left: 40px;text-align:right;padding-right:15px;}
+.btnwrap hr{margin:15px 0;border-color:#979797;}
+.q-number{margin-left: -15px;}
+.questions ol{list-style: none;}
+.quizwrap .card h3 span{font-weight: 400;}
+
+
+.slider-row{padding-left: 25px;}
+.min-range-slider{margin: 20px 0 50px 0;}
+.values-wrap {display: flex;margin: 20px 0 0 0;justify-content: space-between;height: 20px;position: relative;}
+
+.ui-slider-horizontal{height:8px;}
+.ui-slider-horizontal .ui-slider-range-min{background: #1890ff;border:0 none;}
+.ui-slider-horizontal .ui-slider-handle{top:-4px;border-radius: 50%;background: #1890ff;border:0 none;width: 15px;height: 15px;}
+.values-wrap span{position: absolute;left: 0;margin-left: -5px;}
+.form-control-feedback{display: none !important;}
+
+.help-block {color: #f00;}
+
+@keyframes red-ball {
+  from {
+      motion-offset: 0%;
+    offset-distance: 0%;
+  }
+  to {
+      motion-offset: 100%;
+    offset-distance: 100%;
+  }
+}
+/*scale down aniamtion*/
+.scaledown{animation-name: scaledown;animation-name: scaledown; animation-duration: 0.5s;animation-fill-mode: forwards;transform-origin:0% 0% 0px; }
+
+@keyframes scaledown {
+  from {
+     -webkit-transform: scaleY(0);
+      transform: scaleY(0);
+  }
+  to {
+     -webkit-transform: scaleY(1);
+      transform: scaleY(1);
+  }
+}
+@-webkit-keyframes scaledown {
+  from {
+     -webkit-transform: scaleY(0);
+      transform: scaleY(0);
+  }
+  to {
+     -webkit-transform: scaleY(1);
+      transform: scaleY(1);
+  }
+}
+
+
+.pt-60{padding-top:30px;}
+
+.greetingtext{padding:25px 20px 0 0;color:#fff;font-size:14px;}
+.greetingtext a{color:#fff;}
+
+.document-form{max-width:450px;margin:0 auto;}
+.btn-grey{background:#4d4d4d;border-color:#4d4d4d;color:#fff;}
+.btn-grey:hover,.btn-grey:focus,.btn-grey:active{background:#4d4d4d;border-color:#4d4d4d;color:#fff;}
+.document-form hr {border-color:#979797}
+
+.fileupload  .fileupload-label{background:#1cd444;}
+.file-name{display:none;}
+
+.form-wrap h2{font-weight:700;color:#202122;}
+
+.overviewwrap{max-width:700px;margin:0 auto;padding-bottom:50px;}
+
+.overviewwrap form label{font-size:12px;color:#262626;}
+.overviewwrap form hr.form-line {margin:20px 0;}
+
+.commands .prev{background:#4d4d4d;border-radius:0px;color:#fff;border-color:#4d4d4d;min-width:120px;}
+.overviewwrap form .btn-primary{border-radius:0px;padding:8px 15px;min-width:120px;}
+
+.stepDetails:not(#step0){max-width:550px;margin:0 auto;}
+
+.questions{font-weight:600 ;}
+.questions li{position:relative;}
+.q-number{position:absolute;right:100%;padding:0 5px 0 0;}
+.btnwrap .btn{padding:8px 12px;border-radius:0px;min-width:120px;}
+
+
+.mr-m{margin-top: 145px;}
+  .visuallyhidden {
+    display: none;
+}
+.bs-wizard {margin-top: 40px;}
+
+/*Form Wizard*/
+.progress{background-color: #cccc;}
+.bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 10px 0;max-width:700px;margin:0 auto;}
+.bs-wizard > .bs-wizard-step {padding: 0; position: relative;}
+.bs-wizard > .bs-wizard-step + .bs-wizard-step {}
+.bs-wizard > .bs-wizard-step .bs-wizard-stepnum {color: #595959; font-size: 12px; margin-bottom: 5px;}
+.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #999; font-size: 14px;}
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 30px; height: 30px; display: block; background: #fbe8aa; top: 45px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;} 
+.bs-wizard > .bs-wizard-step.complete > .bs-wizard-dot{background:url('../images/progress-tick.png') no-repeat center center;}
+.bs-wizard > .bs-wizard-step.complete > .bs-wizard-dot:after{opacity:0;;}
+.bs-wizard > .bs-wizard-step.active > .bs-wizard-dot{background:#4d4d4d;}
+.bs-wizard > .bs-wizard-step.active > .bs-wizard-dot:after{opacity:0;;}
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: #fbbd19; border-radius: 50px; position: absolute; top: 8px; left: 8px; } 
+.bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 8px; box-shadow: none; margin: 22px 0;}
+.bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: #1c69d4;}
+.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100%;}
+.bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:50%;}
+.bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
+.bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {width: 100%;}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {background-color: #ccc;}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {opacity: 0;}
+.bs-wizard > .bs-wizard-step:first-child  > .progress {left: 50%; width: 50%;}
+.bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
+.bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
+/*END Form Wizard*/
+
+.documentmodel .modal-content{min-height:300px;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;}
+
+
+/***
+score page
+***/
+
+.ov-bg{    background-color: #1C69D4;color: white;border-radius: 3px;padding: 8px 20px 8px 20px;font-size: 13px;}
+.per-bg{background-color: white;
+    color: black;font-weight: 550;
+    padding: 2px 5px 2px 5px;
+    border-radius: 6px;}
+    .exc-bg{   background-color: #BBBBBB;color: black;border-radius: 3px;padding: 8px 20px 8px 20px;font-size: 13px;}
+
+/***
+score page
+***/
+@media(max-width:1850px){
+    .quiz-status {-webkit-transform: scale(0.8) translateX(-9%); transform: scale(0.8) translateX(-9%);}
+}
+@media(max-width:1500px){
+    .quiz-status {-webkit-transform: scale(0.6) translateX(-15%); transform: scale(0.6) translateX(-15%);}
+}
+@media(max-width:1200px){
+    .form-wrap{padding-top: 30px;}
+}
+@media(max-width:991px){
+    .datetime-row{padding-left: 0}
+    .check-row{padding-left: 15px;}
+.comment-row{padding-left: 0;}
+.btnwrap {padding-left: 15px;}
+    .card{padding: 35px 0px;}
+    .questions ol{padding-left: 15px;}
+    .questions-form ul{padding-left: 15px;}
+    .rmve-dot{padding-left:0px;	}
+    .banner-figure img{height:auto;}
+    .bs-wizard > .bs-wizard-step .bs-wizard-stepnum{font-size:12px;}
+}
+
+@media(max-width:767px){
+	
+	.logo{margin:0;}
+	.logo a:first-child img{width:30px;height:auto;}
+	.logo a:last-child img{width:80px;height:auto;}
+	.quizwrap {padding:0 15px;margin:15px 0 0 0;}
+    .quizwrap .count-wrap{padding-top: 20px;}
+    .form-wrap{padding-left:0px;padding-right:0px;}
+    .greetingtext{padding:17px 15px 0 0;}
+    .header{margin:0;}
+    
+    	.bs-wizard > .bs-wizard-step .bs-wizard-stepnum{display:none;}
+    	.bs-wizard > .bs-wizard-step > .bs-wizard-dot{top:25px;}
+    
+}
+

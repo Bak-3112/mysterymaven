@@ -1,0 +1,45 @@
+*{margin:0; padding:0; box-sizing:border-box; }
+ol,ul { list-style:none;}
+h1,h2,h3,h4,h5,h6{font-weight:700; display:block; padding:0; margin:0;}
+h1 {font-size:30px; }
+h2 {font-size:24px; }
+h3 {font-size:20px; }
+h4 {font-size:18px; }
+h5 {font-size:16px; }
+h6 {font-size:14px; }
+p{font-family: Arial, Helvetica, sans-serif; font-size:16px; line-height:24px; margin:0; padding:0;}
+/*---------------------------------------------------*/
+.last{margin:0 !important;}
+.pad_last{padding:0 !important;}
+.no_bg {background:none !important;}
+.no_bor{border:0 none !important; }
+
+html {height:100%; }
+body {font-family: 'Open Sans', sans-serif; height:100%; color:#000; font-size:12px; padding:0; margin:0;}
+
+/* Tabs */
+
+
+/* LayOut Start here */
+.wrapper									{}
+.container									{max-width:840px; margin:0 auto;}
+
+.cust_wizard .help-block	{ margin:5px 0 5px 0 !important; color:#a94442 !important; font-size:14px;}
+
+
+.has-success .control-label	{color: #3c763d !important;}
+.has-error .control-label{color: #a94442 !important;}
+.has-success .form-control	{box-shadow:0 0 !important;}
+.has-error .form-control	{box-shadow:0 0 !important;}
+
+/* Main content ends here */
+
+.cust_wizard .form-group {margin:0;}
+/* .cust_wizard .form-control{height:auto;} */
+
+.progress{border:1px solid #f00;}
+.progress-status{height: 20px;background: #f00;width: 0%;}
+.text{
+    font-size: 14px;
+    margin-left:15px;
+}

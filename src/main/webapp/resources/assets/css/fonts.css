@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'BMWGroup-Regular';
+  src: url('../fonts/BMWGroup-Regular/BMWGroup-Regular.eot?#iefix') format('embedded-opentype'),  url('../fonts/BMWGroup-Regular/BMWGroup-Regular.woff') format('woff'), 
+      url('../fonts/BMWGroup-Regular/BMWGroup-Regular.ttf')  format('truetype'),
+      url('../fonts/BMWGroup-Regular/BMWGroup-Regular.svg#BMWGroup-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
