@@ -5018,7 +5018,7 @@ return qBean;
 //			if(gBean.getRegion_id()==null) {
 //				gBean.setRegion_id("");	
 //				}
-			
+		
 		System.out.println("hello this is overall perf YTD MTD");
 		//int year = 2019;
 		int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -5154,6 +5154,94 @@ return qBean;
 			}
 		});
 	}
+	/*get outlets method for role 7 for overallperformance**/
+	public GraphBean getOutletsoverallperFilterForYtdMtdForRole(GraphBean gBean) {
+//		if(gBean.getDealer_id()==null) {
+//			gBean.setDealer_id("");	
+//			}
+//			if(gBean.getOutlet_id()==null) {
+//				gBean.setOutlet_id("");	
+//				}
+//			if(gBean.getRegion_id()==null) {
+//				gBean.setRegion_id("");	
+//				}
+		HttpSession session = request.getSession(true);
+	    String dealers = (String) session.getAttribute("dealers");
+	    String roleId = (String) session.getAttribute("role_id");
+	    String region = (String) session.getAttribute("region");
+	    if(roleId.equals("7"))
+	    {
+	      String did=dealers;
+	      String rid=region;
+	      gBean.setDealer_id(did);
+	      gBean.setRegion_id(rid);
+	      System.out.println("role 7 in if"+gBean.getDealer_id());
+	      System.out.println("role 7 in if"+gBean.getRegion_id());
+	      
+	    }
+		System.out.println("hello this is overall perf YTD MTD");
+		//int year = 2019;
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		String sql = "";
+		System.out.println(gBean.getBrand_id() + "brnd" + gBean.getMonth() + "month" + gBean.getRegion_id() + "region"+ gBean.getDealer_id() + "Dealer");
+		// int year = Calendar.getInstance().get(Calendar.YEAR);
+		if (gBean.getBrand_id() != null && gBean.getMonth() == null && gBean.getRegion_id() != null
+				 && gBean.getDealer_id() != null && gBean.getOutlet_id()  == null) {
+			sql = "select GROUP_CONCAT(distinct mst_shopper_details.outlet_id) as outlets from mst_dealer_outlet,mst_shopper_details where mst_shopper_details.brand_id='"
+					+ gBean.getBrand_id() + "' and mst_shopper_details.outlet_id=sk_outlet_id  and year='" + year + "' and region_id='" + gBean.getRegion_id()
+					+ "' and mst_shopper_details.dealer_id='" + gBean.getDealer_id()
+					+ "' and visit_status='published' order by mst_shopper_details.outlet_id asc";
+			System.out.println("1111111111111111111 if");
+		} 
+		else if (!gBean.getBrand_id().equals("") && gBean.getMonth().equals("") && !gBean.getRegion_id().equals("")
+				&& !gBean.getDealer_id().equals("") && gBean.getOutlet_id().equals("")) {
+			sql = "select GROUP_CONCAT(distinct mst_shopper_details.outlet_id) as outlets from mst_dealer_outlet,mst_shopper_details where mst_shopper_details.brand_id='"
+					+ gBean.getBrand_id() + "' and mst_shopper_details.outlet_id=sk_outlet_id  and year='" + year + "' and region_id='" + gBean.getRegion_id()
+					+ "' and mst_shopper_details.dealer_id='" + gBean.getDealer_id()
+					+ "' and visit_status='published' order by mst_shopper_details.outlet_id asc";
+			System.out.println("222222222222222 elseif");
+		} 
+		
+		else if (!gBean.getBrand_id().equals("") && !gBean.getMonth().equals("") && !gBean.getRegion_id().equals("")
+				&& !gBean.getDealer_id().equals("") && gBean.getOutlet_id().equals("")) {
+			sql = "select GROUP_CONCAT(distinct mst_shopper_details.outlet_id) as outlets from mst_dealer_outlet,mst_shopper_details where mst_shopper_details.brand_id='"
+					+ gBean.getBrand_id() + "' and mst_shopper_details.outlet_id=sk_outlet_id  and year='" + year + "' and region_id='" + gBean.getRegion_id()
+					+ "' and mst_shopper_details.dealer_id='" + gBean.getDealer_id()
+					+ "' and month(visit_date)='" + gBean.getMonth()+"' and visit_status='published' order by mst_shopper_details.outlet_id asc";
+			System.out.println("3333333333333 elseif");
+		}
+		else if (!gBean.getBrand_id().equals("") && gBean.getMonth().equals("") && !gBean.getRegion_id().equals("")
+				&& !gBean.getDealer_id().equals("") && !gBean.getOutlet_id().equals("")) {
+			sql = "select GROUP_CONCAT(distinct mst_shopper_details.outlet_id) as outlets from mst_dealer_outlet,mst_shopper_details where mst_shopper_details.brand_id='"
+					+ gBean.getBrand_id() + "' and mst_shopper_details.outlet_id=sk_outlet_id and sk_outlet_id='"
+					+ gBean.getOutlet_id() + "' and year='" + year + "' and region_id='" + gBean.getRegion_id()
+					+ "' and mst_shopper_details.dealer_id='" + gBean.getDealer_id()
+					+ "'  and visit_status='published' order by mst_shopper_details.outlet_id asc";
+			System.out.println("444444444444 elseif");
+		}else {
+			if(!gBean.getBrand_id().equals("") && !gBean.getMonth().equals("") && !gBean.getRegion_id().equals("")
+					&& !gBean.getDealer_id().equals("") && !gBean.getOutlet_id().equals("")) {
+				sql = "select GROUP_CONCAT(distinct mst_shopper_details.outlet_id) as outlets from mst_dealer_outlet,mst_shopper_details where mst_shopper_details.brand_id='"
+						+ gBean.getBrand_id() + "' and mst_shopper_details.outlet_id=sk_outlet_id and sk_outlet_id='"
+						+ gBean.getOutlet_id() + "' and year='" + year + "' and region_id='" + gBean.getRegion_id()
+						+ "' and mst_shopper_details.dealer_id='" + gBean.getDealer_id()
+						+ "' and month(visit_date)='" + gBean.getMonth()+"' and visit_status='published' order by mst_shopper_details.outlet_id asc";
+				System.out.println("5555555555555555555 final else");
+			}
+		}
+		
+
+		System.out.println(sql);
+		return template.queryForObject(sql, new RowMapper<GraphBean>() {
+			public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
+				GraphBean gBean = new GraphBean();
+				gBean.setOutlet_id(rs.getString("outlets"));
+
+				return gBean;
+			}
+		});
+	}
+	/*get outlets method for role 7 for overallperformance ends**/
 	public List<GraphBean> getytdmtd(QuestionnaireBean qBean,GraphBean gBean,String oid, String StartData, String EndData, final String monthName,String did) {
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
@@ -5179,14 +5267,17 @@ return qBean;
 		 if(roleId.equals("7"))
 			{
 				did=dealers;
+				System.out.println("role 7 in if condition========"+did);
 			}
 		    else  if((did=="" || did==null))
 	        {
 	          did="all";
+	          System.out.println("role 8 in elseif condition==========="+did);
 	        }		   
 		    else 
 	        {
 	          did= did;  
+	          System.out.println("final else when we select dealer========"+did);
 	        }
 		if(oid == "" || oid == "all" || oid == null){
 		

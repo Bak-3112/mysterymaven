@@ -124,9 +124,16 @@ public class ReportsController {
 		gBean.setBrand_id(gBean.getBrand_id());
 		//GraphBean getoutlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
 		//QuestionnaireBean getoutlets = qDao.getOutletsoverallperFilter1(qBean,did,bid,rid);
-		GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
+		if(roleId.contentEquals("7")) {
+		GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtdForRole(gBean);
 		gBean.setOutlet_id(outlets.getOutlet_id());
-		System.out.println("outlet in overallperformance==="+outlets.getOutlet_id());
+		}
+		else {
+			GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
+			gBean.setOutlet_id(outlets.getOutlet_id());
+		}
+		//gBean.setOutlet_id(outlets.getOutlet_id());
+		//System.out.println("outlet in overallperformance==="+outlets.getOutlet_id());
 		String monthData = "";
 		if (gBean.getMonth() == null || gBean.getMonth().equals("") || gBean.getMonth().equals("all")) {
 
@@ -346,8 +353,15 @@ public class ReportsController {
 		String mid = gBean.getMonth();
 		// QuestionnaireBean getoutlets = qDao.getOutletsoverallperFilter1(qBean,did,bid,rid);
 			//qBean.setOutlets(getoutlets.getOutlets());
-		GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
-		gBean.setOutlet_id(outlets.getOutlet_id());
+		if(roleId.contentEquals("7")) {
+			GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtdForRole(gBean);
+			gBean.setOutlet_id(outlets.getOutlet_id());
+			}
+			else {
+				GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
+				gBean.setOutlet_id(outlets.getOutlet_id());
+			}
+		//gBean.setOutlet_id(outlets.getOutlet_id());
 			 QuestionnaireBean getshopperIds = qDao.getshoppersByOutletMode(qBean,gBean,mid);
 				qBean.setShopperIds(getshopperIds.getShopperIds());
 				QuestionnaireBean data = qDao.crm(qBean,bid,oid,did,rid,mid);
@@ -797,8 +811,16 @@ try {
 		String mid = gBean.getMonth();
 		 //QuestionnaireBean getoutlets = qDao.getOutletsoverallperFilter1(qBean,did,bid,rid);
 			//qBean.setOutlets(getoutlets.getOutlets());
-			GraphBean getoutlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
-				gBean.setOutlet_id(getoutlets.getOutlet_id());
+			//GraphBean getoutlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
+				//gBean.setOutlet_id(getoutlets.getOutlet_id());
+		if(roleId.contentEquals("7")) {
+			GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtdForRole(gBean);
+			gBean.setOutlet_id(outlets.getOutlet_id());
+			}
+			else {
+				GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
+				gBean.setOutlet_id(outlets.getOutlet_id());
+			}
 			List<GraphBean> getDiscountPrices = rDao.getDiscountPrices(gBean,bid,mid,did,oid,rid);
 			List<GraphBean> list = rDao.getdiscountbrands1(gBean,bid,mid,did,oid,rid);
 			System.out.println("list data"+list);
@@ -1011,8 +1033,16 @@ try {
 		
 		// QuestionnaireBean getoutlets = qDao.getOutletsoverallperFilter1(qBean,did,bid,rid);
 			//qBean.setOutlets(getoutlets.getOutlets());
-		GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
-		gBean.setOutlet_id(outlets.getOutlet_id());
+		//GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
+		//gBean.setOutlet_id(outlets.getOutlet_id());
+		if(roleId.contentEquals("7")) {
+			GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtdForRole(gBean);
+			gBean.setOutlet_id(outlets.getOutlet_id());
+			}
+			else {
+				GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
+				gBean.setOutlet_id(outlets.getOutlet_id());
+			}
 			 QuestionnaireBean getshopperIds = qDao.getshoppersByOutlet(qBean,gBean,mid);
 				qBean.setShopperIds(getshopperIds.getShopperIds());
 				
