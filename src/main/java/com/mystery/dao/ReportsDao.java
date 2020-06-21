@@ -1024,6 +1024,44 @@ System.out.println(dealers+"=====");
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
+		if(roleId.equals("7"))
+		{
+			did=dealers;
+			rid=region;
+		}
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
+		}
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
+	    
+	 if(bid==null || bid=="") {
+		 bid="all";
+	 }
+	 if(oid==null || oid=="") {
+		 oid="all";
+	 }
+	 if(month==null || month=="") {
+		 month="all";
+	 }
+		
+		
 		   int  year;
 		   String standard_number="";
 		    if(gBean.getYear()==null || gBean.getYear()=="")
@@ -1044,43 +1082,7 @@ System.out.println(dealers+"=====");
 		    	System.out.println("current year in  else auto response"+year);
 		    	standard_number="1a.6";
 		    }
-		    
-		    if(roleId.equals("7"))
-			{
-				did=dealers;
-				rid=region;
-			}
-		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
-	        {
-	          did="all";
-	          rid="all";
-	        }
-		    
-		    else  if((did!="") &&(rid=="" || rid==null))
-		    {
-			  did= did;
-			  rid="all";	
-			}
-		    else  if((did=="" || did==null) &&(rid!=""))
-		    {
-			  did= "all";
-			  rid=rid;	
-			}
-		    else 
-	        {
-	          did= did;
-	          rid=rid;  
-	        }
-		    
-		 if(bid==null || bid=="") {
-			 bid="all";
-		 }
-		 if(oid==null || oid=="") {
-			 oid="all";
-		 }
-		 if(month==null || month=="") {
-			 month="all";
-		 }
+		   
 		 String sql = "SELECT mon,month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null  THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='"+standard_number+"' and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact='"+gBean.getMode_of_contact()+"' and    (mst_shopper_details.brand_id='"+bid+"' or '"+bid+"'='all') and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all') and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all')  and mys_txn_answers.status='active'  GROUP by month)res1 order by mon asc";
 			System.out.println("getautoresponseemailgraph=="+sql);
 			return template.query(sql, new RowMapper<GraphBean>() {
@@ -1235,6 +1237,42 @@ System.out.println(dealers+"=====");
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
+		if(roleId.equals("7"))
+		{
+			did=dealers;
+			rid=region;
+		}
+	    else  if((did=="" || did==null) &&(rid=="" || rid==null))
+        {
+          did="all";
+          rid="all";
+        }
+	    
+	    else  if((did!="") &&(rid=="" || rid==null))
+	    {
+		  did= did;
+		  rid="all";	
+		}
+	    else  if((did=="" || did==null) &&(rid!=""))
+	    {
+		  did= "all";
+		  rid=rid;	
+		}
+	    else 
+        {
+          did= did;
+          rid=rid;  
+        }
+		 if(bid==null || bid=="") {
+			 bid="all";
+		 }
+		 if(oid==null || oid=="") {
+			 oid="all";
+		 }
+		 if(month==null || month=="") {
+			 month="all";
+		 }
+		
 		   int  year;
 		   String standard_number="";
 		   String sub_question_id="";
@@ -1256,49 +1294,7 @@ System.out.println(dealers+"=====");
 			   standard_number="1a.9";
          	   sub_question_id="574";
 			}	 
-		   
-		   if(roleId.equals("7"))
-			{
-				did=dealers;
-				rid=region;
-			}
-		    else  if((did=="" || did==null) &&(rid=="" || rid==null))
-	        {
-	          did="all";
-	          rid="all";
-	        }
-		    
-		    else  if((did!="") &&(rid=="" || rid==null))
-		    {
-			  did= did;
-			  rid="all";	
-			}
-		    else  if((did=="" || did==null) &&(rid!=""))
-		    {
-			  did= "all";
-			  rid=rid;	
-			}
-		    else 
-	        {
-	          did= did;
-	          rid=rid;  
-	        }
-		 
-//		 if(did==null || did=="") {
-//			 did="all";
-//		 }
-//		 if(rid==null || rid=="") {
-//			 rid="all";
-//		 }
-		 if(bid==null || bid=="") {
-			 bid="all";
-		 }
-		 if(oid==null || oid=="") {
-			 oid="all";
-		 }
-		 if(month==null || month=="") {
-			 month="all";
-		 }
+		  
 		 String sql = "SELECT mon, month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT monthname(mst_shopper_details.visit_date)as month,month(mst_shopper_details.visit_date)as mon,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='"+standard_number+"' and (subquestion_id='"+sub_question_id+"' oR 'ALL'='"+sub_question_id+"') and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact='"+gBean.getMode_of_contact()+"' and    (mst_shopper_details.brand_id='"+bid+"' or '"+bid+"'='all') and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all')  and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all')  and mys_txn_answers.status='active' GROUP by month)res1 order by mon asc";
 			System.out.println("appointment chart"+sql);
 			return template.query(sql, new RowMapper<GraphBean>() {

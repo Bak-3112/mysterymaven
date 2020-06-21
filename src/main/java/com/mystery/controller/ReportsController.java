@@ -485,8 +485,17 @@ public class ReportsController {
 	  mv.addObject("activeoutletsbyid", activeoutletsbyid); 
 	  List<GraphBean> autoresponseemailgraph =rDao.getautoresponseemailgraph(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id(),gBean.getOutlet_id(),gBean.getMonth());
 	  mv.addObject("autoresponseemailgraph", autoresponseemailgraph); 
-	  String year=autoresponseemailgraph.get(0).getYear();
-	  request.setAttribute("selected_year", year);
+	 // String year=autoresponseemailgraph.get(0).getYear();
+	  //request.setAttribute("selected_year", year);
+	  if(autoresponseemailgraph.isEmpty()) { 
+		   int year1 = Calendar.getInstance().get(Calendar.YEAR);
+		   String year=String.valueOf(year1);
+		   request.setAttribute("selected_year", year);
+	   }
+	   else {
+		   String year=autoresponseemailgraph.get(0).getYear();
+		   request.setAttribute("selected_year", year);
+	   }
 	  Gson gson = new Gson(); 
 	  String autoresponseemailgraphjson = gson.toJson(autoresponseemailgraph);
 	  request.setAttribute("autoresponseemailgraphjson", autoresponseemailgraphjson);
@@ -1129,9 +1138,18 @@ try {
 	  
 	  List<GraphBean> bmwfinancialservice =rDao.getbmwfinancialservice(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id(),gBean.getOutlet_id(),gBean.getMonth());
 	  mv.addObject("bmwfinancialservice", bmwfinancialservice); 
-	  String year=bmwfinancialservice.get(0).getYear();
-	  request.setAttribute("selected_year", year);
-	  System.out.println("year bmw"+year);
+	 // String year=bmwfinancialservice.get(0).getYear();
+	  //request.setAttribute("selected_year", year);
+	  if(bmwfinancialservice.isEmpty()) { 
+		   System.out.println("list is empty");
+		   int year1 = Calendar.getInstance().get(Calendar.YEAR);
+		   String year=String.valueOf(year1);
+		   request.setAttribute("selected_year", year);
+	   }
+	   else {
+		   String year=bmwfinancialservice.get(0).getYear();
+		   request.setAttribute("selected_year", year);
+	   }
 	  String bmwfinancialservicegson = gson.toJson(bmwfinancialservice);
 	  request.setAttribute("bmwfinancialservicegson", bmwfinancialservicegson);
 	  
