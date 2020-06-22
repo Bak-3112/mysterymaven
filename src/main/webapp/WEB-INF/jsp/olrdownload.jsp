@@ -775,12 +775,12 @@ offer?</td>
                 		<div class="brder pb-1"></div>
                 				<div class="row">
                   				  <div class="col-6">
-                      				  <h5 class="mb-0"><span class="question-index" data-id="${qBean.standard_number}"> ${qBean.standard_number}  </span>  ${qBean.question} </h5>
+                      				  <h5 class="mb-0"><span class="question-index" style="margin-right: 2.2px"; data-id="${qBean.standard_number}"> ${qBean.standard_number}</span>${qBean.question}</h5>
                     			  </div>
                    				 <div class="col-5">
                         			<ul class="custom-control custom-radio">
                         			   <input type="text" name="ans" class="answers" value="${qBean.selectedanswerid}" style="display: none"> <br>
-                        			    <input type="text" name="anssssss" class="answers" value="${qBean.selected_option_comment}" style="display: none" > 
+                        			    <input type="text" name="anssssss" class="padleft" value="${qBean.selected_option_comment}" style="display: none" > 
                         			     
                         			   <c:forEach var="qBean1" items="${qBean.optionsList}"> 
                         			   <c:set var = "comment" value="${qBean.selected_option_comment}"/>
@@ -824,7 +824,7 @@ offer?</td>
                             </c:choose> 
                     </div>
                 				</div>
-                				 </c:if> 
+                				 </c:if>
             	</div>
                 
 				
@@ -930,7 +930,7 @@ offer?</td>
                         <c:when test="${qBean.formulFlag == '1'}">
                         <div class="col-1">${qBean.formulapoints}/${qBean.total_ques_points}</div>
                         </c:when>
-                         <c:when test="${qBean.total_ques_points == '0'}">
+                        <c:when test="${qBean.total_ques_points == '0'}">
                          <div class="col-1">NA</div>
                         </c:when>
                         <c:when test="${qBean.max_question_points == '0'}">
@@ -1037,7 +1037,7 @@ offer?</td>
                                          <c:set var = "para" value="${qBean2.paragraph}"/>
                                           <c:set var = "num5" value="${qBean2.date_code}"/>
                                           <c:set var = "datetime" value="${qBean2.time_code}"/>
-                                          <c:set var = "SubAnswerType" value="Date & Time"/>
+                                           <c:set var = "SubAnswerType" value="Date & Time"/>
                                        <c:choose>
                                     <c:when test="${qBean2.selectedanswerid eq num1}">
                                                   <span class="answerss" data-id="${qBean2.subQuestion }"><c:out value="${qBean2.subQuestion}"/><br>
@@ -1109,7 +1109,7 @@ offer?</td>
                         <c:when test="${qBean.formulFlag == '1'}">
                         <div class="col-1">${qBean.formulapoints}/${qBean.total_ques_points}</div>
                         </c:when>
-                         <c:when test="${qBean.total_ques_points == '0'}">
+                        <c:when test="${qBean.total_ques_points == '0'}">
                          <div class="col-1">NA</div>
                         </c:when>
                         <c:when test="${qBean.sumOfQuesPoints == '0'}">
@@ -1191,7 +1191,7 @@ offer?</td>
                     </div>
                 				</div>
             	</div>
-				 </c:if> 
+				 </c:if>
 				 <c:if test="${qBean.question_type=='Dependent Question' && qBean.answer_type=='Date & Time'}">
 				  <div>
                 		<div class="brder pb-1"></div>
@@ -1230,8 +1230,8 @@ offer?</td>
                     </div>
                 				</div>
             	</div>
-				</c:if> 
-				 <c:if test="${qBean.question_type=='Dependent Question' && qBean.answer_type=='Date'}">
+				</c:if>
+				  <c:if test="${qBean.question_type=='Dependent Question' && qBean.answer_type=='Date'}">
 				  <div>
                 		<div class="brder pb-1"></div>
                 				<div class="row">
@@ -1246,7 +1246,7 @@ offer?</td>
                         <c:when test="${qBean.formulFlag == '1'}">
                         <div class="col-1">${qBean.formulapoints}/${qBean.total_ques_points}</div>
                         </c:when>
-                         <c:when test="${qBean.total_ques_points == '0'}">
+                        <c:when test="${qBean.total_ques_points == '0'}">
                          <div class="col-1">NA</div>
                         </c:when>
                         <c:when test="${qBean.max_question_points == '0'}">
@@ -1401,7 +1401,7 @@ offer?</td>
                                          <c:set var = "para" value="${qBean2.paragraph}"/>
                                           <c:set var = "num5" value="${qBean2.date_code}"/>
                                           <c:set var = "datetime" value="${qBean2.time_code}"/>
-                                          <c:set var = "SubAnswerType" value="Date & Time"/>
+                                          <c:set var = "SubAnswerType" value="Date & Time"/> 
                                        <c:choose>
                                     <c:when test="${qBean2.selectedanswerid eq num1}">
                                                   <span class="answerss" data-id="${qBean2.subQuestion }"><c:out value="${qBean2.subQuestion}"/><br>
@@ -1442,10 +1442,10 @@ offer?</td>
                                                     Answer. ${qBean2.paragraph}<br>
                                                     </c:if> 
                                                     <c:if test="${qBean2.date_code ne 'null'}">                                           
-                                                     Answer. ${qBean2.date_code}<br> 
+                                                    Answer. ${qBean2.date_code}<br>
                                                     </c:if> 
                                                     <c:if test="${qBean2.time_code ne 'null'}">                                           
-                                                     Answer. ${qBean2.time_code}<br> 
+                                                    Answer. ${qBean2.time_code}<br>
                                                     </c:if>
                                                     <c:if test="${qBean2.subQuestionAnswerType ne SubAnswerType}">
                                                     <br>Answer. ${qBean2.selectedanswerid}
@@ -1532,56 +1532,26 @@ offer?</td>
 		});
 	</script>
 	
- <!-- <script>
+  <script>
 $("ul").each(function(){
 	var ans=$(this).find(".answers").attr('value');
+	//alert(ans);
 	$(this).find('span').each(function(){
 		var option=$(this).attr('data-id');
+		//alert(option);
 		
 		if(ans==option){
-			console.log(ans+"="+option)
+			console.log(ans+"====="+option)
 			$(this).parent().find('[type=radio]').prop('checked',true);
-			
+			validate_text();
+		}
+		else{
+			console.log(ans+"== not ==="+option)
 		}
 		
 	});
 	
 });
-var uniqueLi  = {};
-
-$('.radionoanswer').each (function () {
-	  var thisVal = $(this).find(".heading").text();
-	 // console.log(thisVal)
-	  if ( !(thisVal in uniqueLi) ) {
-		    uniqueLi[thisVal] = "";
-		  } else {
-			  $(this).find(".heading").remove();
-		  }
-});
-
-var uniqueLi  = {};
-
-$('.radionoanswer').each (function () {
-	  var thisVal = $(this).find(".headingonline").text();
-	  //console.log(thisVal)
-	  if ( !(thisVal in uniqueLi) ) {
-		    uniqueLi[thisVal] = "";
-		  } else {
-			  $(this).find(".headingonline").remove();
-		  }
-});
-var uniqueLi  = {};
-
-$('.online ').each (function () {
-	  var thisVal = $(this).text();
-	  if ( !(thisVal in uniqueLi) ) {
-		    uniqueLi[thisVal] = "";
-		  } else {
-		    $(this).remove();
-		  }
-}); 
-</script>
-<script>
 function validate_text(){
 	
 	$('.correctans').each(function(){
@@ -1592,6 +1562,28 @@ function validate_text(){
 		}
 		});
 }
+
+  var uniqueLi  = {};
+
+$('.radionoanswer').each (function () {
+	  var thisVal = $(this).find(".heading").text();
+	  if ( !(thisVal in uniqueLi) ) {
+		    uniqueLi[thisVal] = "";
+		  } else {
+			  $(this).find(".heading").remove();
+		  }
+}); 
+
+  var uniqueLi  = {};
+
+$('.online ').each (function () {
+	  var thisVal = $(this).text();
+	  if ( !(thisVal in uniqueLi) ) {
+		    uniqueLi[thisVal] = "";
+		  } else {
+		    $(this).remove();
+		  }
+}); 
 </script>
 <script type="text/javascript">
  $('div.row.sub_question').each(function(){
@@ -1608,7 +1600,7 @@ function validate_text(){
 
                 })
                 });
- </script>  -->
+ </script>  
 <!-- <script>
  //var url="<%=dashboardURL%>performance/${outlet}/${dealer}/${month}/${year}/${brand}/1";
 
@@ -1634,7 +1626,7 @@ $( document ).ready(function() {
 
 
 </script> -->
- <script>
+ <!-- <script>
 $("ul").each(function(){
 	var ans=$(this).find(".answers").attr('value');
 	//alert(ans);
@@ -1706,7 +1698,7 @@ $('div.row.sub_question').each(function(){
 
 	})
 	});
-</script> 
+</script>  -->
 <script>
 $( document ).ready(function() {
 	   
@@ -1721,9 +1713,9 @@ $( document ).ready(function() {
 	      .then(function(group) {
 	        kendo.drawing.pdf.saveAs(group, "Outlet_Level_report.pdf");
 	      });
-	       <%-- setTimeout(function(){ 
+	         setTimeout(function(){
 			 window.location.replace("<%=dashboardURL%>performance/${outlet}/${dealer}/${month}/${yearr}/${brand}/1"); 
-			 }, 5000);  --%>   
+			 }, 5000);     
 	   
 });
 </script>
