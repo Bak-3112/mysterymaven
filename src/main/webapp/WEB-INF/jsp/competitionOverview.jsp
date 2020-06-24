@@ -210,7 +210,7 @@ String dashboardURL=resource.getString("dashboardURL");
 													</div>
 													
 													<div class="ml-auto">
-													<img alt="" style="width:80px;height:80px;"  src="<%=request.getContextPath()%>/design/images/<c:if test="${qBean.brand_name=='BMW'}">bmw.png</c:if><c:if test="${qBean.brand_name=='AUDI'}">Audi1.png</c:if><c:if test="${qBean.brand_name=='Mercedes Benz'}">merc.png</c:if>">
+													<img alt="" style="width:80px;height:80px;"  src="<%=UI_PATH%>/design/images/<c:if test="${qBean.brand_name=='BMW'}">bmw.png</c:if><c:if test="${qBean.brand_name=='AUDI'}">Audi1.png</c:if><c:if test="${qBean.brand_name=='Mercedes Benz'}">merc.png</c:if>">
 													
 													</div>
 													</div>

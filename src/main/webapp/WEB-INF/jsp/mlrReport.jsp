@@ -4828,7 +4828,8 @@ data:yesCount.map(Number)
 
 </script>
 <script>
-
+if(year==2019)
+{
 var anyoneatdealershipjson= ${anyoneatdealershipjson};
 console.log(anyoneatdealershipjson)
 var arrMonth=[];
@@ -4982,7 +4983,149 @@ series: [ {
 
 ]
 });
+}
+else{
+	var anyoneatdealershipjson= ${anyoneatdealershipjson};
+     console.log(anyoneatdealershipjson)
+      var arrMonth=[];
+      //var WithoutwaitingloopWithin30secondsatthefirstattempt = [];
+      //var WithoutwaitingloopWithin30secondsatthesecondattemp = [];
+      
+      var InwaitingloopWithin120secondsatthefirstattempt = [];
+      var InwaitingloopWithin120secondsatthesecondattempt = [];
+      var Callbackwasnotconductedwithinoneworkingday = [];
+      var IcalledtwotimesbutIcouldnotreachthedealershipatall = [];
+      
+      $.each(anyoneatdealershipjson,function(k,v){
+    	  arrMonth.push(v.month+","+v.year);
+    	 // WithoutwaitingloopWithin30secondsatthefirstattempt.push(v.WithoutwaitingloopWithin30secondsatthefirstattemptp);
+    	 // WithoutwaitingloopWithin30secondsatthesecondattemp.push(v.WithoutwaitingloopWithin30secondsatthesecondattempp) ;
+    	  InwaitingloopWithin120secondsatthefirstattempt.push(v.InwaitingloopWithin120secondsatthefirstattemptp);
+    	  InwaitingloopWithin120secondsatthesecondattempt.push(v.InwaitingloopWithin120secondsatthesecondattemptp) ;
+    	  Callbackwasnotconductedwithinoneworkingday.push(v.Callbackwasnotconductedwithinoneworkingdayp);
+    	  IcalledtwotimesbutIcouldnotreachthedealershipatall.push(v.IcalledtwotimesbutIcouldnotreachthedealershipatallp) ;
+       	
+      });
+      
 
+
+	
+	
+	
+	Highcharts.chart('dealers', {
+	  chart: {
+	    type: 'column'
+	  },
+	     legend: {
+	          enabled:true,
+	        align: 'center',
+	        verticalAlign: 'top',
+	        x: 0,
+	        y: -15,
+	        itemDistance: 7,
+	          itemStyle: {
+	            color: '#003366',
+	             fontSize:'13px',
+	            fontWeight: 400,
+	         fontFamily: "'BMWGroup-Regular'",
+	        }
+	          
+	    },
+	     credits: {
+	      enabled: false
+	  },
+	  title: {
+	    text: null
+	  },
+	  xAxis: {
+	    categories: arrMonth,
+	       tickLength: 0,
+	      lineColor: 'transparent',
+	      labels: {
+	         
+	         style: {
+	            color: '#003366',
+	            'font-family': "'BMWGroup-Regular'",
+	             'font-size':'13px',
+	             'font-weight':400,
+	         }
+	      },
+	  },
+	  yAxis: {
+	      reversedStacks: false,
+	    min: 0,
+	       gridLineColor: 'transparent',
+	        labels: {
+	            enabled: false,
+	        }, 
+	    title: {
+	      text: null
+	    }
+	  },
+	   
+	    
+	  tooltip: {
+	    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+	    shared: true
+	  },
+	  plotOptions: {
+	    column: {
+	      stacking: 'percent'
+	    },
+	        series: {
+	         
+	      borderWidth: 0,
+	      //   pointWidth: 26,
+	         pointPadding: 0,
+	            groupPadding: 0.1,
+	            borderWidth: 0,
+	            shadow: false,
+	      dataLabels: {
+	          enabled: true,
+	          inside:true,
+	           rotation: 0,
+	          verticalAlign:'middle',
+	          y:0,
+	        format: '{point.y}%',
+	          color:'#fff',
+	           style: {
+	                textOutline: 0,
+	                fontSize:'12px',
+	                fontFamily: "'BMWGroup-Regular'",
+	  },
+	      }
+	    }
+	  },
+	  series: [ {
+		    name: 'Within 20 seconds at the first attempt',
+		      "colorByPoint": false ,
+		        color: '#6593d8',
+		        data: InwaitingloopWithin120secondsatthefirstattempt.map(Number)
+		  },
+		  {
+		    name: 'After 21 seconds but within 60 seconds at the first attempt ',
+		      "colorByPoint": false ,
+		        color: '#8baee2',
+		        data: Callbackwasnotconductedwithinoneworkingday.map(Number)
+		  },
+		  
+		  {   
+			    name: 'Within 60 seconds at the second attempt',
+			      "colorByPoint": false ,
+			        color: '#78a0dd',
+			    data: InwaitingloopWithin120secondsatthesecondattempt.map(Number)
+			  },
+			   {
+			    name: 'I called two times but I could not reach the dealership at all',
+			      "colorByPoint": false ,
+			        color: '#9fbbe7',
+			        data:IcalledtwotimesbutIcouldnotreachthedealershipatall.map(Number)
+			  },
+	    
+	  
+	  ]
+	});
+}
 </script>
 <!-- Conquest And Via Tele End -->
 <!-- Conquest And Loyalty Focus Area Start 2019-->
