@@ -1982,46 +1982,81 @@ System.out.println(dealers+"=====");
 		 if(month==null || month=="") {
 			 month="all";
 		 }
-	     int  year;
-	       String standard_number="";
-	       String sub_question_id="";
-	        if(gBean.getYear()==null || gBean.getYear()=="")
-	        {
-	          year=Calendar.getInstance().get(Calendar.YEAR);
-	          standard_number="1.b1";
-	          sub_question_id="all";
-	          System.out.println("current year in if auto response"+year);
-	        }
-	        else if(gBean.getYear().equals("2019"))
-	        {
-	          year=Integer.parseInt(gBean.getYear());
-	          System.out.println("current year in  else if auto response"+year);
-	          standard_number="1.7";
-	          sub_question_id="all";
-	        }
-	        else
-	        {
-	          year=Integer.parseInt(gBean.getYear());
-	          System.out.println("current year in  else auto response"+year);
-	          standard_number="1.b1";
-	          sub_question_id="all";
-	        }
-		 String sql = "SELECT mon,month,totalcount,WithoutwaitingloopWithin30secondsatthefirstattempt,WithoutwaitingloopWithin30secondsatthesecondattemp,InwaitingloopWithin120secondsatthefirstattempt,InwaitingloopWithin120secondsatthesecondattempt,Callbackwasnotconductedwithinoneworkingday,IcalledtwotimesbutIcouldnotreachthedealershipatall,round(((WithoutwaitingloopWithin30secondsatthefirstattempt/totalcount)*100),2)as WithoutwaitingloopWithin30secondsatthefirstattemptp,round(((WithoutwaitingloopWithin30secondsatthesecondattemp/totalcount)*100),2)as WithoutwaitingloopWithin30secondsatthesecondattempp,round(((InwaitingloopWithin120secondsatthefirstattempt/totalcount)*100),2)as InwaitingloopWithin120secondsatthefirstattemptp,round(((InwaitingloopWithin120secondsatthesecondattempt/totalcount)*100),2)as InwaitingloopWithin120secondsatthesecondattemptp,round(((Callbackwasnotconductedwithinoneworkingday/totalcount)*100),2)as Callbackwasnotconductedwithinoneworkingdayp,round(((IcalledtwotimesbutIcouldnotreachthedealershipatall/totalcount)*100),2)as IcalledtwotimesbutIcouldnotreachthedealershipatallp FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(CASE  WHEN mys_txn_answers.select_option_text is not null  then 1 else null end )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Without waiting loop- Within 30 seconds at the first attempt'  and select_option_text is not null THEN 1 ELSE null  END) AS WithoutwaitingloopWithin30secondsatthefirstattempt,count(CASE  WHEN mys_txn_answers.select_option_text='Without waiting loop- Within 30 seconds at the second attempt' and select_option_text is not null THEN 1 ELSE null END ) AS WithoutwaitingloopWithin30secondsatthesecondattemp,count(CASE  WHEN mys_txn_answers.select_option_text='In waiting loop: Within 120 seconds at the first attempt' and select_option_text is not null THEN 1 ELSE null END ) AS InwaitingloopWithin120secondsatthefirstattempt,count(CASE  WHEN mys_txn_answers.select_option_text='In waiting loop: Within 120 seconds at the second attempt' and select_option_text is not null THEN 1 ELSE null END ) AS InwaitingloopWithin120secondsatthesecondattempt,count(CASE  WHEN mys_txn_answers.select_option_text='Call back was not conducted within one working day' and select_option_text is not null THEN 1 ELSE null END ) AS Callbackwasnotconductedwithinoneworkingday ,count(CASE  WHEN mys_txn_answers.select_option_text='I called two times but I could not reach the dealership at all' and select_option_text is not null THEN 1 ELSE null END ) AS IcalledtwotimesbutIcouldnotreachthedealershipatall from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id  WHERE standard_number='"+standard_number+"' and (subquestion_id='"+sub_question_id+"' oR 'ALL'='"+sub_question_id+"')  and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact='"+gBean.getMode_of_contact()+"' and    (mst_shopper_details.brand_id='"+bid+"' or '"+bid+"'='all') and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all') and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active'  GROUP by month)res1 order by mon asc";
-			System.out.println(sql);
-			return template.query(sql, new RowMapper<GraphBean>() {
-				public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
-					GraphBean gBean = new GraphBean();
-					gBean.setMonth(rs.getString("month"));
-					gBean.setYear(String.valueOf(year));
-					gBean.setIcalledtwotimesbutIcouldnotreachthedealershipatallp(rs.getString("IcalledtwotimesbutIcouldnotreachthedealershipatallp"));
-					gBean.setCallbackwasnotconductedwithinoneworkingdayp(rs.getString("Callbackwasnotconductedwithinoneworkingdayp"));
-					gBean.setInwaitingloopWithin120secondsatthefirstattemptp(rs.getString("InwaitingloopWithin120secondsatthefirstattemptp"));
-					gBean.setInwaitingloopWithin120secondsatthesecondattemptp(rs.getString("InwaitingloopWithin120secondsatthesecondattemptp"));
-					gBean.setWithoutwaitingloopWithin30secondsatthesecondattempp(rs.getString("WithoutwaitingloopWithin30secondsatthesecondattempp"));
-					gBean.setWithoutwaitingloopWithin30secondsatthefirstattemptp(rs.getString("WithoutwaitingloopWithin30secondsatthefirstattemptp"));
-					return gBean;
-				}
-			});
+		 int  year;
+		   String standard_number="";
+		   String sub_question_id="";
+		   String sql="";
+		    if(gBean.getYear()==null || gBean.getYear()=="")
+		    {
+		      year=Calendar.getInstance().get(Calendar.YEAR);
+		      standard_number="1.b1";
+		      sub_question_id="all";
+		       sql = "SELECT mon,month,totalcount,After21secondsbutwithin60secondsatthefirstattempt,Within20secondsatthefirstattempt,Within60secondsatthesecondattempt,IcalledtwotimesbutIcouldnotreachthedealershipatall,round(((After21secondsbutwithin60secondsatthefirstattempt/totalcount)*100),2)as After21secondsbutwithin60secondsatthefirstattempt,round(((Within20secondsatthefirstattempt/totalcount)*100),2)as Within20secondsatthefirstattempt,round(((Within60secondsatthesecondattempt/totalcount)*100),2)as Within60secondsatthesecondattempt,round(((IcalledtwotimesbutIcouldnotreachthedealershipatall/totalcount)*100),2)as IcalledtwotimesbutIcouldnotreachthedealershipatall FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(CASE  WHEN mys_txn_answers.select_option_text is not null  then 1 else null end )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Within 20 seconds at the first attempt'  and select_option_text is not null THEN 1 ELSE null  END) AS Within20secondsatthefirstattempt,count(CASE  WHEN mys_txn_answers.select_option_text='After 21 seconds but within 60 seconds at the first attempt' and select_option_text is not null THEN 1 ELSE null END ) AS After21secondsbutwithin60secondsatthefirstattempt,count(CASE  WHEN mys_txn_answers.select_option_text='Within 60 seconds at the second attempt' and select_option_text is not null THEN 1 ELSE null END ) AS Within60secondsatthesecondattempt,count(CASE  WHEN mys_txn_answers.select_option_text='I called two times but I could not reach the dealership at all' and select_option_text is not null THEN 1 ELSE null END ) AS IcalledtwotimesbutIcouldnotreachthedealershipatall from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id  WHERE standard_number='"+standard_number+"' and (subquestion_id='"+sub_question_id+"' oR 'ALL'='"+sub_question_id+"')  and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact='"+gBean.getMode_of_contact()+"' and    (mst_shopper_details.brand_id='"+bid+"' or '"+bid+"'='all') and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all') and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active'  GROUP by month)res1 order by mon asc";
+				System.out.println(sql);
+				return template.query(sql, new RowMapper<GraphBean>() {
+					public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
+						GraphBean gBean = new GraphBean();
+						gBean.setMonth(rs.getString("month"));
+						gBean.setYear(String.valueOf(year));
+						gBean.setIcalledtwotimesbutIcouldnotreachthedealershipatallp(rs.getString("IcalledtwotimesbutIcouldnotreachthedealershipatall"));
+						gBean.setCallbackwasnotconductedwithinoneworkingdayp(rs.getString("After21secondsbutwithin60secondsatthefirstattempt"));
+						gBean.setInwaitingloopWithin120secondsatthefirstattemptp(rs.getString("Within20secondsatthefirstattempt"));
+						gBean.setInwaitingloopWithin120secondsatthesecondattemptp(rs.getString("Within60secondsatthesecondattempt"));
+						//gBean.setWithoutwaitingloopWithin30secondsatthesecondattempp(rs.getString("WithoutwaitingloopWithin30secondsatthesecondattempp"));
+						//gBean.setWithoutwaitingloopWithin30secondsatthefirstattemptp(rs.getString("WithoutwaitingloopWithin30secondsatthefirstattemptp"));
+						return gBean;
+					}
+				});
+            
+           
+		    }
+		    else if(gBean.getYear().equals("2019"))
+		    {
+		      year=Integer.parseInt(gBean.getYear());
+		      standard_number= "1.7";
+		      sub_question_id="all";
+		       sql = "SELECT mon,month,totalcount,WithoutwaitingloopWithin30secondsatthefirstattempt,WithoutwaitingloopWithin30secondsatthesecondattemp,InwaitingloopWithin120secondsatthefirstattempt,InwaitingloopWithin120secondsatthesecondattempt,Callbackwasnotconductedwithinoneworkingday,IcalledtwotimesbutIcouldnotreachthedealershipatall,round(((WithoutwaitingloopWithin30secondsatthefirstattempt/totalcount)*100),2)as WithoutwaitingloopWithin30secondsatthefirstattemptp,round(((WithoutwaitingloopWithin30secondsatthesecondattemp/totalcount)*100),2)as WithoutwaitingloopWithin30secondsatthesecondattempp,round(((InwaitingloopWithin120secondsatthefirstattempt/totalcount)*100),2)as InwaitingloopWithin120secondsatthefirstattemptp,round(((InwaitingloopWithin120secondsatthesecondattempt/totalcount)*100),2)as InwaitingloopWithin120secondsatthesecondattemptp,round(((Callbackwasnotconductedwithinoneworkingday/totalcount)*100),2)as Callbackwasnotconductedwithinoneworkingdayp,round(((IcalledtwotimesbutIcouldnotreachthedealershipatall/totalcount)*100),2)as IcalledtwotimesbutIcouldnotreachthedealershipatallp FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(CASE  WHEN mys_txn_answers.select_option_text is not null  then 1 else null end )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Without waiting loop- Within 30 seconds at the first attempt'  and select_option_text is not null THEN 1 ELSE null  END) AS WithoutwaitingloopWithin30secondsatthefirstattempt,count(CASE  WHEN mys_txn_answers.select_option_text='Without waiting loop- Within 30 seconds at the second attempt' and select_option_text is not null THEN 1 ELSE null END ) AS WithoutwaitingloopWithin30secondsatthesecondattemp,count(CASE  WHEN mys_txn_answers.select_option_text='In waiting loop: Within 120 seconds at the first attempt' and select_option_text is not null THEN 1 ELSE null END ) AS InwaitingloopWithin120secondsatthefirstattempt,count(CASE  WHEN mys_txn_answers.select_option_text='In waiting loop: Within 120 seconds at the second attempt' and select_option_text is not null THEN 1 ELSE null END ) AS InwaitingloopWithin120secondsatthesecondattempt,count(CASE  WHEN mys_txn_answers.select_option_text='Call back was not conducted within one working day' and select_option_text is not null THEN 1 ELSE null END ) AS Callbackwasnotconductedwithinoneworkingday ,count(CASE  WHEN mys_txn_answers.select_option_text='I called two times but I could not reach the dealership at all' and select_option_text is not null THEN 1 ELSE null END ) AS IcalledtwotimesbutIcouldnotreachthedealershipatall from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id  WHERE standard_number='"+standard_number+"' and (subquestion_id='"+sub_question_id+"' oR 'ALL'='"+sub_question_id+"')  and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact='"+gBean.getMode_of_contact()+"' and    (mst_shopper_details.brand_id='"+bid+"' or '"+bid+"'='all') and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all') and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active'  GROUP by month)res1 order by mon asc";
+				System.out.println(sql);
+				return template.query(sql, new RowMapper<GraphBean>() {
+					public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
+						GraphBean gBean = new GraphBean();
+						gBean.setMonth(rs.getString("month"));
+						gBean.setYear(String.valueOf(year));
+						gBean.setIcalledtwotimesbutIcouldnotreachthedealershipatallp(rs.getString("IcalledtwotimesbutIcouldnotreachthedealershipatallp"));
+						gBean.setCallbackwasnotconductedwithinoneworkingdayp(rs.getString("Callbackwasnotconductedwithinoneworkingdayp"));
+						gBean.setInwaitingloopWithin120secondsatthefirstattemptp(rs.getString("InwaitingloopWithin120secondsatthefirstattemptp"));
+						gBean.setInwaitingloopWithin120secondsatthesecondattemptp(rs.getString("InwaitingloopWithin120secondsatthesecondattemptp"));
+						gBean.setWithoutwaitingloopWithin30secondsatthesecondattempp(rs.getString("WithoutwaitingloopWithin30secondsatthesecondattempp"));
+						gBean.setWithoutwaitingloopWithin30secondsatthefirstattemptp(rs.getString("WithoutwaitingloopWithin30secondsatthefirstattemptp"));
+						return gBean;
+					}
+				});
+           
+           
+           
+		    }
+		    else
+		    {
+		    	year=Integer.parseInt(gBean.getYear());
+		    	 standard_number="1.b1";
+		    	 sub_question_id="all";
+		    	  sql = "SELECT mon,month,totalcount,After21secondsbutwithin60secondsatthefirstattempt,Within20secondsatthefirstattempt,Within60secondsatthesecondattempt,IcalledtwotimesbutIcouldnotreachthedealershipatall,round(((After21secondsbutwithin60secondsatthefirstattempt/totalcount)*100),2)as After21secondsbutwithin60secondsatthefirstattempt,round(((Within20secondsatthefirstattempt/totalcount)*100),2)as Within20secondsatthefirstattempt,round(((Within60secondsatthesecondattempt/totalcount)*100),2)as Within60secondsatthesecondattempt,round(((IcalledtwotimesbutIcouldnotreachthedealershipatall/totalcount)*100),2)as IcalledtwotimesbutIcouldnotreachthedealershipatall FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(CASE  WHEN mys_txn_answers.select_option_text is not null  then 1 else null end )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Within 20 seconds at the first attempt'  and select_option_text is not null THEN 1 ELSE null  END) AS Within20secondsatthefirstattempt,count(CASE  WHEN mys_txn_answers.select_option_text='After 21 seconds but within 60 seconds at the first attempt' and select_option_text is not null THEN 1 ELSE null END ) AS After21secondsbutwithin60secondsatthefirstattempt,count(CASE  WHEN mys_txn_answers.select_option_text='Within 60 seconds at the second attempt' and select_option_text is not null THEN 1 ELSE null END ) AS Within60secondsatthesecondattempt,count(CASE  WHEN mys_txn_answers.select_option_text='I called two times but I could not reach the dealership at all' and select_option_text is not null THEN 1 ELSE null END ) AS IcalledtwotimesbutIcouldnotreachthedealershipatall from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id  WHERE standard_number='"+standard_number+"' and (subquestion_id='"+sub_question_id+"' oR 'ALL'='"+sub_question_id+"')  and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact='"+gBean.getMode_of_contact()+"' and    (mst_shopper_details.brand_id='"+bid+"' or '"+bid+"'='all') and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all') and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active'  GROUP by month)res1 order by mon asc";
+					System.out.println(sql);
+					return template.query(sql, new RowMapper<GraphBean>() {
+						public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
+							GraphBean gBean = new GraphBean();
+							gBean.setMonth(rs.getString("month"));
+							gBean.setYear(String.valueOf(year));
+							gBean.setIcalledtwotimesbutIcouldnotreachthedealershipatallp(rs.getString("IcalledtwotimesbutIcouldnotreachthedealershipatall"));
+							gBean.setCallbackwasnotconductedwithinoneworkingdayp(rs.getString("After21secondsbutwithin60secondsatthefirstattempt"));
+							gBean.setInwaitingloopWithin120secondsatthefirstattemptp(rs.getString("Within20secondsatthefirstattempt"));
+							gBean.setInwaitingloopWithin120secondsatthesecondattemptp(rs.getString("Within60secondsatthesecondattempt"));
+							//gBean.setWithoutwaitingloopWithin30secondsatthesecondattempp(rs.getString("WithoutwaitingloopWithin30secondsatthesecondattempp"));
+							//gBean.setWithoutwaitingloopWithin30secondsatthefirstattemptp(rs.getString("WithoutwaitingloopWithin30secondsatthefirstattemptp"));
+							return gBean;
+						}
+					});
+		    }
 		
 	}
 

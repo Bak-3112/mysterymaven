@@ -368,7 +368,7 @@ String dashboardURL=resource.getString("dashboardURL");
 							
 							 <!-- <h4 class="chart-title-heading text-center">Were all contact details spelt correctly</h4>  -->
 											
-											 <h4 class="chart-title-heading text-center">Lost league</h4> 
+											 <h4 class="chart-title-heading text-center">Lost lead</h4> 
 								<div class="card">
 									<div class="card-body">
 										

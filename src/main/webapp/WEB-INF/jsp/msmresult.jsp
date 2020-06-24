@@ -662,7 +662,7 @@ if($("#pagecount").val()<=0){
         </script>
         <script>
         $(".download").click(function(){
-        	alert(1);
+        	//alert(1);
         	var year= $("#year").val();
         	var brand_id= $("#brand_id").val();
         	var month= $("#month").val();
