@@ -214,6 +214,24 @@ String dashboardURL=resource.getString("dashboardURL");
 											
 										</select>
 									</div>
+									<div class="col-sm-6 col-md py-3">
+										<label>Year</label> <select name="year"
+											class="form-control" id="year">
+											<option value="">Select Year</option> 
+											<c:choose>
+                                      <c:when test="${empty year}">
+                                       <option value="2019">2019</option>
+                                         <option value="2020">2020</option>	
+                                      </c:when>
+                                      <c:otherwise>
+                                        <option value="${year}"<c:if test = "${selected_year == year}">selected </c:if>>${year}</option>
+                                         <option value="2019">2019</option>
+                                          <option value="2020">2020</option>	
+                                     </c:otherwise>
+                                      </c:choose>
+										</select>
+									</div>
+									
 									<div class="col-sm-6 col-md py-4" style="max-width: 100px;">
 										<label></label>
 										<button class="btn btn-primary btn-block" type="submit">View</button>
@@ -710,6 +728,20 @@ String dashboardURL=resource.getString("dashboardURL");
 
 		
 	</script>
+	
+	    <script>
+    $(document).ready(function() {
+       var usedNames = {};
+      $("select[name='year'] > option").each(function() {
+        if (usedNames[this.text]) {
+          $(this).remove();
+        } else {
+          usedNames[this.text] = this.value;
+        }
+      }); 
+      
+    });
+    </script>
       
 </body>
 </html>

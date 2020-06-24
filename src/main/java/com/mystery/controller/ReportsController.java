@@ -949,6 +949,7 @@ try {
 	request.setAttribute("dealer_id", gBean.getDealer_id());
 	request.setAttribute("outlet_id", gBean.getOutlet_id());
 	request.setAttribute("region_id", gBean.getRegion_id());
+	request.setAttribute("year", gBean.getYear());
 	request.setAttribute("role_id", gBean.getRole_id());
 
 	//gBean.setMode_of_contact("Telephone");
@@ -966,6 +967,15 @@ try {
 	  //in3
 	  List<GraphBean> configurationprocess =rDao.getconfigurationprocess(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id(),gBean.getOutlet_id(),gBean.getMonth());
 	  mv.addObject("configurationprocess", configurationprocess); 
+	  if(configurationprocess.isEmpty()) { 
+		   int year1 = Calendar.getInstance().get(Calendar.YEAR);
+		   String year=String.valueOf(year1);
+		   request.setAttribute("selected_year", year);
+	   }
+	   else {
+		   String year=configurationprocess.get(0).getYear();
+		   request.setAttribute("selected_year", year);
+	   }
 	  String configurationprocessgson = gson.toJson(configurationprocess);
 	  request.setAttribute("configurationprocessgson", configurationprocessgson);
 	  
@@ -1205,6 +1215,7 @@ try {
 	request.setAttribute("dealer_id", gBean.getDealer_id());
 	request.setAttribute("outlet_id", gBean.getOutlet_id());
 	request.setAttribute("region_id", gBean.getRegion_id());
+	request.setAttribute("year", gBean.getYear());
 	request.setAttribute("role_id", gBean.getRole_id());
 
 	//gBean.setMode_of_contact("Telephone");
@@ -1222,6 +1233,16 @@ try {
 	  
 	  List<GraphBean> currentcustomervehicle =rDao.getcurrentcustomervehiclegson(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id(),gBean.getOutlet_id(),gBean.getMonth());
 	  mv.addObject("currentcustomervehicle", currentcustomervehicle); 
+	  if(currentcustomervehicle.isEmpty()) { 
+		   int year1 = Calendar.getInstance().get(Calendar.YEAR);
+		   String year=String.valueOf(year1);
+		   request.setAttribute("selected_year", year);
+	   }
+	   else {
+		   String year=currentcustomervehicle.get(0).getYear();
+		   request.setAttribute("selected_year", year);
+	   }
+	  
 	  String currentcustomervehiclegson = gson.toJson(currentcustomervehicle);
 	  request.setAttribute("currentcustomervehiclegson", currentcustomervehiclegson);
 	}catch (Exception e) {

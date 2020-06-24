@@ -1062,24 +1062,21 @@ System.out.println(dealers+"=====");
 	 }
 		
 		
-		   int  year;
-		   String standard_number="";
+		    int  year;
+		    String standard_number="";
 		    if(gBean.getYear()==null || gBean.getYear()=="")
 		    {
 		      year=Calendar.getInstance().get(Calendar.YEAR);
 		      standard_number="1a.6";
-		      System.out.println("current year in if auto response"+year);
 		    }
 		    else if(gBean.getYear().equals("2019"))
 		    {
 		      year=Integer.parseInt(gBean.getYear());
-		      System.out.println("current year in  else if auto response"+year);
 		      standard_number="1.2";
 		    }
 		    else
 		    {
 		    	year=Integer.parseInt(gBean.getYear());
-		    	System.out.println("current year in  else auto response"+year);
 		    	standard_number="1a.6";
 		    }
 		   
@@ -3341,7 +3338,7 @@ return qBean;
 	public List<GraphBean> getconfigurationprocess(GraphBean gBean, String did, String bid,
 			String rid, String oid, String month) {
 		// int year = 2019;
-		    int year = Calendar.getInstance().get(Calendar.YEAR);
+		   // int year = Calendar.getInstance().get(Calendar.YEAR);
 		    HttpSession session = request.getSession(true);
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
@@ -3372,8 +3369,7 @@ return qBean;
 	          did= did;
 	          rid=rid;  
 	        }
-			
-			
+	
 //		 if(did==null || did=="") {
 //			 did="all";
 //		 }
@@ -3386,7 +3382,26 @@ return qBean;
 		 if(month==null || month=="") {
 			 month="all";
 		 }
-		String sql="SELECT mon,month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT monthname(mst_shopper_details.visit_date)as month,month(mst_shopper_details.visit_date)as mon,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id  left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='IN-3' and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all')  and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active'  GROUP by month)res1 order by mon asc";
+		 
+		    int  year;
+		    String standard_number="";
+		    if(gBean.getYear()==null || gBean.getYear()=="")
+		    {
+		      year=Calendar.getInstance().get(Calendar.YEAR);
+		      standard_number="2.3";
+		    }
+		    else if(gBean.getYear().equals("2019"))
+		    {
+		      year=Integer.parseInt(gBean.getYear());
+		      standard_number="IN-3";
+		    }
+		    else
+		    {
+		    	year=Integer.parseInt(gBean.getYear());
+		    	standard_number="2.3";
+		    }
+		 
+		String sql="SELECT mon,month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT monthname(mst_shopper_details.visit_date)as month,month(mst_shopper_details.visit_date)as mon,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id  left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='"+standard_number+"' and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all')  and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active'  GROUP by month)res1 order by mon asc";
 		System.out.println(sql);
 		return template.query(sql, new RowMapper<GraphBean>() {
 			public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
@@ -3404,7 +3419,7 @@ return qBean;
 	public List<GraphBean> getWhattakehomematerial(GraphBean gBean, String did, String bid,
 			String rid, String oid, String month) {
 		// int year = 2019;
-		    int year = Calendar.getInstance().get(Calendar.YEAR);
+		  //  int year = Calendar.getInstance().get(Calendar.YEAR);
 		    HttpSession session = request.getSession(true);
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
@@ -3448,18 +3463,77 @@ return qBean;
 		 if(month==null || month=="") {
 			 month="all";
 		 }
-		String sql="SELECT mon,month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='IN-7' and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all')   and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active' GROUP by month)res1 order by mon asc";
-		System.out.println(sql);
-		return template.query(sql, new RowMapper<GraphBean>() {
-			public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
-				GraphBean gBean = new GraphBean();
-				gBean.setMonth(rs.getString("month"));
-				gBean.setYear(String.valueOf(year));
-				gBean.setYesCount(rs.getString("yespercentage"));
-				gBean.setNoCount(rs.getString("nopercentage"));
-				return gBean;
-			}
-		});
+		    int  year;
+		    String sql="";
+		    String standard_number="";
+		    String questionId="";
+		    if(gBean.getYear()==null || gBean.getYear()=="")
+		    {
+		      year=Calendar.getInstance().get(Calendar.YEAR);
+		      standard_number="2.7";
+		      questionId="370";
+		      sql="SELECT mon,month,totalcount,yescount,round(((yescount/totalcount)*100),2)as yespercentage FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE question_id='"+questionId+"' and select_option_id IN (2029,2031,2033,2035,2037,2039)and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all')   and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active' GROUP by month)res1 order by mon asc";
+		      System.out.println("in what makes other special"+sql);
+		      return template.query(sql, new RowMapper<GraphBean>() {
+					public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
+						GraphBean gBean = new GraphBean();
+						gBean.setMonth(rs.getString("month"));
+						gBean.setYear(String.valueOf(year));
+						gBean.setYesCount(rs.getString("yespercentage"));
+						//gBean.setNoCount(rs.getString("nopercentage"));
+						return gBean;
+					}
+				});
+		      
+		    }
+		    else if(gBean.getYear().equals("2019"))
+		    {
+		      year=Integer.parseInt(gBean.getYear());
+		      standard_number="IN-7";
+		      questionId="370";
+			  sql="SELECT mon,month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='"+standard_number+"' and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all')   and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active' GROUP by month)res1 order by mon asc";
+			  System.out.println("sql in else if"+sql);
+			  return template.query(sql, new RowMapper<GraphBean>() {
+					public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
+						GraphBean gBean = new GraphBean();
+						gBean.setMonth(rs.getString("month"));
+						gBean.setYear(String.valueOf(year));
+						gBean.setYesCount(rs.getString("yespercentage"));
+						gBean.setNoCount(rs.getString("nopercentage"));
+						return gBean;
+					}
+				});
+		    }
+		    else
+		    {
+		    	year=Integer.parseInt(gBean.getYear());
+		    	//standard_number="2.7";
+		    	questionId="370";
+			     sql="SELECT mon,month,totalcount,yescount,round(((yescount/totalcount)*100),2)as yespercentage FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE question_id='"+questionId+"' and select_option_id IN (2029,2031,2033,2035,2037,2039)and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all')   and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active' GROUP by month)res1 order by mon asc";
+                System.out.println("in what makes other special in else"+sql);
+			    return template.query(sql, new RowMapper<GraphBean>() {
+					public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
+						GraphBean gBean = new GraphBean();
+						gBean.setMonth(rs.getString("month"));
+						gBean.setYear(String.valueOf(year));
+						gBean.setYesCount(rs.getString("yespercentage"));
+						//gBean.setNoCount(rs.getString("nopercentage"));
+						return gBean;
+					}
+				});
+		    }
+		 //	String sql="SELECT mon,month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT month(mst_shopper_details.visit_date)as mon,monthname(mst_shopper_details.visit_date)as month,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='IN-7' and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all')   and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active' GROUP by month)res1 order by mon asc";
+		
+//		return template.query(sql, new RowMapper<GraphBean>() {
+//			public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
+//				GraphBean gBean = new GraphBean();
+//				gBean.setMonth(rs.getString("month"));
+//				gBean.setYear(String.valueOf(year));
+//				gBean.setYesCount(rs.getString("yespercentage"));
+//				gBean.setNoCount(rs.getString("nopercentage"));
+//				return gBean;
+//			}
+//		});
 	}
 	
 	
@@ -3639,9 +3713,6 @@ return qBean;
 	}
 	public List<GraphBean> getcurrentcustomervehiclegson(GraphBean gBean, String did, String bid,
 			String rid, String oid, String month) {
-		// int year = 2019;
-		int year = Calendar.getInstance().get(Calendar.YEAR);
-		
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
@@ -3685,7 +3756,26 @@ return qBean;
 		 if(month==null || month=="") {
 			 month="all";
 		 }
-		String sql="SELECT mon,month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT monthname(mst_shopper_details.visit_date)as month,month(mst_shopper_details.visit_date)as mon,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='in-8' and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all') and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active'   GROUP by month)res1 order by mon asc";
+		 
+		    int  year;
+		    String standard_number="";
+		    if(gBean.getYear()==null || gBean.getYear()=="")
+		    {
+		      year=Calendar.getInstance().get(Calendar.YEAR);
+		      standard_number="4.2";
+		    
+		    }
+		    else if(gBean.getYear().equals("2019"))
+		    {
+		      year=Integer.parseInt(gBean.getYear());
+		      standard_number="in-8";
+		    }
+		    else
+		    {
+		    	year=Integer.parseInt(gBean.getYear());
+		    	standard_number="4.2";
+		    }
+		 String sql="SELECT mon,month,totalcount,yescount,nocount,round(((yescount/totalcount)*100),2)as yespercentage,round(((nocount/totalcount)*100),2)as nopercentage FROM(SELECT monthname(mst_shopper_details.visit_date)as month,month(mst_shopper_details.visit_date)as mon,count(* )as totalcount, count(CASE  WHEN mys_txn_answers.select_option_text='Yes'  and select_option_text is not null THEN 1 ELSE null  END) AS yescount, count(CASE  WHEN mys_txn_answers.select_option_text='No' and select_option_text is not null THEN 1 ELSE null  END ) AS nocount from  `mys_txn_answers` left join mst_shopper_details on  mst_shopper_details.sk_shopper_id=mys_txn_answers.shopper_id left join mst_dealer_outlet on mst_dealer_outlet.sk_outlet_id=mst_shopper_details.outlet_id WHERE standard_number='"+standard_number+"' and mst_shopper_details.visit_status='published' and mst_shopper_details.mode_of_contact!='Online sales channel' and    mst_shopper_details.brand_id='"+bid+"'  and mst_shopper_details.year='"+year+"' and (month(mst_shopper_details.visit_date)='"+month+"' or '"+month+"'='all') and (mst_shopper_details.dealer_id='"+did+"' or '"+did+"'='all') and (mst_shopper_details.outlet_id='"+oid+"' or '"+oid+"'='all') and (mst_dealer_outlet.region_id='"+rid+"' or '"+rid+"'='all') and mys_txn_answers.status='active'   GROUP by month)res1 order by mon asc";
 		System.out.println(sql);
 		return template.query(sql, new RowMapper<GraphBean>() {
 			public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
