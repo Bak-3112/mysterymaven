@@ -581,6 +581,7 @@ String dashboardURL=resource.getString("dashboardURL");
 	   
 	</script>
 	<script>
+	alert(year);
 	if(year==2019)
     {
 	 var anyoneatdealershipjson= ${anyoneatdealershipjson};
@@ -593,6 +594,7 @@ String dashboardURL=resource.getString("dashboardURL");
       var InwaitingloopWithin120secondsatthesecondattempt = [];
       var Callbackwasnotconductedwithinoneworkingday = [];
       var IcalledtwotimesbutIcouldnotreachthedealershipatall = [];
+      var year='';
       
       $.each(anyoneatdealershipjson,function(k,v){
     	  arrMonth.push(v.month+","+v.year);

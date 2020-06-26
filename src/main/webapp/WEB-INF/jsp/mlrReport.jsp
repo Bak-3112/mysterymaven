@@ -2615,7 +2615,7 @@ label, th, span, a {
                               <div class="">
                                 <div class="card-body">
                                   <div class="scroll-x">
-                                 <div id="container-bar-graph-financial1" style="height: 425px; margin: 0 auto"></div>
+                                 <div id="container-bar-graph-financial" style="height: 425px; margin: 0 auto"></div>
                                  <img alt="" src="" id="canvasimg34">
                                </div>
                                 </div>
@@ -2632,7 +2632,7 @@ label, th, span, a {
                               <div class="">
                                 <div class="card-body">
                                    <div class="scroll-x">
-                                     <div id="container-bar-graph-financial" style="height: 425px; margin: 0 auto"></div>
+                                     <div id="container-bar-graph-financial1" style="height: 425px; margin: 0 auto"></div>
                                      <img alt="" src="" id="canvasimg35">
                                   </div>
                                 </div>

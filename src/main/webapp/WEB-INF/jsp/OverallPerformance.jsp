@@ -120,7 +120,7 @@ String dashboardURL=resource.getString("dashboardURL");
                                       </c:when>
                                 <c:otherwise>
                                 <option value="">Select Region</option>
-                                <option value="all" <c:if test = "${region_id == 'all' }">selected </c:if>>All</option>
+                                <option value="" <c:if test = "${region_id == '' }">selected </c:if>>All</option>
 											 <c:forEach var="rgBean" items="${activeRegionList}">
 												<option value="${rgBean.sk_region_id}" <c:if test = "${region_id == rgBean.sk_region_id }">selected </c:if>>${rgBean.region_name}</option>
 											</c:forEach>
@@ -145,7 +145,7 @@ String dashboardURL=resource.getString("dashboardURL");
                                       </c:when>
 											<c:otherwise>
 											<option value="">Select Dealer</option>
-                                <option value="all" <c:if test = "${dealer_id == 'all' }">selected </c:if>>All</option>
+                                <option value="" <c:if test = "${dealer_id == '' }">selected </c:if>>All</option>
 											 <c:forEach var="gBean" items="${activedealersbyid}">
 												<option value="${gBean.dealer_id}" <c:if test = "${dealer_id == gBean.dealer_id }">selected </c:if>>${gBean.dealer_name}</option>
 											</c:forEach> 
