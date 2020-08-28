@@ -333,7 +333,7 @@ label, th, span, a {
 				<div
 					class="main-content pt-3 position-relative nav-left  nav-left-adjst "
 					style="padding-left: 0px !important; margin-left: -6px;">
-					<a href="<%=dashboardURL %>Reports" class="btn btn-light waves-effect m-l-5" >Back</a>
+					<a href="<%=dashboardURL %>Reports" class="btn btn-light waves-effect m-l-5" id="export2">Back</a>
 					<button class="btn btn-primary pull-right" id="export"> Download pdf</button>
 					<form action="<%=dashboardURL %>allgraphs" method="GET">
 						<div class="position-relative brand-div">
@@ -371,7 +371,7 @@ label, th, span, a {
 							</div>
 						</div>
 						<div class="container-fluid my-3 filter-div">
-							<div class="card shadow-card">
+							<div class="card shadow-card" id="export1">
 
 
 								<div class="row d-flex justify-content-center px-4 mb-3  mt-3">
@@ -3063,7 +3063,10 @@ var image = new Image;
 image.onload = function() {
     canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
 };
+document.getElementById('responsecontainer').style.height = "150px";
 $("#responsecontainer").hide();
+
+
 $("#canvasimg6").attr('src','data:image/svg+xml;base64,' + window.btoa(svg));
 
 }
@@ -3092,7 +3095,10 @@ var image = new Image;
 image.onload = function() {
     canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
 };
+document.getElementById('responsecontainer2').style.height = "150px";
 $("#responsecontainer2").hide();
+
+
 $("#canvasimg7").attr('src','data:image/svg+xml;base64,' + window.btoa(svg));
 
 }
@@ -3120,7 +3126,10 @@ var image = new Image;
 image.onload = function() {
     canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
 };
+document.getElementById('conq-loy-dealer').style.height = "150px";
 $("#conq-loy-dealer").hide();
+
+
 $("#canvasimg8").attr('src','data:image/svg+xml;base64,' +btoa(unescape(encodeURIComponent(svg)))
 );
 
@@ -3148,7 +3157,9 @@ var image = new Image;
 image.onload = function() {
     canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
 };
+document.getElementById('appointment').style.height = "150px";
 $("#appointment").hide();
+
 $("#canvasimg9").attr('src','data:image/svg+xml;base64,' + window.btoa(svg));
 
 }
@@ -3706,6 +3717,8 @@ $('#export').click(function() {
 	//document.getElementById('chartdiv11').style.width = "9933px";
 	document.getElementById('chartdiv12').style.height = "14043px";
 	//document.getElementById('chartdiv12').style.width = "9933px";
+	
+	
 	save_chart1($('#ytdchart').highcharts());
     save_chart2($('#processchart').highcharts());
     save_chart3($('#customerchart').highcharts());
@@ -3827,6 +3840,8 @@ $('#export').click(function() {
 	  
 	    function call(){
 		$("#export").hide();
+		$("#export1").hide();
+		$("#export2").hide();
 		$('.td-progress span').hide();
 		$('.btn btn-light waves-effect m-l-5').hide();
 	//alert(hello);

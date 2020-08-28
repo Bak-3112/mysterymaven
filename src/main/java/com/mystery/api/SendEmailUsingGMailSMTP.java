@@ -255,9 +255,9 @@ public class SendEmailUsingGMailSMTP {
 				multipart.addBodyPart(messageBodyPart);
 
 				// adds attachments
-				 doTrustToCertificates();//  
+				// doTrustToCertificates();//  
 				 URL url1 = new URL("https://mys.dqi.co.in:8443/Mystery_documents/uploads/documents/pdf/Declaration.pdf") ;
-			     HttpsURLConnection conn = (HttpsURLConnection)url1.openConnection(); 
+			     HttpURLConnection conn = (HttpURLConnection)url1.openConnection(); 
 			     
 				    Part attachment = new MimeBodyPart();
 			        URLDataSource uds = new URLDataSource(url1);
@@ -429,9 +429,9 @@ public class SendEmailUsingGMailSMTP {
 				// adds attachments
 				
 
-				 doTrustToCertificates();//  
+				// doTrustToCertificates();//  
 				 URL url1 = new URL("https://mys.dqi.co.in:8443/Mystery_documents/uploads/documents/pdf/Declaration.pdf") ;
-			     HttpsURLConnection conn = (HttpsURLConnection)url1.openConnection(); 
+			     HttpURLConnection conn = (HttpURLConnection)url1.openConnection(); 
 			     
 				    Part attachment = new MimeBodyPart();
 				    

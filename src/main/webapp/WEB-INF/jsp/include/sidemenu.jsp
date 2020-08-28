@@ -70,20 +70,23 @@ padding-left: 77px;
                             </li>
                           
 							</c:forEach>
-							<input type="hidden" value="${sessionScope.userId }" id="userId">
+							<%-- <input type="text" value="${sessionScope.userId }" id="userId"> --%>
                         </ul>
                     </div>
                     </div>
                     </div>
 
 	
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script>
+   <!-- <script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  -->  
+	   <%--  <script src="<%=UI_PATH%>/assets/js/jquerynew.min.js"></script>     --%>
+	   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+	 <script>
 if($("#userId").val()==""){
-	window.location.replace("${pageContext.request.contextPath}/logout");
+	//window.location.replace("${pageContext.request.contextPath}/logout");
+	window.location.replace("<%=dashboardURL%>logout");
 }
-</script> 
+</script>  
 <script>
                     $("#slidebutton").css("transform","rotate(180deg)");
                     $("#slidebutton").click(function() {
@@ -94,4 +97,4 @@ if($("#userId").val()==""){
                         }
                       });
                    
-                    </script>
+                    </script> 

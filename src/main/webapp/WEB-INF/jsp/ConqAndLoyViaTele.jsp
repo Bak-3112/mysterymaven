@@ -581,7 +581,7 @@ String dashboardURL=resource.getString("dashboardURL");
 	   
 	</script>
 	<script>
-	alert(year);
+	//alert(year);
 	if(year==2019)
     {
 	 var anyoneatdealershipjson= ${anyoneatdealershipjson};

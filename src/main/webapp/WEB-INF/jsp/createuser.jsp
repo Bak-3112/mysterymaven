@@ -59,7 +59,7 @@ String dashboardURL=resource.getString("dashboardURL");
 <%-- 	 <link href="<%=UI_PATH%>/assets/css/nice-select.css" rel="stylesheet" type="text/css" />
  --%>	
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" />
+	href="http://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" />
 	
 <script src="<%=UI_PATH%>/assets/js/modernizr.min.js"></script>
 <style>
@@ -329,7 +329,7 @@ String dashboardURL=resource.getString("dashboardURL");
 		src="<%=UI_PATH%>/assets/pages/jquery.form-advanced.init.js"></script>
 	
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+		src="http://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 	 
 	 <script type="text/javascript">
 		$(document).ready(function() {

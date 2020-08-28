@@ -1708,6 +1708,7 @@ $( document ).ready(function() {
 	        margin:{top:"1cm",bottom:"1cm"},
 	        //margin: { left: "0cm", top: "3cm", right: "0cm", bottom: "0cm" },
 	        forcePageBreak: ".page-break",
+	       // keepTogether: ".prevent-split",
 	        multiPage: true
 	      })
 	      .then(function(group) {

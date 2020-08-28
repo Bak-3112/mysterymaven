@@ -1,5 +1,6 @@
 package com.mystery.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,6 +39,17 @@ ModelAndView model = null;
 	aDao.signin(uBean);
 	if(uBean.getStatusCode().equals("1"))
 	{
+		HttpSession session = request.getSession();
+		if (request.getParameter("JSESSIONID") != null) {
+			System.out.println("log in ifif");
+		    Cookie userCookie = new Cookie("JSESSIONID", request.getParameter("JSESSIONID"));
+		    response.addCookie(userCookie);
+		} else {
+			System.out.println("login in else");
+		    String sessionId = session.getId();
+		    Cookie userCookie = new Cookie("JSESSIONID", sessionId);
+		    response.addCookie(userCookie);
+		}
 		model = new ModelAndView("redirect:/home");
 		request.getSession().setAttribute("userId", uBean.getSk_user_id());
 		request.getSession().setAttribute("first_name", uBean.getFirst_name());
