@@ -59,7 +59,7 @@ table-layout:fixed;
 			<header>
 				<nav class="navbar navbar-expand-lg navbar-light ">
 					<a class="navbar-brand" href="#">BMW GROUP - Sales Mystery
-						Shopping 2019</a>
+						Shopping ${year}</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse"
 						data-target="#navbarSupportedContent"
 						aria-controls="navbarSupportedContent" aria-expanded="false"
