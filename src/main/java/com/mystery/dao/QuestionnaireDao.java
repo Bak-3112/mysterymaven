@@ -49,18 +49,18 @@ public class QuestionnaireDao {
 		}
 		if (qBean.getAnswer_type().equals("Paragraph")) {
 			System.out.println(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
 							+ qBean.getAnswer_type().replace("'", "\\'") + "','"
 							+ qBean.getComment_mandatory().replace("'", "\\'") + "','" + qBean.getUpload_file() + "')");
 			template.execute(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -69,9 +69,9 @@ public class QuestionnaireDao {
 
 		} else if (qBean.getAnswer_type().equals("Date")) {
 			System.out.println(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -80,9 +80,9 @@ public class QuestionnaireDao {
 							+ qBean.getDate_points() + "','" + qBean.getDate_code() + "','" + qBean.getDate_response()
 							+ "','" + qBean.getDate_routing() + "')");
 			template.execute(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -95,9 +95,9 @@ public class QuestionnaireDao {
 
 		else if (qBean.getAnswer_type().equals("Date & Time")) {
 			System.out.println(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `year_applied`,`standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -107,9 +107,9 @@ public class QuestionnaireDao {
 							+ qBean.getTime_points() + "','" + qBean.getTime_code() + "','" + qBean.getTime_response()
 							+ "','" + qBean.getTime_routing() + "')");
 			template.execute(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `year_applied`,`standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -121,9 +121,9 @@ public class QuestionnaireDao {
 
 		} else {
 			System.out.println(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number() + "','" + qBean.getQuestion_type().replace("'", "\\'") + "','"
 							+ qBean.getQuestion_optiontype().replace("'", "\\'") + "','"
 							+ qBean.getQuestion_points().replace("'", "\\'") + "','"
@@ -132,9 +132,9 @@ public class QuestionnaireDao {
 							+ qBean.getAnswer_type().replace("'", "\\'") + "','"
 							+ qBean.getComment_mandatory().replace("'", "\\'") + "','" + qBean.getUpload_file() + "')");
 			template.execute(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number() + "','" + qBean.getQuestion_type().replace("'", "\\'") + "','"
 							+ qBean.getQuestion_optiontype().replace("'", "\\'") + "','"
 							+ qBean.getQuestion_points().replace("'", "\\'") + "','"
@@ -621,18 +621,18 @@ public class QuestionnaireDao {
 
 		if (qBean.getAnswer_type().equals("Paragraph")) {
 			System.out.println(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
 							+ qBean.getAnswer_type().replace("'", "\\'") + "','"+ qBean.getComment_mandatory().replace("'", "\\'") + "','" + qBean.getUpload_file() + "','"
 							+ superQuestionIds.substring(2)+ "','" + superQuestionAnswers.substring(2) + "')");
 			template.execute(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `year_applied`,`standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -642,9 +642,9 @@ public class QuestionnaireDao {
 
 		} else if (qBean.getAnswer_type().equals("Date")) {
 			System.out.println(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -654,9 +654,9 @@ public class QuestionnaireDao {
 							+ qBean.getDate_points() + "','" + qBean.getDate_code() + "','" + qBean.getDate_response()
 							+ "','" + qBean.getDate_routing() + "')");
 			template.execute(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -668,9 +668,9 @@ public class QuestionnaireDao {
 
 		} else if (qBean.getAnswer_type().equals("Date & Time")) {
 			System.out.println(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -681,9 +681,9 @@ public class QuestionnaireDao {
 							+ "','" + qBean.getTime_points() + "','" + qBean.getTime_code() + "','"
 							+ qBean.getTime_response() + "','" + qBean.getTime_routing() + "')");
 			template.execute(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 							+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 							+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"
@@ -697,9 +697,9 @@ public class QuestionnaireDao {
 		} else {
 
 			System.out.println(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number() + "','" + qBean.getQuestion_type().replace("'", "\\'") + "','"
 							+ qBean.getQuestion_optiontype().replace("'", "\\'") + "','"
 							+ qBean.getQuestion_points().replace("'", "\\'") + "','"
@@ -709,9 +709,9 @@ public class QuestionnaireDao {
 							+ qBean.getComment_mandatory().replace("'", "\\'") + "','" + qBean.getUpload_file() + "','"
 							+ superQuestionIds.substring(2) + "','" + superQuestionAnswers.substring(2) + "')");
 			template.execute(
-					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
+					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
 							+ qBean.getStandard_number() + "','" + qBean.getQuestion_type().replace("'", "\\'") + "','"
 							+ qBean.getQuestion_optiontype().replace("'", "\\'") + "','"
 							+ qBean.getQuestion_points().replace("'", "\\'") + "','"
@@ -833,13 +833,13 @@ public class QuestionnaireDao {
 	}
 
 	public QuestionnaireBean getStandardNumberExistance(QuestionnaireBean qBean, String section_id, String brand_id,
-			String modeOfContact, String subsection_id, String standardNumber) {
+			String modeOfContact, String subsection_id, String standardNumber,String year_applied) {
 
 		// TODO Auto-generated method stub
 		String count = "";
 		String sql = "SELECT count(*) as exist FROM `mst_questionare` WHERE `section_id`='" + section_id
 				+ "' and `subsection_id`='" + subsection_id + "' and `brand_id`='" + brand_id
-				+ "' and `mode_of_contact`='" + modeOfContact + "' and standard_number='" + standardNumber + "' and question_status='active';";
+				+ "' and `mode_of_contact`='" + modeOfContact + "' and year_applied='"+year_applied+"' and standard_number='" + standardNumber + "' and question_status='active';";
 		System.out.println(sql);
 		List<Map<String, Object>> list = template.queryForList(sql);
 		for (Map<String, Object> row : list) {
@@ -884,17 +884,17 @@ public class QuestionnaireDao {
 		
 
 		System.out.println(
-				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
+				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `year_applied`,`standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 						+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 						+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 						+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 						+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"+ qBean.getComment_mandatory().replace("'", "\\") + "','" + qBean.getUpload_file() + "','"
 						+ superQuestionIds.substring(2) + "','" + superQuestionAnswers.substring(2) + "')");
 		template.execute(
-				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
+				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 						+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
 						+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 						+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 						+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"+ qBean.getComment_mandatory().replace("'", "\\") + "','" + qBean.getUpload_file() + "','"
@@ -1209,16 +1209,16 @@ public class QuestionnaireDao {
 		}
 		
 		System.out.println(
-				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`) VALUES ('"
+				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `year_applied`,`standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`) VALUES ('"
 						+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
 						+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 						+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 						+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"+ qBean.getComment_mandatory().replace("'", "\\'") + "','" + qBean.getUpload_file() + "')");
 		template.execute(
-				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`) VALUES ('"
+				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`) VALUES ('"
 						+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
-						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"
+						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
 						+ qBean.getStandard_number().replace("'", "\\'") + "','" + qBean.getQuestion_type() + "','"
 						+ qBean.getQuestion_optiontype() + "','" + qBean.getQuestion_points() + "','"
 						+ qBean.getQuestion_code() + "','" + qBean.getQuestion().replace("'", "\\'") + "','"+ qBean.getComment_mandatory().replace("'", "\\'") + "','" + qBean.getUpload_file() + "')");

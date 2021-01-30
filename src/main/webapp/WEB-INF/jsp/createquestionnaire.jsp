@@ -132,7 +132,7 @@ String dashboardURL=resource.getString("dashboardURL");
 		                                            </select>
 		                                        </div>
 		                                        
-		                                        <div  class="form-group col-md-3">
+		                                        <div  class="form-group col-md-2">
 		                                            <label for="userName">Section<span class="text-danger">*</span></label>
 		                                            <select name="sk_section_id" parsley-trigger="change" required class="form-control" id="sk_section_id" onchange="getSubSection(this.value)">
 		                                            	<option value="">Select Section</option>       
@@ -143,10 +143,21 @@ String dashboardURL=resource.getString("dashboardURL");
 		                                            </select>
 		                                        </div>
 		                                        
-		                                        <div  class="form-group col-md-3">
+		                                        <div  class="form-group col-md-2">
 		                                            <label for="userName">Sub Section<span class="text-danger">*</span></label>
 		                                            <select name="sk_subsection_id" parsley-trigger="change" required class="form-control" id="sk_subsection_id">
 		                                           <option value="">Select Sub Section</option>       
+		                                            </select>
+		                                        </div>
+		                                         <div  class="form-group col-md-2">
+		                                            <label for="userName">Year<span class="text-danger">*</span></label>
+		                                            <select name="year_applied" parsley-trigger="change" required class="form-control" id="year_applied">
+		                                           <option value="">Select Year</option> 
+		                                            <option value="2021">2021</option> 
+		                                             <option value="2022">2022</option> 
+		                                              <option value="2023">2023</option>
+		                                              <option value="2024">2024</option> 
+		                                              <option value="2025">2025</option>       
 		                                            </select>
 		                                        </div>
 		                                        
@@ -353,11 +364,12 @@ String dashboardURL=resource.getString("dashboardURL");
     	  var modeOfContact=$("#modeOfContact").val();
     	  var section_id=$("#sk_section_id").val();
     	  var subsection_id=$("#sk_subsection_id").val();
+    	  var year_applied=$("#year_applied").val();
     	  var standardNumber=$("#standardNumber").val();
       	 $.ajax({
                url: "<%=dashboardURL%>getStandardNumberExistance",
                type: "GET", 
-                 data: { 'brand_id': brand_id,'modeOfContact':modeOfContact,'section_id':section_id,'subsection_id':subsection_id,'standardNumber':standardNumber},
+                 data: { 'brand_id': brand_id,'modeOfContact':modeOfContact,'section_id':section_id,'subsection_id':subsection_id,'year_applied':year_applied,'standardNumber':standardNumber},
                success: function(response)
                            {
              	  var msg=response.message;

@@ -23,6 +23,7 @@ public class QuestionnaireBean extends DatabaseManagementBean  {
 	private String sk_brand_id;
 	private String formulaCount;
 	private String sk_formula_id;
+	private String year_applied;
 	
 	private String formulaFinalResult;
 	
@@ -867,4 +868,13 @@ public class QuestionnaireBean extends DatabaseManagementBean  {
 		this.sumOfQuesPoints = sumOfQuesPoints;
 	}
 
+	public String getYear_applied() {
+		return year_applied;
+	}
+
+	public void setYear_applied(String year_applied) {
+		this.year_applied = year_applied;
+	}
+
+	
 }

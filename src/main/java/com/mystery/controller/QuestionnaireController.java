@@ -575,8 +575,10 @@ public class QuestionnaireController {
 		String modeOfContact = request.getParameter("modeOfContact");
 		String subsection_id = request.getParameter("subsection_id");
 		String standardNumber = request.getParameter("standardNumber");
+		String year_applied = request.getParameter("year_applied");
+		System.out.println("year applied"+year_applied);
 		QuestionnaireBean StandardNumberexistingstatus = qDao.getStandardNumberExistance(qBean, section_id, brand_id,
-				modeOfContact, subsection_id, standardNumber);
+				modeOfContact, subsection_id, standardNumber,year_applied);
 		return StandardNumberexistingstatus;
 	}
 
