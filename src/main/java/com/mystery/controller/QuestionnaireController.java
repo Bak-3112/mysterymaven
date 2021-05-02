@@ -407,6 +407,8 @@ public class QuestionnaireController {
 	public ModelAndView editstatePost(@PathVariable String qid, HttpServletRequest request,
 			HttpServletResponse response, QuestionnaireBean qBean) throws IOException {
 		ModelAndView model = null;
+		System.out.println("==================="+qBean.getYear_applied());
+
 		List<QuestionnaireBean> subquestionsList = qBean.getSubquestions();
 		// for main with set of sub questions
         List<QuestionnaireBean> superQuestions=qBean.getSuperquestions();
@@ -664,6 +666,8 @@ public class QuestionnaireController {
 
 		mv = new ModelAndView("editmainsubQuestions");
 		qBean.setSk_question_id(qid);
+		System.out.println("----------------");
+
 		try {
 			qDao.getQuestionById(qBean);
 		} catch (Exception e) {
@@ -704,6 +708,7 @@ public class QuestionnaireController {
 		request.setAttribute("super_subsection_id", qBean.getSuper_question_subsection_id());
 		request.setAttribute("super_subsection_name", qBean.getSuper_question_subsection_name());
 		request.setAttribute("super_standard_number", qBean.getSuper_question_standard_number());
+		request.setAttribute("year", qBean.getYear());
 
 		List<QuestionnaireBean> subquestionsList = qDao.getsubquestionsList(dbBean, qBean.getSk_question_id());
 		mv.addObject("subquestionsList", subquestionsList);
@@ -769,6 +774,7 @@ public class QuestionnaireController {
 		request.setAttribute("super_subsection_id", qBean.getSuper_question_subsection_id());
 		request.setAttribute("super_subsection_name", qBean.getSuper_question_subsection_name());
 		request.setAttribute("super_standard_number", qBean.getSuper_question_standard_number());
+		request.setAttribute("year", qBean.getYear());
 
 		List<QuestionnaireBean> subquestionsList = qDao.getsubquestionsList(dbBean, qBean.getSk_question_id());
 		mv.addObject("subquestionsList", subquestionsList);

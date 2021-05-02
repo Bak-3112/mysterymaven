@@ -182,6 +182,17 @@ String dashboardURL=resource.getString("dashboardURL");
 
 											</select>
 										</div>
+										 <div  class="form-group col-md-2">
+		                                            <label for="userName">Year<span class="text-danger">*</span></label>
+		                                            <select name="year_applied"  class="form-control" id="year_applied">
+		                                           <option value="${year}">${year}</option> 
+		                                            <option value="2021">2021</option> 
+		                                             <option value="2022">2022</option> 
+		                                              <option value="2023">2023</option>
+		                                              <option value="2024">2024</option> 
+		                                              <option value="2025">2025</option>       
+		                                            </select>
+		                                        </div>
 
 										<div class="form-group col-md-3">
 											<label for="userName">Standard Number<span
@@ -424,8 +435,9 @@ String dashboardURL=resource.getString("dashboardURL");
 																									value="Yes">Yes</option>
 																								<option value="No" >No</option></select>
 																						</div>
-																						<button class="remove_field" data-id="${count.sk_answer_id }" type="button">-</button>
-																					</div>
+																						<button class="btnstyle remove_field" data-id="${count.sk_answer_id}" value="${count.sk_answer_id}" onclick="deleteselectedanswer(this.value)" data-toggle="modal" data-target="#myModal" data-count="${status.index}" type="button">-</button>
+<%-- 																						<button class="remove_field" data-id="${count.sk_answer_id }" type="button">-</button>
+ --%>																					</div>
 																					</c:forEach>
 																				
 																			</div>
@@ -973,7 +985,13 @@ String dashboardURL=resource.getString("dashboardURL");
     }
  });
  
- 
+ function deleteselectedanswer(id){
+
+	 var qid='${question_id}';
+	 var value=id;
+ 	var url="<%=dashboardURL%>deleteanwerOptions/"+value+"/"+qid;
+ 	$(".btn-edit").attr("href",url);
+ }
     </script>
  
  

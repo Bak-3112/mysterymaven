@@ -179,7 +179,17 @@ String dashboardURL=resource.getString("dashboardURL");
 												placeholder="Enter Standard Number" required
 												class="form-control">
 										</div>
-
+ <div  class="form-group col-md-2">
+		                                            <label for="userName">Year<span class="text-danger">*</span></label>
+		                                            <select name="year_applied"  class="form-control" id="year_applied">
+		                                           <option value="${year}">${year}</option> 
+		                                            <option value="2021">2021</option> 
+		                                             <option value="2022">2022</option> 
+		                                              <option value="2023">2023</option>
+		                                              <option value="2024">2024</option> 
+		                                              <option value="2025">2025</option>       
+		                                            </select>
+		                                        </div>
 
 										<div class="form-group col-md-3">
 											<label for="userName">Question Type<span

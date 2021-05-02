@@ -762,16 +762,17 @@ public class QuestionnaireDao {
 	}
 
 	private QuestionnaireBean getSuperQuestionId(QuestionnaireBean qBean) {
+		System.out.println("==================="+qBean.getYear_applied());
     System.out.println(
         "SELECT * FROM mst_questionare WHERE standard_number='" + qBean.getSuper_question_standard_number()
             + "'  and brand_id='" +qBean.getSk_brand_id()+ "' and mode_of_contact='"
             + qBean.getMode_of_contact() + "' and section_id='" + qBean.getSuper_question_section_id()
-            + "' and  subsection_id='" + qBean.getSuper_question_subsection_id() + "';");
+            + "' and  subsection_id='" + qBean.getSuper_question_subsection_id() + "' and year_applied='"+qBean.getYear_applied()+"';");
     return template.queryForObject(
         "SELECT * FROM mst_questionare WHERE standard_number='" + qBean.getSuper_question_standard_number()
             + "'  and brand_id='" +qBean.getSk_brand_id()+ "' and mode_of_contact='"
             + qBean.getMode_of_contact() + "' and section_id='" + qBean.getSuper_question_section_id()
-            + "' and  subsection_id='" + qBean.getSuper_question_subsection_id() + "'  ",
+            + "' and  subsection_id='" + qBean.getSuper_question_subsection_id() + "'  and year_applied='"+qBean.getYear_applied()+"'",
         new RowMapper<QuestionnaireBean>() {
           @Override
           public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
@@ -787,13 +788,13 @@ public class QuestionnaireDao {
 		        + "' and mst_questionare_selectoption.question_id=mst_questionare.sk_question_id and mst_questionare.question_status='active' and mst_questionare_selectoption.options_status='active' AND mst_questionare.answer_type='Select/List'  and mst_questionare.brand_id='"
 		        + brand_id + "' and mst_questionare.mode_of_contact='" + modeOfContact
 		        + "' and mst_questionare.section_id='" + section_id + "' and mst_questionare.subsection_id='"
-		        + subsection_id + "';");
+		        + subsection_id + "' and year_applied='"+qBean.getYear_applied()+"';");
 		    return template.query("SELECT * FROM mst_questionare,mst_questionare_selectoption WHERE standard_number='"
 		        + stdnum
 		        + "' and mst_questionare_selectoption.question_id=mst_questionare.sk_question_id and mst_questionare.question_status='active' and mst_questionare_selectoption.options_status='active' AND mst_questionare.answer_type='Select/List'  and mst_questionare.brand_id='"
 		        + brand_id + "' and mst_questionare.mode_of_contact='" + modeOfContact
 		        + "' and mst_questionare.section_id='" + section_id + "' and mst_questionare.subsection_id='"
-		        + subsection_id + "' ", new RowMapper<QuestionnaireBean>() {
+		        + subsection_id + "' and year_applied='"+qBean.getYear_applied()+"'", new RowMapper<QuestionnaireBean>() {
 		          @Override
 		          public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 		            QuestionnaireBean qBean = new QuestionnaireBean();
