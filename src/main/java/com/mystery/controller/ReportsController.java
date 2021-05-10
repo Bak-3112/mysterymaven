@@ -2515,7 +2515,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		  request.setAttribute("dealer_id", mvBean.getDealer_id());
 		  request.setAttribute("outlet_id", mvBean.getOutlet_id());
 		  request.setAttribute("brand_id", mvBean.getBrand_id());
-		  request.setAttribute("limit", mvBean.getLimit());
+		//  request.setAttribute("limit", mvBean.getLimit());
 		  
 		  
 		  

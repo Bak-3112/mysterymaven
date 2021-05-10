@@ -330,9 +330,24 @@ public class ReportsDao {
 	    	  mvBean.setDealer_id(rs.getString("dealer_id"));
 	    	  mvBean.setOutlet_id(rs.getString("outlet_id"));
 	    	  mvBean.setMonth(rs.getString("month"));
-	    	  mvBean.setMonthly_dealer_avg(rs.getString("dscore"));
-	    	  mvBean.setOutlet_score(rs.getString("monthly_outlet_score"));
-	    	  
+	    	 // mvBean.setMonthly_dealer_avg(rs.getString("dscore"));
+	    	  try {
+		    	  if(rs.getString("dscore")==null || rs.getString("dscore").equals("null")) {
+		    		  mvBean.setMonthly_dealer_avg1(0);
+		    	  }else {
+		    		  mvBean.setMonthly_dealer_avg1(rs.getDouble("dscore"));
+		    	  }
+		    	  }catch (Exception e) {
+		    		  mvBean.setMonthly_dealer_avg1(0);
+				}
+	    	//  mvBean.setOutlet_score(rs.getString("monthly_outlet_score"));
+
+	    	  if(rs.getString("monthly_outlet_score")==null || rs.getString("monthly_outlet_score").equals("null")) {
+	    		  mvBean.setOutlet_score("0");
+	    	  }else {
+	    		  mvBean.setOutlet_score(rs.getString("monthly_outlet_score"));
+	    	  }
+	    	
 	    	  
 	    	  getnonoscShopperIdByOid(mvBean,rs.getString("outlet_id"),rs.getString("brand_id"),mvBean.getYear(),rs.getString("months"));
 	    	  getoscShopperIdByOid(mvBean,rs.getString("dealer_id"),rs.getString("brand_id"),mvBean.getYear(),rs.getString("months"));
@@ -411,8 +426,23 @@ public class ReportsDao {
 		    	  mvBean.setDealer_id(rs.getString("dealer_id"));
 		    	  mvBean.setOutlet_id(rs.getString("outlet_id"));
 		    	  mvBean.setMonth(rs.getString("month"));
-		    	  mvBean.setMonthly_dealer_avg1(rs.getDouble("dscore"));
-		    	  mvBean.setOutlet_score(rs.getString("monthly_outlet_score"));
+		    	  try {
+		    	  if(rs.getString("dscore")==null || rs.getString("dscore").equals("null")) {
+		    		  mvBean.setMonthly_dealer_avg1(0);
+		    	  }else {
+		    		  mvBean.setMonthly_dealer_avg1(rs.getDouble("dscore"));
+		    	  }
+		    	  }catch (Exception e) {
+		    		  mvBean.setMonthly_dealer_avg1(0);
+				}
+		    	  
+		    	  
+			    	  if(rs.getString("monthly_outlet_score")==null || rs.getString("monthly_outlet_score").equals("null")) {
+			    		  mvBean.setOutlet_score("0");
+			    	  }else {
+			    		  mvBean.setOutlet_score(rs.getString("monthly_outlet_score"));
+			    	  }
+			    	
 		    	  
 		    	  
 		    	  getnonoscShopperIdByOid(mvBean,rs.getString("outlet_id"),rs.getString("brand_id"),mvBean.getYear(),rs.getString("months"));
@@ -424,7 +454,17 @@ public class ReportsDao {
 		    	  mvBean.setSc_name(rs.getString("salesperson_name"));
 		    	 // getytddealeravg(mvBean,mvBean.getYear(),mvBean.getDealer_id(),mvBean.getMonth(),rs.getString("brand_id"));
 		    	  //mvBean.setYtd_dealer_avg1(mvBean.getYtd_dealer_avg1());
-		    	mvBean.setYtd_dealer_avg1(rs.getDouble("ytdscore"));
+		    	  try {
+		    	  if(rs.getString("ytdscore")==null || rs.getString("ytdscore").equals("null")) {
+		    		  mvBean.setYtd_dealer_avg1(0);
+		    	  }else {
+		    		  mvBean.setYtd_dealer_avg1(rs.getDouble("ytdscore"));
+		    	  }
+		    	  }catch (Exception e) {
+		    		  mvBean.setYtd_dealer_avg1(0);
+				}
+		    	 
+		    	
 		    	  getytdoutletavg(mvBean,mvBean.getMonth(),rs.getString("brand_id"),mvBean.getYear(),mvBean.getOutlet_id(),mvBean.getDealer_id());
 		    	
 		    	  mvBean.setYtd_outlet_avg(mvBean.getYtd_outlet_avg());
@@ -645,7 +685,7 @@ public class ReportsDao {
 }
 	protected MysteryShoppingVisitsBean getytdoutletavg(MysteryShoppingVisitsBean mvBean, String month, String brand_id, String year, String outlet_id, String did) {
 		//String sql="SELECT round((sec2_sp+sec3_sp)/(sec2_mp+sec3_mp)*100,2) as ytd_outlet_average FROM(SELECT(SELECT SUM(scored_points)*0.7 from mys_score WHERE  shopper_id='"+sid+"' and mys_score.year='"+year+"' AND (  mys_score.outlet_id='"+outlet_id+"' OR '"+outlet_id+"'='all')  and status='active' and mys_score.section_id='2' and osc_flag!=1)as sec2_sp,(SELECT SUM(scored_points)*0.2 from mys_score WHERE  shopper_id='"+sid+"' and mys_score.year='"+year+"' AND (  mys_score.outlet_id='"+outlet_id+"' OR '"+outlet_id+"'='all')  and status='active' and mys_score.section_id='3' and osc_flag!=1)as sec3_sp,(SELECT SUM(max_points)*0.7 from mys_score WHERE  shopper_id='"+sid+"' and mys_score.year='"+year+"' AND (  mys_score.outlet_id='"+outlet_id+"' OR '"+outlet_id+"'='all')  and status='active' and mys_score.section_id='2' and osc_flag!=1)as sec2_mp,(SELECT SUM(max_points)*0.2 from mys_score WHERE  shopper_id='"+sid+"' and mys_score.year='"+year+"' AND (  mys_score.outlet_id='"+outlet_id+"' OR '"+outlet_id+"'='all')  and status='active' and mys_score.section_id='3' and  osc_flag!=1)as sec3_mp )res1";
-		String sql="SELECT round((sum(scored_point)/sum(maximum_point))*100,2)as ytd_outlet_average FROM `mys_txn_outlet_score` WHERE  dealer_id='"+did+"' and  outlet_id='"+outlet_id+"' AND osc_flag=0 AND month<="+month+" AND year='"+year+"' AND brand_id='"+brand_id+"'";
+		String sql="SELECT ifnull(round((sum(scored_point)/sum(maximum_point))*100,2),0)as ytd_outlet_average FROM `mys_txn_outlet_score` WHERE  dealer_id='"+did+"' and  outlet_id='"+outlet_id+"' AND osc_flag=0 AND month<="+month+" AND year='"+year+"' AND brand_id='"+brand_id+"'";
 		System.out.println("ytd outket avg===="+sql);
 		return template.queryForObject(sql, new RowMapper<MysteryShoppingVisitsBean>() {
 			public MysteryShoppingVisitsBean mapRow(ResultSet rs, int row) throws SQLException {
@@ -659,7 +699,7 @@ public class ReportsDao {
 		//String sql="SELECT round(((sec2_md_sp+sec3_md_sp+IFNULL(osc_md_sp,0))/(sec2_md_mp+sec3_md_mp+IFNULL(osc_md_mp,0)))*100,2) as ytd_dealer_average FROM (SELECT(SELECT SUM(scored_points)*0.7 from mys_score WHERE  shopper_id='"+sid+"' and status='active'and mys_score.section_id='2')as sec2_md_sp,(SELECT SUM(scored_points)*0.2 from mys_score WHERE  shopper_id='"+sid+"'  and status='active' and mys_score.section_id='3')as sec3_md_sp,(SELECT SUM(mys_score.scored_points)*0.1 from mys_score WHERE  shopper_id='"+osc_shopper_id+"' and status='active')as osc_md_sp ,(SELECT SUM(max_points)*0.7 from mys_score WHERE  shopper_id='"+sid+"'  and status='active' and mys_score.section_id='2')as sec2_md_mp,(SELECT SUM(max_points)*0.2 from mys_score WHERE  shopper_id='"+sid+"'  and status='active' and mys_score.section_id='3' )as sec3_md_mp,(SELECT SUM(mys_score.max_points)*0.1 from mys_score WHERE  shopper_id='"+osc_shopper_id+"' and status='active')as osc_md_mp)res1";
 			//	String sql="SELECT round(((sum(`scores_earned`)+sum(scored_point_721))/(sum(`maximum_scores`)+sum(maximum_point_721)))*100,2) as ytd_dealer_avg FROM `mys_txn_dealer_score` WHERE dealer_id='"+dealer_id+"' AND month<="+month+" AND year='"+year+"' AND brand_id='"+brand_id+"'";
 
-		String sql="SELECT round(((sum(scored_point_721))/(sum(maximum_point_721)))*100,2) as ytd_dealer_avg FROM `mys_txn_dealer_score` WHERE dealer_id='"+dealer_id+"' AND month<="+month+" AND year='"+year+"' AND brand_id='"+brand_id+"'";
+		String sql="SELECT ifnull(round(((sum(scored_point_721))/(sum(maximum_point_721)))*100,2),0) as ytd_dealer_avg FROM `mys_txn_dealer_score` WHERE dealer_id='"+dealer_id+"' AND month<="+month+" AND year='"+year+"' AND brand_id='"+brand_id+"'";
 		System.out.println("ytd dealer average=="+sql);
 		return template.queryForObject(sql, new RowMapper<MysteryShoppingVisitsBean>() {
 			public MysteryShoppingVisitsBean mapRow(ResultSet rs, int row) throws SQLException {
@@ -4523,8 +4563,26 @@ return qBean;
 			public ReportsBean mapRow(ResultSet rs, int row) throws SQLException {
 				//rBean.setMax_points(rs.getString("maximum_point"));
 				//rBean.setScored_points(rs.getString("scored_point"));
-				rBean.setOutlet_score(rs.getString("outlet_score"));
-				rBean.setNonosc_ytd_score(rs.getString("ytd"));
+				
+				try {
+				if(rs.getString("outlet_score").equals("null") || rs.getString("outlet_score")==null) {
+					rBean.setOutlet_score("0");
+				}else {
+					rBean.setOutlet_score(rs.getString("outlet_score"));
+				}
+				}catch (Exception e) {
+					rBean.setOutlet_score("0");
+				}
+				
+				try {
+				if(rs.getString("ytd").equals("null") || rs.getString("ytd")==null) {
+					rBean.setNonosc_ytd_score("0");
+				}else {
+					rBean.setNonosc_ytd_score(rs.getString("ytd"));
+				}
+				}catch (Exception e) {
+					rBean.setNonosc_ytd_score("0");
+				}
 				return rBean;
 			}
 		});
@@ -4533,7 +4591,7 @@ return qBean;
 	public ReportsBean getOscScore(ReportsBean rBean, String sk_shopper_id, String did, String year, String month,
 			String brand) {
 		
-		String sql="SELECT count(*), oscscore,oscytd,scored_point,maximum_point FROM (SELECT outlet_id,shopper_id, round((((scored_point)/(maximum_point))*100),2) as oscscore,mys_txn_outlet_score.scored_point,mys_txn_outlet_score.maximum_point FROM mys_txn_outlet_score WHERE shopper_id='"+sk_shopper_id+"' and osc_flag='1')AS RES1 JOIN (SELECT round(((ifnull(sum(scored_point),0)/ifnull(sum(maximum_point),0))*100),2) AS oscytd FROM mys_txn_outlet_score WHERE brand_id='"+brand+"' and year='"+year+"' and dealer_id='"+did+"' AND month <= "+month+" and osc_flag='1')AS RES2 ";
+		String sql="SELECT count(*), ifnull(oscscore,0) as oscscore,ifnull(oscytd,0) as oscytd,ifnull(scored_point,0)scored_point,ifnull(maximum_point,0)as maximum_point FROM (SELECT outlet_id,shopper_id, round((((scored_point)/(maximum_point))*100),2) as oscscore,mys_txn_outlet_score.scored_point,mys_txn_outlet_score.maximum_point FROM mys_txn_outlet_score WHERE shopper_id='"+sk_shopper_id+"' and osc_flag='1')AS RES1 JOIN (SELECT round(((ifnull(sum(scored_point),0)/ifnull(sum(maximum_point),0))*100),2) AS oscytd FROM mys_txn_outlet_score WHERE brand_id='"+brand+"' and year='"+year+"' and dealer_id='"+did+"' AND month <= "+month+" and osc_flag='1')AS RES2 ";
 		System.out.println(sql);	
 		return template.queryForObject(sql, new RowMapper<ReportsBean>() {
 				public ReportsBean mapRow(ResultSet rs, int row) throws SQLException {

@@ -313,12 +313,12 @@ String dashboardURL=resource.getString("dashboardURL");
                                 </tbody>
                             </table>
                             
-                          <%--   <div class="btnwrap center">
+                            <div class="btnwrap center">
    <a class="btn btn-grey mrg-top Previous" data-id="" >Previous</a> <input type="button"  class="btn btn-info mrg-top Next" value="Next" id="nextid" data-id=""/>
         <input type="hidden" id="pageCountVal"/>
           <input type="hidden" value="${limit }" name="count" id="pagecount"/>
             <input type="hidden" value=" " name="count" id="count"/>
-    </div> --%>
+    </div> 
      <ul id="pagination-demo" class="pagination-lg pull-right"></ul>
                         </div>
                     </div>
@@ -453,7 +453,7 @@ $('.Next').on('click', function(){
 	
 	 i++;
 
-	window.location.href ="/summary/"+report_type+"/"+year+"/"+month+"/"+region_id+"/"+sk_dealer_id+"/"+sk_outlet_id+"/"+brand_id+"/"+i;
+	window.location.href ="<%=dashboardURL%>summary/"+report_type+"/"+year+"/"+month+"/"+region_id+"/"+sk_dealer_id+"/"+sk_outlet_id+"/"+brand_id+"/"+i;
 	
 })
 
@@ -468,7 +468,7 @@ if($("#pagecount").val()<=0){
 	$(".Previous").removeAttr("display","none");
 	 $('.Previous').on('click', function(){
 	     i--;
-	 	window.location.href ="/summary/"+report_type+"/"+year+"/"+month+"/"+region_id+"/"+sk_dealer_id+"/"+sk_outlet_id+"/"+brand_id+"/"+i;
+	 	window.location.href ="<%=dashboardURL%>summary/"+report_type+"/"+year+"/"+month+"/"+region_id+"/"+sk_dealer_id+"/"+sk_outlet_id+"/"+brand_id+"/"+i;
 
 		 
 	 })
@@ -593,7 +593,8 @@ $('#datatable-buttons').DataTable( {
         	var region_id= $("#region_id").val();
         	var sk_dealer_id= $("#sk_dealer_id").val();
         	var sk_outlet_id= $("#sk_outlet_id").val();
-        	$(this).attr('href','<%=dashboardURL%>summarydownload/'+year+'/'+month+'/'+region_id+'/'+sk_dealer_id+'/'+sk_outlet_id+'/'+brand_id+'');
+        	var url="<%=dashboardURL%>summarydownload/"+year+"/"+month+"/"+region_id+"/"+sk_dealer_id+"/"+sk_outlet_id+"/"+brand_id;
+        	$(this).attr('href',url);
         });
         
         </script>
