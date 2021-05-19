@@ -315,7 +315,15 @@ String dashboardURL=resource.getString("dashboardURL");
 																<td>${mvBean.standard_number}</td>
 																<td>${mvBean.question_text}</td>
 																<td>${mvBean.answer_status}</td>
-																<td>${mvBean.scored_points}</td>
+																<c:choose>
+																	<c:when test="${mvBean.formula_flag !='1'}">
+																		<td>${mvBean.scored_points}</td>
+																	</c:when>
+																	<c:otherwise>
+																		<td>${mvBean.points}</td>
+
+																	</c:otherwise>
+																</c:choose>
 																<td><a href="<%=dashboardURL%>viewQualityAssuranceQuestions/${mvBean.sk_shopper_id}/${mvBean.question_id}">Review</a><br></td>
 															</tr>
 															</c:forEach>
