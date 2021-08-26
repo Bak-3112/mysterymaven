@@ -50,7 +50,7 @@ String dashboardURL=resource.getString("dashboardURL");
 		<div id="myModal" class="modal fade" role="dialog">
 		<div  class=" ">
 		    <div class="row">
-			  <form method="POST" action=""  autocomplete="off">
+			  <form method="POST" action="<%=dashboardURL%>updateAnswer"  autocomplete="off">
 				
 		    	<div class="col-md-8 col-md-offset-2">
 				  	<div class="card bg-fff">	
@@ -336,8 +336,8 @@ String dashboardURL=resource.getString("dashboardURL");
 					
 					
 			   		 <div class="center">		    	
-<!-- 					    <input type="submit" class="btn btn-info  btn-gradient" value="Update">
- -->					     <a href="<%=dashboardURL%>getMYSsecondphase/${shopper_id}" class="btn btn-light waves-effect m-l-5">
+			    <input type="submit" class="btn btn-info  btn-gradient" value="Update">
+				     <a href="<%=dashboardURL%>getMYSsecondphase/${shopper_id}" class="btn btn-light waves-effect m-l-5">
                                                 Back
                                             </a>
 				  	</div>	 

@@ -1299,12 +1299,13 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	System.out.println("Year iss"+dbBean.getYear());
 	String encrypt_year= Encryption.encrypt(dbBean.getYear());
 	System.out.println("Brand iss"+dbBean.getBrand_id());
+	String encrypt_mode = Encryption.encrypt(mvBean.getMode_of_contact());
 	int brand=dbBean.getBrand_id();
 	//int encrypt_brand= Encryption.encrypt(brand);
 	request.setAttribute("dealer_id",dbBean.getDealer_id());
 	
 	mv = new ModelAndView("redirect:/performance/"+ encrypt_oid + "/"+encrypt_did+"/" + encrypt_mid + "/"
-			+ encrypt_year +"/"+dbBean.getBrand_id()+ "/1");
+			+ encrypt_year +"/"+dbBean.getBrand_id()+"/"+encrypt_mode+ "/1");
 			
 		}
 
@@ -2583,9 +2584,9 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		return outletList;
 	}
 	
-	@RequestMapping("performance/{encrypt_oid}/{encrypt_did}/{encrypt_month}/{encrypt_year}/{brand}/{page}")
+	@RequestMapping("performance/{encrypt_oid}/{encrypt_did}/{encrypt_month}/{encrypt_year}/{brand}/{mode}/{page}")
 	public ModelAndView performance(@PathVariable String encrypt_oid,@PathVariable String encrypt_did, @PathVariable String encrypt_year, @PathVariable String page,
-			@PathVariable String brand,@PathVariable String encrypt_month, ReportsBean rBean,MysteryShoppingVisitsBean mvBean,HttpServletRequest request) throws java.text.ParseException{
+			@PathVariable String brand,@PathVariable String encrypt_month, @PathVariable String mode, ReportsBean rBean,MysteryShoppingVisitsBean mvBean,HttpServletRequest request) throws java.text.ParseException{
 	//ModelAndView mv=new ModelAndView("performance1");
 		  ModelAndView model = null;
 		  try {
@@ -2602,6 +2603,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		String month=Encryption.decrypt(encrypt_month);
 		System.out.println("month============"+month);
 		String year=Encryption.decrypt(encrypt_year);
+		String dec_mode=Encryption.decrypt(mode);
 		mvBean.setOutlet_id(oid);
 		mvBean.setYear(year);
 		mvBean.setMonth(month);
@@ -2612,15 +2614,16 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		request.setAttribute("dealer", encrypt_did);
 		request.setAttribute("month", encrypt_month);
 		request.setAttribute("yearr", encrypt_year);
-	
-		mvBean1=   mvDao.getShopperIdByOid(mvBean,oid,brand);
+		request.setAttribute("mode", mode);
+
+		mvBean1=   mvDao.getShopperIdByOid(mvBean,oid,brand,dec_mode);
 		String NonOscShopperId = mvBean1.getSk_shopper_id();
 		String encrypted_shopper_id = Encryption.encrypt(NonOscShopperId);
 		  request.setAttribute("NonOsc_shopper_id", encrypted_shopper_id); 
 			
 		  
 			//MysteryShoppingVisitsBean getShopperid2 =   mvDao.getShopperIdByOid1(mvBean,did,brand);
-			mvBean1 =   mvDao.getShopperIdByOid1(mvBean,did,brand);
+			mvBean1 =   mvDao.getShopperIdByOid1(mvBean,did,brand, dec_mode);
 			String shopper_Id= mvBean1.getOsc_shopper_id();
 			String encrypted_OSCshopper_id = Encryption.encrypt(shopper_Id);
 			System.out.println("This is Ecrypted SId"+encrypted_OSCshopper_id);
@@ -2857,9 +2860,9 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	 * olr download start
 	 * 
 	 */
-	@RequestMapping("/performance/{encrypt_oid}/{encrypt_month}/{encrypt_year}/{brand}/{encrypt_did}/download")
+	@RequestMapping("/performance/{encrypt_oid}/{encrypt_month}/{encrypt_year}/{brand}/{encrypt_did}/{mode}/download")
 	public ModelAndView performancedownload(@PathVariable String encrypt_oid, @PathVariable String encrypt_year,
-			@PathVariable String encrypt_month,@PathVariable String brand,@PathVariable String encrypt_did, ReportsBean rBean,MysteryShoppingVisitsBean mvBean, HttpServletRequest request, HttpServletResponse response, QuestionnaireBean qBean)
+			@PathVariable String encrypt_month,@PathVariable String brand,@PathVariable String encrypt_did,@PathVariable String mode, ReportsBean rBean,MysteryShoppingVisitsBean mvBean, HttpServletRequest request, HttpServletResponse response, QuestionnaireBean qBean)
 			throws ParseException {
 
 		ModelAndView model = null;
@@ -2881,6 +2884,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		String did=Encryption.decrypt(encrypt_did);
 		String month=Encryption.decrypt(encrypt_month);
 		String year=Encryption.decrypt(encrypt_year);
+		String dec_mode=Encryption.decrypt(mode);
 		mvBean.setOutlet_id(oid);
 		mvBean.setYear(year);
 		mvBean.setMonth(month);
@@ -2891,11 +2895,11 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		request.setAttribute("dealer", encrypt_did);
 		request.setAttribute("month", encrypt_month);
 		request.setAttribute("yearr", encrypt_year);
-		  mvBean1=   mvDao.getShopperIdByOid(mvBean,oid,brand);
+		  mvBean1=   mvDao.getShopperIdByOid(mvBean,oid,brand,dec_mode);
 		  String NonOscShopperId = mvBean1.getSk_shopper_id();
 			String encrypted_shopper_id = Encryption.encrypt(NonOscShopperId);
 		  request.setAttribute("Nosc_shopper_id", encrypted_shopper_id);  
-		  mvBean1=   mvDao.getShopperIdByOid1(mvBean,did,brand);
+		  mvBean1=   mvDao.getShopperIdByOid1(mvBean,did,brand,dec_mode);
 		  String shopper_Id= mvBean1.getOsc_shopper_id();
 			String encrypted_OSCshopper_id = Encryption.encrypt(shopper_Id);
 			System.out.println("This is Ecrypted SId"+encrypted_OSCshopper_id);

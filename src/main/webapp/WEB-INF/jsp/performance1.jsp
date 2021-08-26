@@ -62,7 +62,7 @@ a {
 	<!-- wrapper starts -->
 	<div class="wrapper">
 		<div class="container">
-		<a class="btn btn-primary" href="<%=dashboardURL%>performance/${outlet}/${month}/${yearr}/${brand}/${dealer}/download">Download </a>
+		<a class="btn btn-primary" href="<%=dashboardURL%>performance/${outlet}/${month}/${yearr}/${brand}/${dealer}/{mode}/download">Download </a>
 			<header>
 				<nav class="navbar navbar-expand-lg navbar-light ">
 				   <a href="<%=dashboardURL%>/Reports" class="previous">&laquo;  Back To Reports</a>

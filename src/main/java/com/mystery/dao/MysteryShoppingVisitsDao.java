@@ -2158,16 +2158,16 @@ private MysteryShoppingVisitsBean getShopperYear(MysteryShoppingVisitsBean mvBea
 
 	
 
-	public MysteryShoppingVisitsBean getShopperIdByOid(MysteryShoppingVisitsBean mvBean,String oid,String brand) {
+	public MysteryShoppingVisitsBean getShopperIdByOid(MysteryShoppingVisitsBean mvBean,String oid,String brand,String mode) {
 		try {
 			System.out.println("no osc current month="+mvBean.getMonth());
 				System.out.println("select * from mst_shopper_details where outlet_id='" + oid
 						+ "' and year='" + mvBean.getYear() + "' and month(visit_date)='" + mvBean.getMonth()
-						+ "' and brand_id='"+brand+"' and mst_shopper_details.mode_of_contact!='Online Sales Channel' and visit_status='published';");
+						+ "' and brand_id='"+brand+"' and mode_of_contact = '"+mode+"' and mst_shopper_details.mode_of_contact!='Online Sales Channel' and visit_status='published';");
 				return template.queryForObject(
 						"select * from mst_shopper_details where outlet_id='" + oid + "' and year='"
 								+ mvBean.getYear() + "' and month(visit_date)='" + mvBean.getMonth()
-								+ "' and brand_id='"+brand+"' and mst_shopper_details.mode_of_contact!='Online Sales Channel' and visit_status='published';",
+								+ "' and brand_id='"+brand+"' and mode_of_contact = '"+mode+"'  and mst_shopper_details.mode_of_contact!='Online Sales Channel' and visit_status='published';",
 						new RowMapper<MysteryShoppingVisitsBean>() {
 							public MysteryShoppingVisitsBean mapRow(ResultSet rs, int row) throws SQLException {
 								mvBean.setSk_shopper_id(rs.getString("sk_shopper_id"));		
@@ -2182,16 +2182,16 @@ private MysteryShoppingVisitsBean getShopperYear(MysteryShoppingVisitsBean mvBea
 						return mvBean;
 					}
 		
-	public MysteryShoppingVisitsBean getShopperIdByOid1(MysteryShoppingVisitsBean mvBean,String did,String brand) {
+	public MysteryShoppingVisitsBean getShopperIdByOid1(MysteryShoppingVisitsBean mvBean,String did,String brand, String mode) {
 		try {
 			System.out.println("no osc current month="+mvBean.getMonth());
 				System.out.println("select * from mst_shopper_details where dealer_id='" + did
 						+ "' and year='" + mvBean.getYear() + "' and month(visit_date)='" + mvBean.getMonth()
-						+ "' and brand_id='"+brand+"' and mst_shopper_details.mode_of_contact='Online Sales Channel' and visit_status='published';");
+						+ "' and brand_id='"+brand+"' and mode_of_contact = '"+mode+"' and mst_shopper_details.mode_of_contact='Online Sales Channel' and visit_status='published';");
 				return template.queryForObject(
 						"select * from mst_shopper_details where dealer_id='" + did + "' and year='"
 								+ mvBean.getYear() + "' and month(visit_date)='" + mvBean.getMonth()
-								+ "' and brand_id='"+brand+"' and mst_shopper_details.mode_of_contact='Online Sales Channel' and visit_status='published';",
+								+ "' and brand_id='"+brand+"' and mode_of_contact = '"+mode+"' and mst_shopper_details.mode_of_contact='Online Sales Channel' and visit_status='published';",
 						new RowMapper<MysteryShoppingVisitsBean>() {
 							public MysteryShoppingVisitsBean mapRow(ResultSet rs, int row) throws SQLException {
 								mvBean.setOsc_shopper_id(rs.getString("sk_shopper_id"));		

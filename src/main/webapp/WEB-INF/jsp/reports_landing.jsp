@@ -193,11 +193,26 @@ String dashboardURL=resource.getString("dashboardURL");
 									<select name="outlet_id" required class="form-control" id="sk_outlet_id">
 								 	<option value="">Select Outlet</option> 
 									</select>
-								</div>
-								
-                               
-                                <label></label>
+								</div><label></label>
+
+
                                </div>
+
+
+                                 <label></label>
+                                 <div class="row">
+
+                                     <div class="col-md-4 mode_of_contact" style="display: none;">
+                                         <label for="Address" style="font-weight:600; color:#797979; ">Mode of Contact</label>
+                                         <select id="mode_of_contact" name="mode_of_contact" required
+                                                 class="form-control">
+                                             <option value="EMail/Website">EMail/Website</option>
+                                             <option value="Telephone">Telephone</option>
+                                             <option value="Walk In">Walk In</option>
+                                             <option value="Online Sales Channel">Online Sales Channel</option>
+                                         </select>
+                                     </div>
+                                 </div>
                                <div>&nbsp;&nbsp;</div>
                                  	  <div class="row">
                                 <div class="col-md-6 mgmtclass">
@@ -343,6 +358,8 @@ String dashboardURL=resource.getString("dashboardURL");
   document.getElementById("year").innerHTML = options;
   </script> -->
 <script>
+
+
   $('#report_type').on('change', function() {
 	  if(this.value=="Management"){
 		  $('.mgmtclass1').show();
@@ -353,12 +370,22 @@ String dashboardURL=resource.getString("dashboardURL");
 		  $('.dealers').hide();
 		  $('.outlets').hide();
 		  $('.regions').hide();
+          $('.mode_of_contact').hide();
 		  document.getElementById("subreport_type").innerHTML = "<option value='Dealer'>Dealer</option><option value='AL & SF team'>AL & SF team</option><option value='BPS team'>BPS team</option><option value='Training team'>Training team<option value='CRM team '>CRM team</option>";
 	  }
 	  /* else if(this.value=="output_level_report"){
 		  $(".outlets").hide();
 		  } */
-	  
+      else if(this.value=="output_level_report"){
+              $('.mode_of_contact').show();
+              $('.mgmtclass1').hide();
+              $('.years').show();
+              $('.months').show();
+              $('.dealers').show();
+              $('.outlets').show();
+              $('.regions').show();
+              $(".subselect").hide();
+          }
 	  else{ 
 		  $('.mgmtclass1').hide();
 		  $('.years').show();
@@ -366,7 +393,10 @@ String dashboardURL=resource.getString("dashboardURL");
 		  $('.dealers').show();
 		  $('.outlets').show();
 		  $('.regions').show();
-		  $(".subselect").hide(); }
+		  $(".subselect").hide();
+          $('.mode_of_contact').hide();}
+
+
 	  
 	
 	});
