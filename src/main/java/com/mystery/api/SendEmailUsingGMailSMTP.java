@@ -119,7 +119,6 @@ public class SendEmailUsingGMailSMTP {
 	
 	public void Eymail(String email1, String url,  String encrypted_shopper_id,String emailfrom,String emailusername,String emailpassword, MysteryShoppingVisitsBean mvBean) throws Exception {
 		//String email="ashlekha@codebele.com ";
-		
 		System.out.println("url in ey email"+url);
 		String email=email1;
 		String emailBody="<html>"
@@ -261,16 +260,12 @@ public class SendEmailUsingGMailSMTP {
 			     
 				    Part attachment = new MimeBodyPart();
 			        URLDataSource uds = new URLDataSource(url1);
-			       attachment.setDataHandler(new DataHandler(uds));
+			        attachment.setDataHandler(new DataHandler(uds));
 			        attachment.setDisposition(Part.ATTACHMENT);
 			        attachment.setFileName("Declaration.pdf");
-			       multipart.addBodyPart((BodyPart) attachment);
-		        
-				
-				
+			        multipart.addBodyPart((BodyPart) attachment);
 				// sets the multi-part as e-mail's content
 				msg.setContent(multipart);
-
 				// sends the e-mail
 				Transport.send(msg);
 

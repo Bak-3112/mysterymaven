@@ -144,7 +144,7 @@ String dashboardURL=resource.getString("dashboardURL");
 								<div class="col-sm-6 col-md py-3">
 									<label>Dealer</label>
 									<select name="dealer_id"
-											class="form-control" id="Dealer"onChange="getoutlets()" >
+											class="form-control" id="Dealer"onChange="getoutlets();" >
 											<%-- <option value="">Select Dealer</option>
 											<option value="" <c:if test = "${dealer_id == '' }">selected </c:if>>All</option>
 											 <c:forEach var="gBean" items="${activedealersbyid}">
@@ -170,7 +170,7 @@ String dashboardURL=resource.getString("dashboardURL");
 										<label>Location</label>
 									<select name="outlet_id"
 											class="form-control" id="Location">
-											<option value="">Outlet Location</option>
+											<option value="">Select Location</option>
 											<option value="" <c:if test = "${outlet_id == '' }">selected </c:if>>All</option>
 											 <c:forEach var="gBean" items="${activeoutletsbyid}">
 												<option value="${gBean.outlet_id}" <c:if test = "${outlet_id == gBean.outlet_id }">selected </c:if>>${gBean.outlet_name}</option>
@@ -449,19 +449,20 @@ String dashboardURL=resource.getString("dashboardURL");
         function getoutlets(){
         	$("#Location").empty();
         	var did=$("#Dealer").val();
+        	/* alert(did); */
         	//var bid=$("#brand_id").val();
         	var region_id=$("#Region").val();
         	 $.ajax({
                  url: "<%=dashboardURL%>getoutletsforcompitation",
                  type: "GET", 
-                   data: { 'did': did,'region_id':region_id},
+                   data: { 'did': did},
                  success: function(response)
                              {
                 	 $("#Location").append("<option value=''>All</option>");
 					$.each(response,function(k,v){
 						$("#Location").append("<option value='"+v.outlet_id+"' <c:if test = "${outlet_id == v.outlet_id }">selected </c:if>>"+v.outlet_name+"</option>");
 					})
-                             }
+				}
        	  });
         }
          

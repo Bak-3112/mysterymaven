@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.google.gson.Gson;
 import com.mystery.beans.DatabaseManagementBean;
 import com.mystery.beans.QuestionnaireBean;
 import com.mystery.dao.DatabaseManagementDao;
 import com.mystery.dao.QuestionnaireDao;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class QuestionnaireController {
 
@@ -32,6 +35,7 @@ public class QuestionnaireController {
 	QuestionnaireDao qDao;
 	@RequestMapping("questionCreate")
 	public ModelAndView login(DatabaseManagementBean dbBean) {
+		log.info("/questionCreate api");                  	        
 		ModelAndView mv = new ModelAndView("createquestionnaire");
 		List<DatabaseManagementBean> activebrandList = dbDao.getBrandList(dbBean);
 		mv.addObject("activebrandList", activebrandList);
@@ -45,6 +49,8 @@ public class QuestionnaireController {
 	
 	@RequestMapping("/questionformula/{qid}")
 	public ModelAndView questionformula(@PathVariable String qid, HttpServletRequest request, HttpServletResponse response,QuestionnaireBean qBean) {
+		log.info("/questionformula/{qid} api");                  	        
+
 		ModelAndView mv = new ModelAndView("questionformula");
 		List<QuestionnaireBean> subsetquestionsList = dbDao.subsetquestionsList(qBean,qid);
 		mv.addObject("subsetquestionsList", subsetquestionsList);
@@ -64,7 +70,7 @@ public class QuestionnaireController {
 	@RequestMapping("/editquestionformula/{qid}")
 	public ModelAndView editquestionformula(@PathVariable String qid,HttpServletRequest request, HttpServletResponse response,QuestionnaireBean qBean) {
 		ModelAndView mv = new ModelAndView("editquestionformula");
-		
+		log.info("/editquestionformula/{qid} api");                  	        
 		List<QuestionnaireBean> formulacount = qDao.formulacount(qBean,qid);
 		mv.addObject("formulacount", formulacount);
 		
@@ -91,6 +97,7 @@ public class QuestionnaireController {
 	@RequestMapping(value = "/createFormula/{qid}", method = RequestMethod.POST)
 	public ModelAndView addQuestionnaire1(@PathVariable String qid,HttpServletRequest request, HttpServletResponse response,
 			QuestionnaireBean qBean) throws IOException {
+		log.info("/createFormula/{qid} api");                  	        
 		ModelAndView model = null;
 		 model = new ModelAndView("redirect:/questions");
 		 List<QuestionnaireBean> formula = qBean.getFormula();
@@ -110,7 +117,8 @@ public class QuestionnaireController {
 		 		}
 		 	}
 				 }catch (Exception e) {
-					// TODO: handle exception
+					e.printStackTrace();
+					log.info("Exception /createFormula/{qid} api"+e); 
 				}
 		}
 	}
@@ -124,6 +132,7 @@ public class QuestionnaireController {
 	@RequestMapping(value = "/updateFormula/{qid}", method = RequestMethod.POST)
 	public ModelAndView updateFormula(@PathVariable String qid,HttpServletRequest request, HttpServletResponse response,
 			QuestionnaireBean qBean) throws IOException {
+		log.info("/updateFormula/{qid} api");                  	        
 		ModelAndView model = null;
 		 model = new ModelAndView("redirect:/questions");
 		 List<QuestionnaireBean> formula = qBean.getFormula();
@@ -148,7 +157,8 @@ public class QuestionnaireController {
 		 		}
 		 	}
 				 }catch (Exception e) {
-					// TODO: handle exception
+					e.printStackTrace();
+					log.info("Exception /updateFormula/{qid} api"+e); 
 				}
 		}
 	}
@@ -164,7 +174,7 @@ public class QuestionnaireController {
 	public ModelAndView addQuestionnaire(HttpServletRequest request, HttpServletResponse response,
 			QuestionnaireBean qBean) throws IOException {
 		ModelAndView model = null;
-	
+		log.info("/createQuestionnairePost api");                  	        
 		List<QuestionnaireBean> questionSelectList = qBean.getAnswerdata();
 		List<QuestionnaireBean> subquestionsList = qBean.getSubquestions();
         List<QuestionnaireBean> superQuestions=qBean.getSuperquestions();
@@ -213,7 +223,7 @@ public class QuestionnaireController {
 						}
 					}
 				}else {
-					System.out.println("no index");
+					log.info("no index");
 				}
 					
 				}
@@ -254,11 +264,11 @@ public class QuestionnaireController {
 						}
 					}
 					}else {
-						System.out.println("no index");
+						log.info("no index");
 					}
 				}
 			}
-			System.out.println("form="+qBean.getFormulFlag());
+			log.info("form="+qBean.getFormulFlag());
 			if(qBean.getFormulFlag().contentEquals("yes")) {
 		model = new ModelAndView("redirect:/questionformula/"+qBean.getSk_question_id());
 		}else {
@@ -273,7 +283,8 @@ public class QuestionnaireController {
 	@RequestMapping(value = "/getSuperQuestionAnswerBystdnum")
 	  public @ResponseBody Object SuperQuestionAnswerList(HttpServletRequest request, HttpServletResponse response,
 	      QuestionnaireBean qBean) {
-	    String stdnum = request.getParameter("stdnum");
+		log.info("/getSuperQuestionAnswerBystdnum api");                  	        
+		String stdnum = request.getParameter("stdnum");
 	    String section_id = request.getParameter("section_id");
 	    String brand_id = request.getParameter("brand_id");
 	    String modeOfContact = request.getParameter("modeOfContact");
@@ -286,6 +297,7 @@ public class QuestionnaireController {
 	@RequestMapping("/questions")
 	public ModelAndView question(HttpServletRequest request, HttpServletResponse response, QuestionnaireBean qBean)
 			throws IOException {
+		log.info("/questions api");                  	        
 		ModelAndView model = null;
 		model = new ModelAndView("viewQuestions");
 		
@@ -304,12 +316,14 @@ public class QuestionnaireController {
 	public ModelAndView questionPost(@PathVariable String qid, HttpServletRequest request, HttpServletResponse response,
 			DatabaseManagementBean dbBean, QuestionnaireBean qBean) throws IOException {
 		ModelAndView mv = null;
-
+		log.info("/editquestion/{qid} api");                  	        
 		mv = new ModelAndView("editQuestions");
 		qBean.setSk_question_id(qid);
 		try {
 			qDao.getQuestionById(qBean);
 		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("Exception qDao.getQuestionById"+e);
 			// TODO: handle exception
 		}
 		request.setAttribute("question", qBean.getQuestion());
@@ -384,7 +398,8 @@ public class QuestionnaireController {
 			
 	
 			}catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
+				log.info("Exception /editquestion/{qid} api"+e);
 			}
 		
 
@@ -406,8 +421,9 @@ public class QuestionnaireController {
 	@RequestMapping(value = "/updatequestionpost/{qid}", method = RequestMethod.POST)
 	public ModelAndView editstatePost(@PathVariable String qid, HttpServletRequest request,
 			HttpServletResponse response, QuestionnaireBean qBean) throws IOException {
+		log.info("/updatequestionpost/{qid} api");                  	        
 		ModelAndView model = null;
-		System.out.println("==================="+qBean.getYear_applied());
+		log.info("==================="+qBean.getYear_applied());
 
 		List<QuestionnaireBean> subquestionsList = qBean.getSubquestions();
 		// for main with set of sub questions
@@ -432,12 +448,12 @@ public class QuestionnaireController {
 			qDao.uploadDependentWithsetofsubquestions(qBean,qid,superQuestions);
 			}catch(Exception e){
 				e.printStackTrace();
-				System.out.println(e);
+				log.info("Exception of /updatequestionpost/{qid} api"+e);                  	        
 			}
 			if (null != subquestionsList && subquestionsList.size() > 0) {
 
 				for (QuestionnaireBean subQuestionList : subquestionsList) {
-				System.out.println("hema=="+subQuestionList.getSubQuestionAnswerType());
+				log.info("hema=="+subQuestionList.getSubQuestionAnswerType());
 				if (!(subQuestionList.getSubQuestionAnswerType()==null)) {
 					if (!subQuestionList.getSubQuestionAnswerType().equals("Select/List")) {
 						String subanswertype = subQuestionList.getSubQuestionAnswerType();
@@ -486,7 +502,7 @@ public class QuestionnaireController {
 				}
 				}
 			}
-			System.out.println("form dependent="+qBean.getFormulFlag());
+			log.info("form dependent="+qBean.getFormulFlag());
 			if(qBean.getFormulFlag().contentEquals("yes")) {
 		model = new ModelAndView("redirect:/editquestionformula/"+qid);
 		}else {
@@ -507,7 +523,7 @@ public class QuestionnaireController {
 			if (null != subquestionsList && subquestionsList.size() > 0) {
 
 				for (QuestionnaireBean subQuestionList : subquestionsList) {
-				System.out.println("hema=="+subQuestionList.getSubQuestionAnswerType());
+				log.info("hema=="+subQuestionList.getSubQuestionAnswerType());
 				if (!(subQuestionList.getSubQuestionAnswerType()==null)) {
 					if (!subQuestionList.getSubQuestionAnswerType().equals("Select/List")) {
 						String subanswertype = subQuestionList.getSubQuestionAnswerType();
@@ -522,7 +538,7 @@ public class QuestionnaireController {
 
 					} else {
 					String subid=subQuestionList.getSk_subquestion_id();
-					System.out.println("subid"+subid);
+					log.info("subid"+subid);
 					if(subid.contentEquals("nosubid")) {
 						qDao.insertSubquestion(qBean, qid, subQuestionList);
 					
@@ -558,7 +574,7 @@ public class QuestionnaireController {
 				}
 				}
 			}
-			System.out.println("form="+qBean.getFormulFlag());
+			log.info("form="+qBean.getFormulFlag());
 			if(qBean.getFormulFlag().contentEquals("yes")) {
 		model = new ModelAndView("redirect:/editquestionformula/"+qid);
 		}else {
@@ -572,13 +588,14 @@ public class QuestionnaireController {
 	@RequestMapping(value = "/getStandardNumberExistance")
 	public @ResponseBody Object getStandardNumberExistance(HttpServletRequest request, HttpServletResponse response,
 			QuestionnaireBean qBean) {
+		log.info("/getStandardNumberExistance api");                  	        
 		String section_id = request.getParameter("section_id");
 		String brand_id = request.getParameter("brand_id");
 		String modeOfContact = request.getParameter("modeOfContact");
 		String subsection_id = request.getParameter("subsection_id");
 		String standardNumber = request.getParameter("standardNumber");
 		String year_applied = request.getParameter("year_applied");
-		System.out.println("year applied"+year_applied);
+		log.info("year applied"+year_applied);
 		QuestionnaireBean StandardNumberexistingstatus = qDao.getStandardNumberExistance(qBean, section_id, brand_id,
 				modeOfContact, subsection_id, standardNumber,year_applied);
 		return StandardNumberexistingstatus;
@@ -587,6 +604,7 @@ public class QuestionnaireController {
 	@RequestMapping(value = "/getStandardNumberByIds")
 	public @ResponseBody Object getStandardNumberByIds(HttpServletRequest request, HttpServletResponse response,
 			QuestionnaireBean qBean) {
+		log.info("/getStandardNumberByIds api");                  	        
 		String section_id = request.getParameter("section_id");
 		String brand_id = request.getParameter("brand_id");
 		String modeOfContact = request.getParameter("modeOfContact");
@@ -599,6 +617,7 @@ public class QuestionnaireController {
 	@RequestMapping("deleteanwerOptions/{aid}/{qid}")
 	public ModelAndView deleteanwerOptions(@PathVariable String aid, @PathVariable String qid,
 			HttpServletRequest request, HttpServletResponse response, QuestionnaireBean qBean) throws IOException {
+		log.info("/deleteanwerOptions/{aid}/{qid} api");                  	        
 		ModelAndView model = null;
 		model = new ModelAndView("redirect:/editquestion/" + qid);
 		qDao.deleteanwerOptions(qBean, aid);
@@ -608,6 +627,7 @@ public class QuestionnaireController {
 	@RequestMapping("deletequestion/{qid}")
 	public ModelAndView deletequestion(@PathVariable String qid, HttpServletRequest request,
 			HttpServletResponse response, QuestionnaireBean qBean) throws IOException {
+		log.info("/deletequestion/{qid} api");                  	        
 		ModelAndView model = null;
 		model = new ModelAndView("redirect:/questions");
 		qDao.deletequestion(qBean, qid);
@@ -617,6 +637,7 @@ public class QuestionnaireController {
 	@RequestMapping(value = "/getSubsectionsById")
 	public @ResponseBody Object getsectionExistance(HttpServletRequest request, HttpServletResponse response,
 			DatabaseManagementBean dbBean) {
+		log.info("/getSubsectionsById api");                  	        
 		String section_id = request.getParameter("section_id");
 		List<DatabaseManagementBean> subSection_nameList = dbDao.getSubSections(dbBean, section_id);
 		return subSection_nameList;
@@ -628,6 +649,7 @@ public class QuestionnaireController {
 	
 	@RequestMapping("updateQuestionOrder")
 	public ModelAndView updateQuestionOrder(QuestionnaireBean qBean,DatabaseManagementBean dbBean,HttpServletRequest request, HttpServletResponse response) {
+		log.info("/updateQuestionOrder api");                  	        
 		ModelAndView mv = new ModelAndView("questionnairesequence");
 		request.setAttribute("brand_id", qBean.getSk_brand_id());
 		request.setAttribute("mode_of_contact", qBean.getMode_of_contact());
@@ -644,7 +666,7 @@ public class QuestionnaireController {
 	@RequestMapping("/updateStandardSequenceNumber")
 	public @ResponseBody Object updateStandardSequenceNumber(HttpServletRequest request, HttpServletResponse response,
 			QuestionnaireBean qBean) {
-
+		log.info("/updateStandardSequenceNumber api");                  	        
 		String standard_number_sequence = request.getParameter("standardNumberSequence");
 		String questionId = request.getParameter("questionId");
 		qBean.setStandard_number_sequence(standard_number_sequence);
@@ -663,15 +685,16 @@ public class QuestionnaireController {
 	public ModelAndView questionPost1(@PathVariable String qid,@PathVariable String qtype, HttpServletRequest request, HttpServletResponse response,
 			DatabaseManagementBean dbBean, QuestionnaireBean qBean) throws IOException {
 		ModelAndView mv = null;
-
+		log.info("/editquestion/{qid}/{qtype} api");                  	        
 		mv = new ModelAndView("editmainsubQuestions");
 		qBean.setSk_question_id(qid);
-		System.out.println("----------------");
+		log.info("----------------");
 
 		try {
 			qDao.getQuestionById(qBean);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			log.info("Exception qDao.getQuestionById"+e);
 		}
 		request.setAttribute("question", qBean.getQuestion());
 		request.setAttribute("question_code", qBean.getQuestion_code());
@@ -731,13 +754,14 @@ public class QuestionnaireController {
 	public ModelAndView editdependentquestion(@PathVariable String qid,@PathVariable String qtype, HttpServletRequest request, HttpServletResponse response,
 			DatabaseManagementBean dbBean, QuestionnaireBean qBean) throws IOException {
 		ModelAndView mv = null;
-
+		log.info("/editdependentquestion/{qid}/{qtype} api");                  	        
 		mv = new ModelAndView("editdependentsubQuestions");
 		qBean.setSk_question_id(qid);
 		try {
 			qDao.getQuestionById(qBean);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			log.info("Exception qDao.getQuestionById"+e);
 		}
 		request.setAttribute("question", qBean.getQuestion());
 		request.setAttribute("question_code", qBean.getQuestion_code());
@@ -804,7 +828,8 @@ public class QuestionnaireController {
 						sqid,qid,soid);
 				mv.addObject("superquestionsList", superquestionsList);
 			}catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
+				log.info("Exception /editdependentquestion/{qid}/{qtype} api"+e);  
 			}
 			
 			for (QuestionnaireBean questionnaireBean : subquestionsList) {

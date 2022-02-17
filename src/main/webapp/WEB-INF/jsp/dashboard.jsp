@@ -314,11 +314,18 @@ label, th, span, a {
 
 				<nav class="navbar-custom ml-0 pl-3"
 					style="background: #8e8e8e !important">
-					<a href="<%=UI_PATH %>/home"class="logo float-left mt-1 ml-5"> <span> <img src="<%=UI_PATH %>/design/images/bmw-logo.png" alt="" height="50" width="50">
+					<%-- <a href="<%=UI_PATH %>/home"class="logo float-left mt-1 ml-5"> <span> <img src="<%=UI_PATH %>/design/images/bmw-logo.png" alt="" height="50" width="50">
 					<img class="ml-3" src="<%=UI_PATH %>/design/images/mini-logo.svg" alt=""
 							width="128px">
 
 					</span> <i> </i>
+					</a> --%>
+
+					<a href="<%=dashboardURL%>/home" class="logo float-left mt-1 ml-5">
+						<img src="<%=UI_PATH%>/design/images/bmw-logo.png" alt=""
+						height="50" width="50"> <img class="ml-3"
+						src="<%=UI_PATH%>/design/images/mini-logo.svg" alt=""
+						width="136px">
 					</a>
 
 					<ul class="list-unstyled topbar-right-menu float-right mb-0">
@@ -394,11 +401,11 @@ label, th, span, a {
 											</select> <input type="hidden" value="1" id="brand_name">
 										</form>
 									</div>
-									<script>
+									<!-- <script>
 										function getBrand() {
 											$("#brand_form").submit();
 										}
-									</script>
+									</script> -->
 								</div>
 							</div>
 						</div>

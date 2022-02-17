@@ -74,8 +74,8 @@ public void setPincode(String pincode) {
 public String getCity_id() {
 	return city_id;
 }
-public void setCity_id(String city_id) {
-	this.city_id = city_id;
+public String setCity_id(String city_id) {
+	return this.city_id = city_id;
 }
 public String getSk_dealer_id() {
 	return sk_dealer_id;

@@ -126,7 +126,7 @@ String dashboardURL=resource.getString("dashboardURL");
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="Completed">
                            
-
+  <div class='table-responsive'>
                              <table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
@@ -174,6 +174,7 @@ String dashboardURL=resource.getString("dashboardURL");
                                 </c:forEach>
                                 </tbody>
                             </table>
+                        </div>
                         </div>
                           <!-- EXCEPTIONS -->
                                         
@@ -265,7 +266,7 @@ String dashboardURL=resource.getString("dashboardURL");
                 var table = $('#datatable-buttons').DataTable({
                     lengthChange: false,
                     buttons: ['copy', 'excel', 'pdf'],
-                    "scrollX": true
+                   /*  "scrollX": true */
                 });
 
                 table.buttons().container()

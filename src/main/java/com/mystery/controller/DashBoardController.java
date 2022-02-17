@@ -23,8 +23,12 @@ import com.google.gson.Gson;
 import com.mystery.beans.DashboardBean;
 
 import com.mystery.dao.DashboardDao;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.mystery.beans.MenuBean;
 
+@Slf4j
 @Controller
 public class DashBoardController {
 	@Autowired
@@ -32,6 +36,7 @@ public class DashBoardController {
 	
 	@RequestMapping("/home")
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response,  DashboardBean dBean,MenuBean mBean) throws ParseException, IOException {
+		log.info("/home api");
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession(true);
 		request.setAttribute("role_name", (String) session.getAttribute("role_name"));
@@ -39,10 +44,12 @@ public class DashBoardController {
 			  mv = new ModelAndView("/dashboard");
 		String callingname = request.getRequestURL().toString();
 		String getName = callingname.substring(callingname.lastIndexOf("/") + 1);
-		System.out.println("getName"+getName);
+		log.info("getName"+getName);
 		try {
 		//checkaccessEY(getName, request, response);
 		}catch (Exception e) {
+			e.printStackTrace();
+			log.info("Exception home api"+e);
 			// TODO: handle exception
 		}
 
@@ -82,7 +89,7 @@ public class DashBoardController {
 //					year1 = Integer.parseInt(year) - 1;
 //				}else {
 //					year1 = Integer.parseInt(year);
-//					System.out.println("year1=="+year1);
+//					log.info("year1=="+year1);
 //				}
 //		 }else {
 //			 year1 = Integer.parseInt(year);
@@ -91,13 +98,13 @@ public class DashBoardController {
 
 		 int year2 = Integer.parseInt(year);
 			DashboardBean checkClosedVisits = dDao.checkCurrentMonthClosedVisits(dBean, currentmonth, dBean.getBrand_id(),year2);
-            System.out.println("closed visits count in controller"+checkClosedVisits.getCount());
+            log.info("closed visits count in controller"+checkClosedVisits.getCount());
 		while (checkClosedVisits.getCount().equals("0")) {
 			i = i + 1;
-			System.out.println("month" + currentmonth);
+			log.info("month" + currentmonth);
 			currentmonth = sdf.format(now.getTime());
 			now.add(Calendar.MONTH, -1);
-			System.out.println("currentmonth=="+currentmonth);
+			log.info("currentmonth=="+currentmonth);
 			
 //			 if (currentmonth.contentEquals("January") || currentmonth.contentEquals("February") || currentmonth.contentEquals("March") ) {
 //					year1 = Integer.parseInt(year);
@@ -154,17 +161,19 @@ public class DashBoardController {
 	                            .collect(Collectors.toList());  // collecting as list  
 	         
 		    String jsonArray = gson.toJson(productPriceList);
-		    System.out.println(jsonArray);
+		    log.info(jsonArray);
 		
 		
 		
 		mv.addObject("getdashboardTabledata", productPriceList);
 		
 		
-		System.out.println("role id"+roleId);
+		log.info("role id"+roleId);
 		try {
 		dDao.getroleMenuById(mBean, roleId);
 		}catch (Exception e) {
+			e.printStackTrace();
+			log.info("Exception home api"+e);
 			// TODO: handle exception
 		}
 		String menu_list = mBean.getMenu();
@@ -178,14 +187,16 @@ public class DashBoardController {
 			Iterator<MenuBean> iterator = mainMenu.iterator();
 			while (iterator.hasNext()) {
 				String menu_id = iterator.next().getMenu_id();
-				System.out.println("Hi menu ids" + menu_id);
+				log.info("Hi menu ids" + menu_id);
 				subMenu.add(dDao.getSubMenuById(mBean, menu_id, ""));
 			}
 			mv.addObject("subMenuList", subMenu);
 			request.getSession().setAttribute("subMenuList", subMenu);
 		
 		}catch (Exception e) {
-			  mv = new ModelAndView("redirect:/");
+			e.printStackTrace();
+			log.info("Exception home api"+e);  
+			mv = new ModelAndView("redirect:/");
 		}
 		return mv;
 	}
@@ -201,21 +212,23 @@ public class DashBoardController {
 		try {
 			gettype= dDao.getUserType(dbBean);
 		}catch (Exception e) {
+			e.printStackTrace();
+			log.info("Exception home api"+e);
 			// TODO: handle exception
 		}
 		String data = "";
 		if (gettype.getUser_type().equals("BMW")) {
-			System.out.println(gettype.getUser_type());
+			log.info(gettype.getUser_type());
 			response.sendRedirect(dashboardURL + access);
 		} else {
-			System.out.println(session.getAttribute("role_id"));
+			log.info("role_id ="+session.getAttribute("role_id"));
 			String role_id = (String) session.getAttribute("role_id");
 			MenuBean mBean = new MenuBean();
 			dDao.getroleMenuById(mBean, role_id);
 			String menu_list = mBean.getMenu();
 			DashboardBean getMenus = dDao.getMenuByRoleid(dbBean, menu_list, access);
 			if (getMenus.getCount().equals("0")) {
-				System.out.println("hello");
+				log.info("hello");
 				response.sendRedirect(dashboardURL + "logout");
 			}
 		}

@@ -24,9 +24,9 @@ import com.mystery.beans.GraphBean;
 import com.mystery.beans.MysteryShoppingVisitsBean;
 import com.mystery.beans.QuestionnaireBean;
 
+import lombok.extern.slf4j.Slf4j;
 
-
-
+@Slf4j
 public class QuestionnaireDao {
 	@Autowired
     JdbcTemplate template;
@@ -43,12 +43,12 @@ public class QuestionnaireDao {
 	private HttpServletRequest request;
 
 	public QuestionnaireBean addMainQuestion(QuestionnaireBean qBean, List<QuestionnaireBean> questionSelectList) {
-
+		log.info("addMainQuestion method");                  	        
 		if (qBean.getUpload_file() == null) {
 			qBean.setUpload_file("no");
 		}
 		if (qBean.getAnswer_type().equals("Paragraph")) {
-			System.out.println(
+			log.info("addMainQuestion method Insert if Answer_type==Paragraph :"+
 					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
@@ -68,7 +68,7 @@ public class QuestionnaireDao {
 							+ qBean.getComment_mandatory().replace("'", "\\'") + "','" + qBean.getUpload_file() + "')");
 
 		} else if (qBean.getAnswer_type().equals("Date")) {
-			System.out.println(
+			log.info("addMainQuestion method Insert else if Answer_type==date "+
 					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
@@ -94,7 +94,7 @@ public class QuestionnaireDao {
 		}
 
 		else if (qBean.getAnswer_type().equals("Date & Time")) {
-			System.out.println(
+			log.info("addMainQuestion method Insert if Answer_type==Date & Time :"+
 					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `year_applied`,`standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
@@ -120,7 +120,7 @@ public class QuestionnaireDao {
 							+ "','" + qBean.getTime_routing() + "')");
 
 		} else {
-			System.out.println(
+			log.info("addMainQuestion method else part :"+
 					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
@@ -152,7 +152,7 @@ public class QuestionnaireDao {
 							
 							for (int i = 0; i < questionSelectList.size(); i++) {
 								if (!(questionSelectList.get(i).getAnswer()==null)) {
-								System.out.println(questionSelectList.get(i).getAnswer());
+								log.info(questionSelectList.get(i).getAnswer());
 								template.execute(
 										"INSERT INTO `mst_questionare_selectoption`(`question_id`, question_type,`options`, `option_points`, `option_code`, `option_response`, `option_optiontype`, `option_comment`,option_routing_type) VALUES ('"
 												+ questionId + "','" + qBean.getQuestion_type().replace("'", "\\'")
@@ -170,7 +170,7 @@ public class QuestionnaireDao {
 												+ questionSelectList.get(i).getRouting_type().replace("'", "\\'")
 												+ "')");
 							}else {
-								System.out.println("no index");
+								log.info("no index");
 							}
 							}
 
@@ -178,16 +178,16 @@ public class QuestionnaireDao {
 						}
 					});
 		}
+		log.info("addMainQuestion method return");                  	        
 		return qBean;
 
 	}
 
 	public List<QuestionnaireBean> getQuestionnaireList(QuestionnaireBean qBean) {
 	String sql="";
-	
-
+	log.info("getQuestionnaireList method");                  	        
 	sql="SELECT * FROM `mst_questionare` where question_status='active' and brand_id='"+qBean.getSk_brand_id()+"' and mode_of_contact='"+qBean.getMode_of_contact()+"' ORDER BY standard_number";
-	System.out.println(sql);
+	log.info("getQuestionnaireList method :"+sql);
 			return template.query(sql,
 				new RowMapper<QuestionnaireBean>() {
 					@Override
@@ -202,15 +202,16 @@ public class QuestionnaireDao {
 						qBean.setStandard_number(rs.getString("standard_number"));
 						qBean.setStandard_number_sequence(rs.getString("standard_number_sequence"));
 						qBean.setYear(rs.getString("year_applied"));
+						log.info("getQuestionnaireList method return");                  	        
 						return qBean;
 					}
 				});
 	}
 
 	public QuestionnaireBean getQuestionById(QuestionnaireBean qBean) {
-		
-		System.out.println(
-				"main query====SELECT mst_questionare.*,mst_brand.*,mst_section.section_name,mst_subsection.subsection_name FROM `mst_questionare`,mst_brand,mst_subsection,mst_section WHERE mst_brand.sk_brand_id=mst_questionare.brand_id and  mst_questionare.subsection_id=mst_subsection.sk_subsection_id and mst_section.sk_section_id=mst_questionare.section_id and mst_questionare.question_status='active' and  `sk_question_id`='"
+		log.info("getQuestionById method");                  	        
+		log.info("getQuestionById method :"+
+				"SELECT mst_questionare.*,mst_brand.*,mst_section.section_name,mst_subsection.subsection_name FROM `mst_questionare`,mst_brand,mst_subsection,mst_section WHERE mst_brand.sk_brand_id=mst_questionare.brand_id and  mst_questionare.subsection_id=mst_subsection.sk_subsection_id and mst_section.sk_section_id=mst_questionare.section_id and mst_questionare.question_status='active' and  `sk_question_id`='"
 						+ qBean.getSk_question_id() + "'  order by standard_number ;");
 		return template.queryForObject(
 				"SELECT mst_questionare.*,mst_brand.*,mst_section.section_name,mst_subsection.subsection_name FROM `mst_questionare`,mst_brand,mst_subsection,mst_section WHERE mst_brand.sk_brand_id=mst_questionare.brand_id and  mst_questionare.subsection_id=mst_subsection.sk_subsection_id and mst_section.sk_section_id=mst_questionare.section_id and mst_questionare.question_status='active' and  `sk_question_id`='"
@@ -249,6 +250,7 @@ public class QuestionnaireDao {
 						qBean.setSuper_question_id(rs.getString("super_question_id"));
 						qBean.setFormulFlag(rs.getString("formula_flag"));
 						qBean.setYear(rs.getString("year_applied"));
+						log.info("getQuestionById method return");                  	        
 						return qBean;
 					}
 						
@@ -257,7 +259,8 @@ public class QuestionnaireDao {
 	
 
 	public List<QuestionnaireBean> getsubsectionsbyid(DatabaseManagementBean dbBean, String sk_section_id) {
-		System.out.println("SELECT * from mst_subsection where mst_subsection.section_id='" + sk_section_id + "';");
+		log.info("getsubsectionsbyid method");                  	        
+		log.info("getsubsectionsbyid method :"+"SELECT * from mst_subsection where mst_subsection.section_id='" + sk_section_id + "';");
 		return template.query("SELECT * from mst_subsection where mst_subsection.section_id='" + sk_section_id + "'",
 				new RowMapper<QuestionnaireBean>() {
 					@Override
@@ -265,22 +268,19 @@ public class QuestionnaireDao {
 						QuestionnaireBean dbBean = new QuestionnaireBean();
 						dbBean.setSk_subsection_id(rs.getString("sk_subsection_id"));
 						dbBean.setSubsection_name(rs.getString("subsection_name"));
+						log.info("getsubsectionsbyid method return");                  	        
 						return dbBean;
 					}
 				});
 	}
 
 	public void updateQuestion(QuestionnaireBean qBean, String qid, List<QuestionnaireBean> questionSelectList, List<QuestionnaireBean> superQuestions) {
+		log.info("updateQuestion method");                  	        
 		if (qBean.getUpload_file() == null) {
 			qBean.setUpload_file("no");
-		}
-		
-		
-		
-		
-		
+		}		
 		if (qBean.getAnswer_type().equals("Paragraph")) {
-			System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+			log.info("updateQuestion method if Answer_type()==Paragraph :"+"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 					+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 					+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 					+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
@@ -291,7 +291,8 @@ public class QuestionnaireDao {
 					+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
 					+ qBean.getUpload_file() + "'  WHERE `sk_question_id`='" + qid + "'");
 		} else if (qBean.getAnswer_type().equals("Date")) {
-			System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+			log.info("updateQuestion method else if Answer_type()==Date :"+
+					"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 					+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 					+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 					+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
@@ -309,7 +310,7 @@ public class QuestionnaireDao {
 					+ qBean.getDate_routing().replace("'", "\\'") + "' WHERE `sk_question_id`='" + qid + "'");
 
 		} else if (qBean.getAnswer_type().equals("Date & Time")) {
-			System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+			log.info("updateQuestion method else if Answer_type()==Date & Time :"+"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 					+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 					+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 					+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
@@ -335,7 +336,7 @@ public class QuestionnaireDao {
 					+ qBean.getTime_routing().replace("'", "\\'") + "' WHERE `sk_question_id`='" + qid + "'");
 
 		} else {
-			System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+			log.info("updateQuestion method else part :"+"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 			+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 			+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 			+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
@@ -348,9 +349,9 @@ public class QuestionnaireDao {
 
 			for (int i = 0; i < questionSelectList.size(); i++) {
 				if (!(questionSelectList.get(i).getAnswer()==null)) {
-				System.out.println(questionSelectList.get(i).getAnswer());
+				log.info(questionSelectList.get(i).getAnswer());
 				if (questionSelectList.get(i).getSk_answer_id().equals("no_id")) {
-					System.out.println(
+					log.info("updateQuestion method Inserting query :"+
 							"INSERT INTO `mst_questionare_selectoption`(`question_id`, question_type,`options`, `option_points`, `option_code`, `option_response`, `option_optiontype`, `option_comment`,option_routing_type) VALUES ('"
 									+ qid + "','" + qBean.getQuestion_type() + "','"
 									+ questionSelectList.get(i).getAnswer().replace("'", "\\'") + "','"
@@ -372,7 +373,7 @@ public class QuestionnaireDao {
 									+ questionSelectList.get(i).getRouting_type().replace("'", "\\'") + "')");
 
 				} else {
-					System.out.println("UPDATE `mst_questionare_selectoption SET `options`='"
+					log.info("updateQuestion method else part updating :"+"UPDATE `mst_questionare_selectoption SET `options`='"
 							+ questionSelectList.get(i).getAnswer().replace("'", "\\'") + "',`option_points`='"
 							+ questionSelectList.get(i).getAnswer_points().replace("'", "\\'") + "',`option_code`='"
 							+ questionSelectList.get(i).getAnswer_code().replace("'", "\\'") + "',`option_response`='"
@@ -410,14 +411,10 @@ public class QuestionnaireDao {
 	
 	
 	public void updateQuestion1(QuestionnaireBean qBean, String qid, List<QuestionnaireBean> questionSelectList, List<QuestionnaireBean> superQuestions) {
+		log.info("updateQuestion1 method");                  	        
 		if (qBean.getUpload_file() == null) {
 			qBean.setUpload_file("no");
 		}
-		
-		
-		
-		
-		
 		String superQuestionIds = "";
 		String superQuestionAnswers="";
            if(null!=superQuestions && superQuestions.size()>0){
@@ -427,7 +424,7 @@ public class QuestionnaireDao {
 			qBean.setSuper_question_section_id(superQuestionsList.getSuper_question_section_id());
 			qBean.setSuper_question_subsection_id(superQuestionsList.getSuper_question_subsection_id());
 			qBean.setSuper_question_answer(superQuestionsList.getSuper_question_answer());
-			//System.out.println("super question section id="+superQuestionsList.getSuper_question_section_id()+"super question subsection id="+superQuestionsList.getSuper_question_subsection_id()+"super question standard number="+superQuestionsList.getSuper_question_standard_number()+"super question answer="+superQuestionsList.getSuper_question_answer());
+			//log.info("super question section id="+superQuestionsList.getSuper_question_section_id()+"super question subsection id="+superQuestionsList.getSuper_question_subsection_id()+"super question standard number="+superQuestionsList.getSuper_question_standard_number()+"super question answer="+superQuestionsList.getSuper_question_answer());
 				
 			getSuperQuestionId(qBean);
 			
@@ -439,13 +436,13 @@ public class QuestionnaireDao {
 			}
 			
 			}
-		System.out.println(superQuestionIds.substring(2));
-		System.out.println(superQuestionAnswers.substring(2));
+		log.info(superQuestionIds.substring(2));
+		log.info(superQuestionAnswers.substring(2));
 		
 		
 		
 		if (qBean.getAnswer_type().equals("Paragraph")) {
-			System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+			log.info("updateQuestion1 method if Answer_type()==Paragraph :"+"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 					+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 					+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 					+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
@@ -456,7 +453,8 @@ public class QuestionnaireDao {
 					+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
 					+ qBean.getUpload_file() + "' ,super_question_id='"+superQuestionIds.substring(2)+"',super_question_answer='"+superQuestionAnswers.substring(2)+"' WHERE `sk_question_id`='" + qid + "'");
 		} else if (qBean.getAnswer_type().equals("Date")) {
-			System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+			log.info("updateQuestion1 method else if Answer_type()==date :"+
+					"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 					+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 					+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 					+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
@@ -474,7 +472,8 @@ public class QuestionnaireDao {
 					+ qBean.getDate_routing().replace("'", "\\'") + "' WHERE `sk_question_id`='" + qid + "'");
 
 		} else if (qBean.getAnswer_type().equals("Date & Time")) {
-			System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+			log.info("updateQuestion1 method else if Answer_type()==Date & Time :"+
+					"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 					+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 					+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 					+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
@@ -500,7 +499,8 @@ public class QuestionnaireDao {
 					+ qBean.getTime_routing().replace("'", "\\'") + "' WHERE `sk_question_id`='" + qid + "'");
 
 		} else {
-			System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+			log.info("updateQuestion1 method else part :"+
+					"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 			+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 			+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 			+ "',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='"
@@ -513,9 +513,9 @@ public class QuestionnaireDao {
 
 			for (int i = 0; i < questionSelectList.size(); i++) {
 				if (!(questionSelectList.get(i).getAnswer()==null)) {
-				System.out.println(questionSelectList.get(i).getAnswer());
+				log.info(questionSelectList.get(i).getAnswer());
 				if (questionSelectList.get(i).getSk_answer_id().equals("no_id")) {
-					System.out.println(
+					log.info("updateQuestion1 method Inserting :"+
 							"INSERT INTO `mst_questionare_selectoption`(`question_id`, question_type,`options`, `option_points`, `option_code`, `option_response`, `option_optiontype`, `option_comment`,option_routing_type) VALUES ('"
 									+ qid + "','" + qBean.getQuestion_type() + "','"
 									+ questionSelectList.get(i).getAnswer().replace("'", "\\'") + "','"
@@ -537,7 +537,8 @@ public class QuestionnaireDao {
 									+ questionSelectList.get(i).getRouting_type().replace("'", "\\'") + "')");
 
 				} else {
-					System.out.println("UPDATE `mst_questionare_selectoption SET `options`='"
+					log.info("updateQuestion1 method updating :"+
+							"UPDATE `mst_questionare_selectoption SET `options`='"
 							+ questionSelectList.get(i).getAnswer().replace("'", "\\'") + "',`option_points`='"
 							+ questionSelectList.get(i).getAnswer_points().replace("'", "\\'") + "',`option_code`='"
 							+ questionSelectList.get(i).getAnswer_code().replace("'", "\\'") + "',`option_response`='"
@@ -576,7 +577,8 @@ public class QuestionnaireDao {
 
 	public List<QuestionnaireBean> getStandardNumberByIds(QuestionnaireBean qBean, String section_id, String brand_id,
 			String modeOfContact, String subsection_id) {
-		System.out.println("SELECT * FROM `mst_questionare` WHERE `section_id`='" + section_id
+		log.info("getStandardNumberByIds method");                  	        
+		log.info("getStandardNumberByIds method :"+"SELECT * FROM `mst_questionare` WHERE `section_id`='" + section_id
 				+ "' and `subsection_id`='" + subsection_id + "' and `brand_id`='" + brand_id
 				+ "' and `mode_of_contact`='" + modeOfContact + "' and question_status='active';");
 		return template.query("SELECT * FROM `mst_questionare` WHERE `section_id`='" + section_id
@@ -593,11 +595,10 @@ public class QuestionnaireDao {
 	}
 
 	public QuestionnaireBean addDependentQuestion(QuestionnaireBean qBean, List<QuestionnaireBean> questionSelectList,List<QuestionnaireBean> superQuestions) {
+		log.info("addDependentQuestion method");                  	        
 		if (qBean.getUpload_file() == null) {
 			qBean.setUpload_file("no");
 		}
-		
-		
 		String superQuestionIds = "";
 		String superQuestionAnswers="";
            if(null!=superQuestions && superQuestions.size()>0){
@@ -607,7 +608,7 @@ public class QuestionnaireDao {
 			qBean.setSuper_question_section_id(superQuestionsList.getSuper_question_section_id());
 			qBean.setSuper_question_subsection_id(superQuestionsList.getSuper_question_subsection_id());
 			qBean.setSuper_question_answer(superQuestionsList.getSuper_question_answer());
-			//System.out.println("super question section id="+superQuestionsList.getSuper_question_section_id()+"super question subsection id="+superQuestionsList.getSuper_question_subsection_id()+"super question standard number="+superQuestionsList.getSuper_question_standard_number()+"super question answer="+superQuestionsList.getSuper_question_answer());
+			//log.info("super question section id="+superQuestionsList.getSuper_question_section_id()+"super question subsection id="+superQuestionsList.getSuper_question_subsection_id()+"super question standard number="+superQuestionsList.getSuper_question_standard_number()+"super question answer="+superQuestionsList.getSuper_question_answer());
 				getSuperQuestionId(qBean);
 				superQuestionIds+="##"+qBean.getSk_question_id();
 				superQuestionAnswers+="##"+qBean.getSuper_question_answer();
@@ -617,10 +618,10 @@ public class QuestionnaireDao {
 			}
 			
 			}
-		System.out.println(superQuestionIds.substring(2));
+		log.info(superQuestionIds.substring(2));
 
 		if (qBean.getAnswer_type().equals("Paragraph")) {
-			System.out.println(
+			log.info("addDependentQuestion method if part Answer_type()==paragraph :"+
 					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
@@ -641,7 +642,7 @@ public class QuestionnaireDao {
 							+ superQuestionIds.substring(2) + "','" + superQuestionAnswers.substring(2) + "')");
 
 		} else if (qBean.getAnswer_type().equals("Date")) {
-			System.out.println(
+			log.info("addDependentQuestion method else if part Answer_type()==date :"+
 					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
@@ -667,7 +668,7 @@ public class QuestionnaireDao {
 							+ "','" + qBean.getDate_routing() + "')");
 
 		} else if (qBean.getAnswer_type().equals("Date & Time")) {
-			System.out.println(
+			log.info("addDependentQuestion method else if part Answer_type()==Date & Time :"+
 					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer, `date_points`, `date_code`, `date_response`, `date_routing`,time_points,time_code,time_response,time_routing) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
@@ -696,7 +697,7 @@ public class QuestionnaireDao {
 
 		} else {
 
-			System.out.println(
+			log.info("addDependentQuestion method else part :"+
 					"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`,`year_applied`, `standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `answer_type`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 							+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 							+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
@@ -730,8 +731,8 @@ public class QuestionnaireDao {
 
 							for (int i = 0; i < questionSelectList.size(); i++) {
 								if (!(questionSelectList.get(i).getAnswer()==null)) {
-								System.out.println(questionSelectList.get(i).getAnswer());
-								template.execute(
+								log.info(questionSelectList.get(i).getAnswer());
+								template.execute("addDependentQuestion method Inserting :"+
 										"INSERT INTO `mst_questionare_selectoption`(`question_id`, question_type,`options`, `option_points`, `option_code`, `option_response`, `option_optiontype`, `option_comment`,option_routing_type) VALUES ('"
 												+ questionId + "','" + qBean.getQuestion_type().replace("'", "\\'")
 												+ "','" + questionSelectList.get(i).getAnswer().replace("'", "\\'")
@@ -757,13 +758,14 @@ public class QuestionnaireDao {
 					});
 
 		}
+		log.info("addDependentQuestion method return");                  	        
 		return qBean;
 
 	}
 
 	private QuestionnaireBean getSuperQuestionId(QuestionnaireBean qBean) {
-		System.out.println("==================="+qBean.getYear_applied());
-    System.out.println(
+		log.info("getSuperQuestionId method"+qBean.getYear_applied());
+    log.info("getSuperQuestionId method :"+
         "SELECT * FROM mst_questionare WHERE standard_number='" + qBean.getSuper_question_standard_number()
             + "'  and brand_id='" +qBean.getSk_brand_id()+ "' and mode_of_contact='"
             + qBean.getMode_of_contact() + "' and section_id='" + qBean.getSuper_question_section_id()
@@ -777,13 +779,16 @@ public class QuestionnaireDao {
           @Override
           public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
             qBean.setSk_question_id(rs.getString("sk_question_id"));
+    		log.info("getSuperQuestionId method return");                  	        
             return qBean;
           }
         });
   }
 	public List<QuestionnaireBean> getSuperQuestionAnswerBystdnum(QuestionnaireBean qBean, String stdnum,
 		      String brand_id, String section_id, String subsection_id, String modeOfContact) {
-		    System.out.println("SELECT * FROM mst_questionare,mst_questionare_selectoption WHERE standard_number='"
+		log.info("getSuperQuestionAnswerBystdnum method");                  	           
+		log.info("getSuperQuestionAnswerBystdnum method :"+
+				"SELECT * FROM mst_questionare,mst_questionare_selectoption WHERE standard_number='"
 		        + stdnum
 		        + "' and mst_questionare_selectoption.question_id=mst_questionare.sk_question_id and mst_questionare.question_status='active' and mst_questionare_selectoption.options_status='active' AND mst_questionare.answer_type='Select/List'  and mst_questionare.brand_id='"
 		        + brand_id + "' and mst_questionare.mode_of_contact='" + modeOfContact
@@ -800,13 +805,15 @@ public class QuestionnaireDao {
 		            QuestionnaireBean qBean = new QuestionnaireBean();
 		            qBean.setSk_answer_id(rs.getString("sk_answer_id"));
 		            qBean.setAnswer(rs.getString("options"));
+		    		log.info("getSuperQuestionAnswerBystdnum method return");                  	           
 		            return qBean;
 		          }
 		        });
 		  }
 	public List<QuestionnaireBean> getsuperquestionsubsectionsbyid(DatabaseManagementBean dbBean,
 			String super_question_section_id) {
-		System.out.println(
+		log.info("getsuperquestionsubsectionsbyid method");                  	           
+		log.info("getsuperquestionsubsectionsbyid method :"+
 				"SELECT * from mst_subsection where mst_subsection.section_id='" + super_question_section_id + "';");
 		return template.query(
 				"SELECT * from mst_subsection where mst_subsection.section_id='" + super_question_section_id + "'",
@@ -816,18 +823,21 @@ public class QuestionnaireDao {
 						QuestionnaireBean dbBean = new QuestionnaireBean();
 						dbBean.setSk_subsection_id(rs.getString("sk_subsection_id"));
 						dbBean.setSubsection_name(rs.getString("subsection_name"));
+						log.info("getsuperquestionsubsectionsbyid method return");                  	           
 						return dbBean;
 					}
 				});
 	}
 
 	public void deletequestion(QuestionnaireBean qBean, String qid) {
-		System.out.println("UPDATE mst_questionare SET question_status='inactive' WHERE sk_question_id='" + qid + "'");
+		log.info("deletequestion method");                  	           
+		log.info("deletequestion method :"+"UPDATE mst_questionare SET question_status='inactive' WHERE sk_question_id='" + qid + "'");
 		template.execute("UPDATE mst_questionare SET question_status='inactive' WHERE sk_question_id='" + qid + "'");
 	}
 
 	public void deleteanwerOptions(QuestionnaireBean qBean, String aid) {
-		System.out.println(
+		log.info("deleteanwerOptions method");                  	           
+		log.info("deleteanwerOptions method :"+
 				"UPDATE mst_questionare_selectoption SET options_status='inactive' WHERE sk_answer_id='" + aid + "'");
 		template.execute(
 				"UPDATE mst_questionare_selectoption SET options_status='inactive' WHERE sk_answer_id='" + aid + "'");
@@ -835,13 +845,13 @@ public class QuestionnaireDao {
 
 	public QuestionnaireBean getStandardNumberExistance(QuestionnaireBean qBean, String section_id, String brand_id,
 			String modeOfContact, String subsection_id, String standardNumber,String year_applied) {
-
+		log.info("getStandardNumberExistance method");                  	           
 		// TODO Auto-generated method stub
 		String count = "";
 		String sql = "SELECT count(*) as exist FROM `mst_questionare` WHERE `section_id`='" + section_id
 				+ "' and `subsection_id`='" + subsection_id + "' and `brand_id`='" + brand_id
 				+ "' and `mode_of_contact`='" + modeOfContact + "' and year_applied='"+year_applied+"' and standard_number='" + standardNumber + "' and question_status='active';";
-		System.out.println(sql);
+		log.info("getStandardNumberExistance method :"+sql);
 		List<Map<String, Object>> list = template.queryForList(sql);
 		for (Map<String, Object> row : list) {
 			count = row.get("exist").toString();
@@ -852,13 +862,14 @@ public class QuestionnaireDao {
 		} else {
 			qBean.setMessage("notexist");
 		}
-
+		log.info("getStandardNumberExistance method return");                  	           
 		return qBean;
 
 	}
 
 	public QuestionnaireBean insertMainquestion(QuestionnaireBean qBean, List<QuestionnaireBean> superQuestions) {
-	String superQuestionIds = "";
+		log.info("insertMainquestion method");                  	           
+		String superQuestionIds = "";
 		String superQuestionAnswers="";
            if(null!=superQuestions && superQuestions.size()>0){
 			for (QuestionnaireBean superQuestionsList : superQuestions) {
@@ -867,7 +878,7 @@ public class QuestionnaireDao {
 			qBean.setSuper_question_section_id(superQuestionsList.getSuper_question_section_id());
 			qBean.setSuper_question_subsection_id(superQuestionsList.getSuper_question_subsection_id());
 			qBean.setSuper_question_answer(superQuestionsList.getSuper_question_answer());
-			//System.out.println("super question section id="+superQuestionsList.getSuper_question_section_id()+"super question subsection id="+superQuestionsList.getSuper_question_subsection_id()+"super question standard number="+superQuestionsList.getSuper_question_standard_number()+"super question answer="+superQuestionsList.getSuper_question_answer());
+			//log.info("super question section id="+superQuestionsList.getSuper_question_section_id()+"super question subsection id="+superQuestionsList.getSuper_question_subsection_id()+"super question standard number="+superQuestionsList.getSuper_question_standard_number()+"super question answer="+superQuestionsList.getSuper_question_answer());
 				getSuperQuestionId(qBean);
 				superQuestionIds+="##"+qBean.getSk_question_id();
 				superQuestionAnswers+="##"+qBean.getSuper_question_answer();
@@ -877,14 +888,14 @@ public class QuestionnaireDao {
 			}
 			
 			}
-		System.out.println(superQuestionIds.substring(2));
+		log.info(superQuestionIds.substring(2));
 		
 		if (qBean.getUpload_file() == null) {
 			qBean.setUpload_file("no");
 		}
 		
 
-		System.out.println(
+		log.info("insertMainquestion method :"+
 				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `year_applied`,`standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`,super_question_id,	super_question_answer) VALUES ('"
 						+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "','"+qBean.getYear_applied()+"','"
@@ -905,6 +916,7 @@ public class QuestionnaireDao {
 					@Override
 					public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 						qBean.setSk_question_id(rs.getString("questionId"));
+						log.info("insertMainquestion method return");                  	           
 						return qBean;
 					}
 				});
@@ -912,7 +924,8 @@ public class QuestionnaireDao {
 	}
 
 	public List<QuestionnaireBean> getsubquestionsList(DatabaseManagementBean dbBean, String sk_question_id) {
-		System.out.println(
+		log.info("getsubquestionsList method");                  	           
+		log.info("getsubquestionsList method :"+
 				"SELECT mst_questionare_subquestion.* FROM `mst_questionare_subquestion`,mst_questionare WHERE `question_id`='"
 						+ sk_question_id
 						+ "' and mst_questionare_subquestion.question_id=mst_questionare.sk_question_id");
@@ -938,13 +951,15 @@ public class QuestionnaireDao {
 						qBean.setTime_points(rs.getString("subtime_points"));
 						qBean.setTime_response(rs.getString("subtime_response"));
 						qBean.setTime_routing(rs.getString("subtime_routing"));
+						log.info("getsubquestionsList method return");                  	           
 						return qBean;
 					}
 				});
 	}
 
 	public List<QuestionnaireBean> dependentsubquestionsDateList(DatabaseManagementBean dbBean, String sk_question_id) {
-		System.out.println(
+		log.info("dependentsubquestionsDateList method");                  	           
+		log.info("dependentsubquestionsDateList method :"+
 				"SELECT mst_questionare_subquestion.* FROM `mst_questionare_subquestion`,mst_questionare WHERE `question_id`='"
 						+ sk_question_id
 						+ "' and mst_questionare_subquestion.question_id=mst_questionare.sk_question_id and subanswer_type='Date'");
@@ -970,6 +985,7 @@ public class QuestionnaireDao {
 						qBean.setTime_points(rs.getString("subtime_points"));
 						qBean.setTime_response(rs.getString("subtime_response"));
 						qBean.setTime_routing(rs.getString("subtime_routing"));
+						log.info("dependentsubquestionsDateList method return");                  	           
 						return qBean;
 					}
 				});
@@ -977,7 +993,8 @@ public class QuestionnaireDao {
 
 	public List<QuestionnaireBean> dependentsubquestionsDateTimeList(DatabaseManagementBean dbBean,
 			String sk_question_id) {
-		System.out.println(
+		log.info("dependentsubquestionsDateTimeList method");                  	           
+		log.info("dependentsubquestionsDateTimeList method :"+
 				"SELECT mst_questionare_subquestion.* FROM `mst_questionare_subquestion`,mst_questionare WHERE `question_id`='"
 						+ sk_question_id
 						+ "' and mst_questionare_subquestion.question_id=mst_questionare.sk_question_id and subanswer_type='Date & Time'");
@@ -1003,13 +1020,15 @@ public class QuestionnaireDao {
 						qBean.setTime_points(rs.getString("subtime_points"));
 						qBean.setTime_response(rs.getString("subtime_response"));
 						qBean.setTime_routing(rs.getString("subtime_routing"));
+						log.info("dependentsubquestionsDateTimeList method return");                  	           
 						return qBean;
 					}
 				});
 	}
 
 	public void updateMainquestion(QuestionnaireBean qBean, String qid) {
-		System.out.println("UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
+		log.info("updateMainquestion method");                  	           
+		log.info("updateMainquestion method :"+"UPDATE `mst_questionare` SET `question_optiontype`='" + qBean.getQuestion_optiontype()
 				+ "',`question_points`='" + qBean.getQuestion_points() + "',`question_code`='"
 				+ qBean.getQuestion_code() + "',`question`='" + qBean.getQuestion().replace("'", "\\'")
 				+ "' WHERE `sk_question_id`='" + qid + "'");
@@ -1022,9 +1041,10 @@ public class QuestionnaireDao {
 
 	public void updateDependentQuestionwithSubquestion(QuestionnaireBean qBean, String subanswertype,
 			List<QuestionnaireBean> subquestionsList, String qid, int i) {
+		log.info("updateDependentQuestionwithSubquestion method");                  	           
 		if (subanswertype.equals("Paragraph")) {
 
-			System.out.println(
+			log.info("updateDependentQuestionwithSubquestion method if subanswertype==paragraph :"+
 					"update  `mst_questionare_subquestion` set subquestion='" + subquestionsList.get(i).getSubQuestion()
 							+ "', subupload_type='" + subquestionsList.get(i).getUploadFile() + "' where question_id='"
 							+ qid + "' and sk_subquestion_id='" + subquestionsList.get(i).getSubQuestion() + "'");
@@ -1034,7 +1054,7 @@ public class QuestionnaireDao {
 							+ qid + "' and sk_subquestion_id='" + subquestionsList.get(i).getSubQuestion() + "'");
 
 		} else if (subanswertype.equals("Date")) {
-			System.out.println(
+			log.info("updateDependentQuestionwithSubquestion method else if subanswertype==date :"+
 					"update  `mst_questionare_subquestion` set subquestion='" + subquestionsList.get(i).getSubQuestion()
 							+ "', subupload_type='" + subquestionsList.get(i).getUploadFile() + "',subdate_points='"
 							+ subquestionsList.get(i).getDate_points() + "',subdate_code='"
@@ -1052,7 +1072,7 @@ public class QuestionnaireDao {
 							+ "' and sk_subquestion_id='" + subquestionsList.get(i).getSk_subquestion_id() + "'");
 		} else if (subanswertype.equals("Date & Time")) {
 
-			System.out.println(
+			log.info("updateDependentQuestionwithSubquestion method else if subanswertype==Date & time :"+
 					"update  `mst_questionare_subquestion` set`subquestion='" + subquestionsList.get(i).getSubQuestion()
 							+ "', subupload_type='" + subquestionsList.get(i).getUploadFile() + "',subdate_points='"
 							+ subquestionsList.get(i).getDate_points() + "',subdate_code='"
@@ -1083,13 +1103,14 @@ public class QuestionnaireDao {
 
 	public QuestionnaireBean updateSubquestion(QuestionnaireBean qBean, String questionId, int i,
 			List<QuestionnaireBean> subquestionsList) {
+		log.info("updateSubquestion method");                  	           
 		if (subquestionsList.get(i).getUploadFile() == null) {
 			subquestionsList.get(i).setUploadFile("no");
 		}
 
 		if (subquestionsList.get(i).getSk_subquestion_id() == "no_sub_id") {
 
-			System.out.println(
+			log.info("updateSubquestion method if subquestionsList.get(i).getSk_subquestion_id() == no_sub_id :"+
 					"INSERT INTO `mst_questionare_subquestion`( `question_id`, `question_type`, `subquestion`, `subanswer_type`,subupload_type) VALUES ('"
 							+ questionId + "','" + qBean.getQuestion_type() + "','"
 							+ subquestionsList.get(i).getSubQuestion() + "','"
@@ -1110,7 +1131,7 @@ public class QuestionnaireDao {
 							qBean.setSk_subquestion_id(rs.getString("sk_subquestion_id"));
 							if (subquestionsList.get(i).getSubQuestionAnswerType() == "select/List") {
 								for (int j = 0; j < subquestionsList.get(i).getSubquestionanswers().size(); j++) {
-									System.out.println(
+									log.info("updateSubquestion method if subquestionsList.get(i).getSk_subquestion_id() == select/List :"+
 											"INSERT INTO `mst_questionare_selectoption`(`question_id`,subquestion_id, question_type,`options`, `option_points`, `option_code`, `option_response`, `option_optiontype`, `option_comment`) VALUES ('"
 													+ questionId + "','" + rs.getString("sk_subquestion_id") + "','"
 													+ qBean.getQuestion_type().replace("'", "\\'") + "','"
@@ -1156,12 +1177,14 @@ public class QuestionnaireDao {
 							} else {
 
 							}
+							log.info("updateSubquestion method return");                  	           
 							return qBean;
 						}
 					});
 		} else {
 
-			System.out.println("update  `mst_questionare_subquestion` set subquestion='"
+			log.info("updateSubquestion method else part :"+
+					"update  `mst_questionare_subquestion` set subquestion='"
 					+ subquestionsList.get(i).getSubQuestion() + "', subupload_type='"
 					+ subquestionsList.get(i).getUploadFile() + "' where question_id='" + questionId
 					+ "' and sk_subquestion_id='" + subquestionsList.get(i).getSk_subquestion_id() + "'");
@@ -1175,13 +1198,16 @@ public class QuestionnaireDao {
 						questionId, subquestionsList.get(i).getSk_subquestion_id());
 			}
 		}
+		log.info("updateSubquestion method return");                  	           
 		return qBean;
 
 	}
 
 	public void updateDependentQuestionwithSubquestionSelectList(QuestionnaireBean qBean, String subanswertype, int i,
 			int j, List<QuestionnaireBean> subquestionsList, String questionId, String subquestionId) {
-		System.out.println("UPDATE `mst_questionare_selectoption SET `options`='"
+		log.info("updateDependentQuestionwithSubquestionSelectList method");                  	           
+		log.info("updateDependentQuestionwithSubquestionSelectList method :"+
+				"UPDATE `mst_questionare_selectoption SET `options`='"
 				+ subquestionsList.get(i).getAnswer().replace("'", "\\'") + "',`option_points`='"
 				+ subquestionsList.get(i).getAnswer_points().replace("'", "\\'") + "',`option_code`='"
 				+ subquestionsList.get(i).getAnswer_code().replace("'", "\\'") + "',`option_response`='"
@@ -1204,12 +1230,12 @@ public class QuestionnaireDao {
 	}
 
 	public QuestionnaireBean insertMainsetofsubquestionsquestion(QuestionnaireBean qBean) {
-
+		log.info("insertMainsetofsubquestionsquestion method");                  	           
 		if (qBean.getUpload_file() == null) {
 			qBean.setUpload_file("no");
 		}
 		
-		System.out.println(
+		log.info("insertMainsetofsubquestionsquestion method :"+
 				"INSERT INTO `mst_questionare`( `brand_id`, `mode_of_contact`, `section_id`, `subsection_id`, `year_applied`,`standard_number`, `question_type`, `question_optiontype`, `question_points`, `question_code`,  `question`, `comment_mandatory`, `upload_file`) VALUES ('"
 						+ qBean.getSk_brand_id() + "','" + qBean.getMode_of_contact().replace("'", "\\'") + "','"
 						+ qBean.getSk_section_id() + "','" + qBean.getSk_subsection_id() + "', '"+qBean.getYear_applied()+"','"
@@ -1228,6 +1254,7 @@ public class QuestionnaireDao {
 					@Override
 					public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 						qBean.setSk_question_id(rs.getString("questionId"));
+						log.info("insertMainsetofsubquestionsquestion method return");                  	           
 						return qBean;
 					}
 				});
@@ -1236,12 +1263,13 @@ public class QuestionnaireDao {
 
 	public QuestionnaireBean addDependentQuestionwithSubquestion(QuestionnaireBean qBean, String subanswertype,
 			QuestionnaireBean subQuestionList, String questionId) {
+		log.info("addDependentQuestionwithSubquestion method");                  	           
 		if (subQuestionList.getUploadFile() == null) {
 			subQuestionList.setUploadFile("no");
 		}
 		if (subanswertype.equals("Paragraph")) {
 
-			System.out.println(
+			log.info("addDependentQuestionwithSubquestion method if subanswertype==paragraph :"+
 					"INSERT INTO `mst_questionare_subquestion`( `question_id`, `question_type`, `subquestion`, `subanswer_type`,subupload_type) VALUES ('"
 							+ questionId + "','" + qBean.getQuestion_type() + "','" + subQuestionList.getSubQuestion()
 							+ "','" + subQuestionList.getSubQuestionAnswerType() + "','"
@@ -1253,7 +1281,7 @@ public class QuestionnaireDao {
 							+ subQuestionList.getUploadFile() + "')");
 
 		} else if (subanswertype.equals("Date")) {
-			System.out.println(
+			log.info("addDependentQuestionwithSubquestion method else if subanswertype==Date :"+
 					"INSERT INTO `mst_questionare_subquestion`( `question_id`, `question_type`, `subquestion`, `subanswer_type`,subupload_type, `subdate_points`, `subdate_code`, `subdate_response`, `subdate_routing`) VALUES ('"
 							+ questionId + "','" + qBean.getQuestion_type() + "','" + subQuestionList.getSubQuestion()
 							+ "','" + subQuestionList.getSubQuestionAnswerType() + "','"
@@ -1269,7 +1297,7 @@ public class QuestionnaireDao {
 							+ subQuestionList.getDate_routing() + "')");
 		} else if (subanswertype.equals("Date & Time")) {
 
-			System.out.println(
+			log.info("addDependentQuestionwithSubquestion method else if subanswertype==Date & Time :"+
 					"INSERT INTO `mst_questionare_subquestion`( `question_id`, `question_type`, `subquestion`, `subanswer_type`,subupload_type, `subdate_points`, `subdate_code`, `subdate_response`, `subdate_routing`, `subtime_points`, `subtime_code`, `subtime_response`, `subtime_routing`) VALUES ('"
 							+ questionId + "','" + qBean.getQuestion_type() + "','" + subQuestionList.getSubQuestion()
 							+ "','" + subQuestionList.getSubQuestionAnswerType() + "','"
@@ -1289,15 +1317,17 @@ public class QuestionnaireDao {
 							+ subQuestionList.getTime_routing() + "')");
 
 		}
+		log.info("addDependentQuestionwithSubquestion method");                  	           
 		return qBean;
 	}
 
 	public QuestionnaireBean insertSubquestion(QuestionnaireBean qBean, String questionId,
 			QuestionnaireBean subQuestionList) {
+		log.info("insertSubquestion method");                  	           
 		if (subQuestionList.getUploadFile() == null) {
 			subQuestionList.setUploadFile("no");
 		}
-		System.out.println(
+		log.info("insertSubquestion method :"+
 				"INSERT INTO `mst_questionare_subquestion`( `question_id`, `question_type`, `subquestion`, `subanswer_type`,subupload_type) VALUES ('"
 						+ questionId + "','" + qBean.getQuestion_type() + "','" + subQuestionList.getSubQuestion()
 						+ "','" + subQuestionList.getSubQuestionAnswerType() + "','" + subQuestionList.getUploadFile()
@@ -1314,7 +1344,7 @@ public class QuestionnaireDao {
 					public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 						qBean.setSuper_question_id(questionId);
 						qBean.setSk_subquestion_id(rs.getString("sk_subquestion_id"));
-
+						log.info("insertSubquestion method return");                  	           
 						return qBean;
 					}
 				});
@@ -1322,7 +1352,8 @@ public class QuestionnaireDao {
 
 	public void addDependentQuestionwithSubquestionSelectList(QuestionnaireBean qBean, String subanswertype,
 			QuestionnaireBean subQuestionList, String questionId, String subquestionId) {
-		System.out.println(
+		log.info("addDependentQuestionwithSubquestionSelectList method");                  	           
+		log.info("addDependentQuestionwithSubquestionSelectList method :"+
 				"INSERT INTO `mst_questionare_selectoption`(`question_id`,subquestion_id, question_type,`options`, `option_points`, `option_code`, `option_response`, `option_optiontype`, `option_comment`) VALUES ('"
 						+ questionId + "','" + subquestionId + "','" + qBean.getQuestion_type().replace("'", "\\'")
 						+ "','" + subQuestionList.getAnswer().replace("'", "\\'") + "','"
@@ -1345,13 +1376,13 @@ public class QuestionnaireDao {
 
 
 	public QuestionnaireBean updateStandardSequenceNumber(QuestionnaireBean qBean) {
-
-		System.out.println("UPDATE `mst_questionare SET standard_number_sequence='" + qBean.getStandard_number_sequence()
+		log.info("updateStandardSequenceNumber method");                  	           
+		log.info("updateStandardSequenceNumber method Updating :"+"UPDATE `mst_questionare SET standard_number_sequence='" + qBean.getStandard_number_sequence()
 				+ "' WHERE sk_question_id='" + qBean.getSk_question_id() + "';");
 		template.execute("UPDATE mst_questionare SET standard_number_sequence='" + qBean.getStandard_number_sequence()
 				+ "' WHERE sk_question_id='" + qBean.getSk_question_id()+ "';");
 
-		System.out.println("SELECT *  FROM `mst_questionare` WHERE sk_question_id='" +qBean.getSk_question_id()+ "';");
+		log.info("updateStandardSequenceNumber method Selecting :"+"SELECT *  FROM `mst_questionare` WHERE sk_question_id='" +qBean.getSk_question_id()+ "';");
 		return template.queryForObject(
 				"SELECT *  FROM `mst_questionare` WHERE sk_question_id='" + qBean.getSk_question_id() + "';",
 				new RowMapper<QuestionnaireBean>() {
@@ -1359,76 +1390,88 @@ public class QuestionnaireDao {
 						
 						
 						qBean.setStandard_number_sequence(rs.getString("standard_number_sequence"));
+						log.info("updateStandardSequenceNumber method return");                  	           
 						return qBean;
 					}
 				});
 	}
 
 	public void addFormula(QuestionnaireBean qBean, String finalresult, String finalcount, QuestionnaireBean formulaList, String qid) {
-		System.out.println("INSERT INTO `mst_formula_map`( `formula_id`, `question_id`, `subquestion_id`, `option_id`, `result`) VALUES ('"+finalcount+"','"+qid+"','"+formulaList.getSk_subquestion_id()+"','"+formulaList.getSk_answer_id()+"','"+finalresult+"')");
+		log.info("addFormula method");                  	           
+		log.info("addFormula method"+"INSERT INTO `mst_formula_map`( `formula_id`, `question_id`, `subquestion_id`, `option_id`, `result`) VALUES ('"+finalcount+"','"+qid+"','"+formulaList.getSk_subquestion_id()+"','"+formulaList.getSk_answer_id()+"','"+finalresult+"')");
 		template.execute("INSERT INTO `mst_formula_map`( `formula_id`, `question_id`, `subquestion_id`, `option_id`, `result`) VALUES ('"+finalcount+"','"+qid+"','"+formulaList.getSk_subquestion_id()+"','"+formulaList.getSk_answer_id()+"','"+finalresult+"')");
 		template.execute("update mst_questionare set formula_flag='1' where sk_question_id='"+qid+"'");
 	}
 
 	public void uploadMainWithsetofsubquestions(QuestionnaireBean qBean, String qid) {
+		log.info("uploadMainWithsetofsubquestions method");                  	           
 		if (qBean.getUpload_file() == null) {
 			qBean.setUpload_file("no");
 		}
-	System.out.println("update mst_questionare set   `question`='"+qBean.getQuestion().replace("'", "\\'")+"' ,`question_optiontype`='"+qBean.getQuestion_optiontype()+"', `question_points`='"+qBean.getQuestion_points()+"', `question_code`='"+qBean.getQuestion_code()+"' ,`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='" +qBean.getUpload_file() + "'   where sk_question_id='"+qid+"' ");
+	log.info("uploadMainWithsetofsubquestions method :"+"update mst_questionare set   `question`='"+qBean.getQuestion().replace("'", "\\'")+"' ,`question_optiontype`='"+qBean.getQuestion_optiontype()+"', `question_points`='"+qBean.getQuestion_points()+"', `question_code`='"+qBean.getQuestion_code()+"' ,`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='" +qBean.getUpload_file() + "'   where sk_question_id='"+qid+"' ");
 			template.execute("update mst_questionare set   `question`='"+qBean.getQuestion().replace("'", "\\'")+"' , `question_optiontype`='"+qBean.getQuestion_optiontype()+"', `question_points`='"+qBean.getQuestion_points()+"', `question_code`='"+qBean.getQuestion_code()+"' ,`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='" +qBean.getUpload_file() + "'  where sk_question_id='"+qid+"'");	
 
 	}
 
 	public QuestionnaireBean updatemainQuestionwithSubquestion(QuestionnaireBean qBean, String subanswertype,
 			QuestionnaireBean subQuestionList, String qid) {
+		log.info("updatemainQuestionwithSubquestion method");                  	           
 		if (subQuestionList.getUploadFile() == null) {
 			subQuestionList.setUploadFile("no");
 		}
 		if (subanswertype.equals("Paragraph")) {
-		System.out.println("update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"' ");
+		log.info("updatemainQuestionwithSubquestion method if subanswertype==paragraph"+
+				"update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"' ");
 
 			template.execute("update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
 
 		} else if (subanswertype.equals("Date")) {
-		System.out.println("update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' , `subdate_points`='"+subQuestionList.getDate_points()+"', `subdate_code`='"+subQuestionList.getDate_code()+"', `subdate_response`='"+subQuestionList.getDate_response()+"', `subdate_routing`='"+subQuestionList.getDate_response()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
+		log.info("updatemainQuestionwithSubquestion method else if subanswertype==Date"+
+				"update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' , `subdate_points`='"+subQuestionList.getDate_points()+"', `subdate_code`='"+subQuestionList.getDate_code()+"', `subdate_response`='"+subQuestionList.getDate_response()+"', `subdate_routing`='"+subQuestionList.getDate_response()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
 			
 			template.execute(
 					"update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' , `subdate_points`='"+subQuestionList.getDate_points()+"', `subdate_code`='"+subQuestionList.getDate_code()+"', `subdate_response`='"+subQuestionList.getDate_response()+"', `subdate_routing`='"+subQuestionList.getDate_response()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
 		} else if (subanswertype.equals("Date & Time")) {
-		System.out.println("update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' , `subdate_points`='"+subQuestionList.getDate_points()+"', `subdate_code`='"+subQuestionList.getDate_code()+"', `subdate_response`='"+subQuestionList.getDate_response()+"', `subdate_routing`='"+subQuestionList.getDate_response()+"', `subtime_points`='"+subQuestionList.getTime_points()+"', `subtime_code`='"+subQuestionList.getTime_code()+"', `subtime_response`='"+subQuestionList.getTime_response()+"', `subtime_routing`='"+subQuestionList.getTime_routing()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
+		log.info("updatemainQuestionwithSubquestion method if subanswertype==Date & Time :"+"update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' , `subdate_points`='"+subQuestionList.getDate_points()+"', `subdate_code`='"+subQuestionList.getDate_code()+"', `subdate_response`='"+subQuestionList.getDate_response()+"', `subdate_routing`='"+subQuestionList.getDate_response()+"', `subtime_points`='"+subQuestionList.getTime_points()+"', `subtime_code`='"+subQuestionList.getTime_code()+"', `subtime_response`='"+subQuestionList.getTime_response()+"', `subtime_routing`='"+subQuestionList.getTime_routing()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
 			
 			template.execute(
 					"update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' , `subdate_points`='"+subQuestionList.getDate_points()+"', `subdate_code`='"+subQuestionList.getDate_code()+"', `subdate_response`='"+subQuestionList.getDate_response()+"', `subdate_routing`='"+subQuestionList.getDate_response()+"', `subtime_points`='"+subQuestionList.getTime_points()+"', `subtime_code`='"+subQuestionList.getTime_code()+"', `subtime_response`='"+subQuestionList.getTime_response()+"', `subtime_routing`='"+subQuestionList.getTime_routing()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
 
 		}
+		log.info("updatemainQuestionwithSubquestion method return");                  	           
 		return qBean;
 		
 	}
 
 	public QuestionnaireBean updateSubquestion(QuestionnaireBean qBean, String qid, QuestionnaireBean subQuestionList) {
-			if (subQuestionList.getUploadFile() == null) {
+		log.info("updateSubquestion method");                  	           
+		if (subQuestionList.getUploadFile() == null) {
 			subQuestionList.setUploadFile("no");
 		}
-		System.out.println("update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
+		log.info("updateSubquestion method :"+
+				"update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
 	
 		template.execute(
 				"update mst_questionare_subquestion set subquestion='"+subQuestionList.getSubQuestion().replace("'", "\\'")+"',subupload_type='"+subQuestionList.getUploadFile()+"' where question_id='"+qid+"' and sk_subquestion_id='"+subQuestionList.getSk_subquestion_id()+"'");
+		log.info("updateSubquestion method return");                  	           
 		return qBean;
 		
 	}
 
 	public QuestionnaireBean updatemainQuestionwithSubquestionSelectList(QuestionnaireBean qBean, String subanswertype,
 			QuestionnaireBean subQuestionList, String qid, String subid) {
-			
-			System.out.println("update mst_questionare_selectoption set `options`='"+subQuestionList.getAnswer().replace("'", "\\'")+"', `option_points`='"+subQuestionList.getAnswer_points().replace("'", "\\'")+"', `option_code`='"+subQuestionList.getAnswer_code().replace("'", "\\'")+"', `option_response`='"+subQuestionList.getAnswer_response().replace("'", "\\'")+"', `option_optiontype`='"+subQuestionList.getAnswer_optiontype().replace("'", "\\'")+"', `option_comment`='"+subQuestionList.getAnswer_comment().replace("'", "\\'")+"' where `question_id`='"+qid+"' and subquestion_id='"+subid+"' and sk_answer_id='"+subQuestionList.getSk_answer_id()+"'");
+		log.info("updatemainQuestionwithSubquestionSelectList method");                  	           
+			log.info("updatemainQuestionwithSubquestionSelectList method :"+"update mst_questionare_selectoption set `options`='"+subQuestionList.getAnswer().replace("'", "\\'")+"', `option_points`='"+subQuestionList.getAnswer_points().replace("'", "\\'")+"', `option_code`='"+subQuestionList.getAnswer_code().replace("'", "\\'")+"', `option_response`='"+subQuestionList.getAnswer_response().replace("'", "\\'")+"', `option_optiontype`='"+subQuestionList.getAnswer_optiontype().replace("'", "\\'")+"', `option_comment`='"+subQuestionList.getAnswer_comment().replace("'", "\\'")+"' where `question_id`='"+qid+"' and subquestion_id='"+subid+"' and sk_answer_id='"+subQuestionList.getSk_answer_id()+"'");
 		
 		template.execute(
 				"update mst_questionare_selectoption set `options`='"+subQuestionList.getAnswer().replace("'", "\\'")+"', `option_points`='"+subQuestionList.getAnswer_points().replace("'", "\\'")+"', `option_code`='"+subQuestionList.getAnswer_code().replace("'", "\\'")+"', `option_response`='"+subQuestionList.getAnswer_response().replace("'", "\\'")+"', `option_optiontype`='"+subQuestionList.getAnswer_optiontype().replace("'", "\\'")+"', `option_comment`='"+subQuestionList.getAnswer_comment().replace("'", "\\'")+"' where `question_id`='"+qid+"' and subquestion_id='"+subid+"' and sk_answer_id='"+subQuestionList.getSk_answer_id()+"'");
-return qBean;
+		log.info("updatemainQuestionwithSubquestionSelectList method return");                  	           
+		return qBean;
 	}
 
 	public List<QuestionnaireBean> formulacount(QuestionnaireBean qBean, String qid) {
-		System.out.println("SELECT formula_id,GROUP_CONCAT(mst_formula_map.sk_formula_map_id) as sk_formula_map_id,mst_formula_map.result,GROUP_CONCAT(mst_formula_map.subquestion_id) as subquestion_id,GROUP_CONCAT(mst_formula_map.option_id) as option_id FROM `mst_formula_map` WHERE `question_id`='"+qid+"' GROUP by `formula_id`");
+		log.info("formulacount method");                  	           
+		log.info("formulacount method :"+"SELECT formula_id,GROUP_CONCAT(mst_formula_map.sk_formula_map_id) as sk_formula_map_id,mst_formula_map.result,GROUP_CONCAT(mst_formula_map.subquestion_id) as subquestion_id,GROUP_CONCAT(mst_formula_map.option_id) as option_id FROM `mst_formula_map` WHERE `question_id`='"+qid+"' GROUP by `formula_id`");
 		return template.query(
 				"SELECT formula_id,GROUP_CONCAT(mst_formula_map.sk_formula_map_id) as sk_formula_map_id,mst_formula_map.result,GROUP_CONCAT(mst_formula_map.subquestion_id) as subquestion_id,GROUP_CONCAT(mst_formula_map.option_id) as option_id FROM `mst_formula_map` WHERE `question_id`='"+qid+"' GROUP by `formula_id`;",
 				new RowMapper<QuestionnaireBean>() {
@@ -1439,21 +1482,23 @@ return qBean;
 						qBean.setSk_subquestion_id(rs.getString("subquestion_id"));
 						qBean.setSk_formula_id(rs.getString("sk_formula_map_id"));
 							qBean.setFormulaFinalResult(rs.getString("result"));
-						return qBean;
+							log.info("formulacount method return");                  	           
+							return qBean;
 					}
 				});
 	}
 
 	public void updateFormula(QuestionnaireBean qBean, String finalresult, String finalcount,
 			QuestionnaireBean formulaList, String qid, String formulaid) {
-			System.out.println("update mst_formula_map set option_id='"+formulaList.getSk_answer_id()+"',result='"+finalresult+"' where question_id='"+qid+"' and subquestion_id='"+formulaList.getSk_subquestion_id()+"' and sk_formula_map_id='"+formulaid+"'");
+		log.info("updateFormula method");                  	           	
+		log.info("updateFormula method :"+"update mst_formula_map set option_id='"+formulaList.getSk_answer_id()+"',result='"+finalresult+"' where question_id='"+qid+"' and subquestion_id='"+formulaList.getSk_subquestion_id()+"' and sk_formula_map_id='"+formulaid+"'");
 		template.execute("update mst_formula_map set option_id='"+formulaList.getSk_answer_id()+"',result='"+finalresult+"' where question_id='"+qid+"' and subquestion_id='"+formulaList.getSk_subquestion_id()+"' and sk_formula_map_id='"+formulaid+"'");
 		template.execute("update mst_questionare set formula_flag='1' where sk_question_id='"+qid+"'");
 	}
 
 	public List<QuestionnaireBean> superquestionsList(QuestionnaireBean qBean, String super_question_id, String qid, String soid) {
-		
-		System.out.println(
+		log.info("superquestionsList method");                  	           	
+		log.info("superquestionsList method :"+
 				"super sections===SELECT *,mst_brand.*,mst_section.section_name,mst_subsection.subsection_name FROM `mst_questionare`,mst_brand,mst_subsection,mst_section WHERE mst_brand.sk_brand_id=mst_questionare.brand_id and  mst_questionare.subsection_id=mst_subsection.sk_subsection_id and mst_section.sk_section_id=mst_questionare.section_id and mst_questionare.question_status='active' and  `sk_question_id` IN("+super_question_id+ ")  order by standard_number ");
 		return template.query(
 				"SELECT *,mst_brand.*,mst_section.section_name,mst_subsection.subsection_name FROM `mst_questionare`,mst_brand,mst_subsection,mst_section WHERE mst_brand.sk_brand_id=mst_questionare.brand_id and  mst_questionare.subsection_id=mst_subsection.sk_subsection_id and mst_section.sk_section_id=mst_questionare.section_id and mst_questionare.question_status='active' and  `sk_question_id` IN("+super_question_id+ ") order by standard_number ;",
@@ -1469,7 +1514,7 @@ return qBean;
 						qBean.setSk_question_id(rs.getString("sk_question_id"));
 						qBean.setYear(rs.getString("year_applied"));
 
-						System.out.println("soid=="+soid);
+						log.info("soid=="+soid);
 						
 					 List<QuestionnaireBean> optionsList=getOptionsList(qBean,rs.getString("sk_question_id"));
 					 qBean.setOptionsList(optionsList);
@@ -1481,6 +1526,7 @@ return qBean;
 					 List<QuestionnaireBean> selectedoptionsList=getselectedOptionsList(qBean,rs.getString("sk_question_id"),soid);
 					 qBean.setSelectedoptionsList(selectedoptionsList);
 					 }
+						log.info("superquestionsList method return");                  	           	
 						return qBean;
 
 					}
@@ -1493,7 +1539,8 @@ return qBean;
 	
 
 	private List<QuestionnaireBean> getOptionsList(QuestionnaireBean qBean, String qid) {
-		System.out.println(
+		log.info("getOptionsList method");                  	           	
+		log.info("getOptionsList method :"+
 				"SELECT * FROM `mst_questionare_selectoption` WHERE `question_id`='"+qid+"';");
 		return template.query(
 				"SELECT * FROM `mst_questionare_selectoption` WHERE `question_id`='"+qid+"' ;",
@@ -1503,7 +1550,8 @@ return qBean;
 						QuestionnaireBean qBean=new QuestionnaireBean();
 						qBean.setSk_answer_id(rs.getString("sk_answer_id"));
 						qBean.setAnswer(rs.getString("options"));
-						System.out.println("options==="+(rs.getString("options")));
+						log.info("options==="+(rs.getString("options")));
+						log.info("getOptionsList method return");                  	           	
 						return qBean;
 
 					}
@@ -1512,7 +1560,8 @@ return qBean;
 				});
 	}
 	private List<QuestionnaireBean> getOLROptionsList(QuestionnaireBean qBean, String qid) {
-		System.out.println(
+		log.info("getOLROptionsList method");                  	           	
+		log.info("getOLROptionsList method :"+
 				"SELECT * FROM `mst_questionare_selectoption` WHERE `question_id`='"+qid+"';");
 		return template.query(
 				"SELECT * FROM `mst_questionare_selectoption` WHERE `question_id`='"+qid+"' ;",
@@ -1522,7 +1571,8 @@ return qBean;
 						QuestionnaireBean qBean=new QuestionnaireBean();
 						qBean.setSk_answer_id(rs.getString("sk_answer_id"));
 						qBean.setOptions(rs.getString("options"));
-						System.out.println("options==="+(rs.getString("options")));
+						log.info("options==="+(rs.getString("options")));
+						log.info("getOLROptionsList method return");                  	           	
 						return qBean;
 
 					}
@@ -1532,7 +1582,8 @@ return qBean;
 	}
 	
 	protected List<QuestionnaireBean> getselectedOptionsList(QuestionnaireBean qBean, String qid, String soid) {
-		System.out.println(
+		log.info("getselectedOptionsList method");                  	           	
+		log.info("getselectedOptionsList method :"+
 				"SELECT * FROM `mst_questionare_selectoption` WHERE `sk_answer_id` IN("+soid+") and `question_id`='"+qid+"';");
 		return template.query(
 				"SELECT * FROM `mst_questionare_selectoption` WHERE `sk_answer_id` IN("+soid+") and `question_id`='"+qid+"'; ;",
@@ -1542,6 +1593,7 @@ return qBean;
 						QuestionnaireBean qBean=new QuestionnaireBean();
 						qBean.setSk_answer_id(rs.getString("sk_answer_id"));
 						qBean.setAnswer(rs.getString("options"));
+						log.info("getselectedOptionsList method return");                  	           	
 						return qBean;
 
 					}
@@ -1551,19 +1603,21 @@ return qBean;
 	}
 
 	public QuestionnaireBean getformulaid(QuestionnaireBean qBean, String finalcount, QuestionnaireBean formulaList1, String qid) {
-		System.out.println("SELECT count(`sk_formula_map_id`),IFNULL(`sk_formula_map_id`, 'noformulaid') as formula_id FROM `mst_formula_map` WHERE `formula_id`='"+finalcount+"' and `question_id`='"+qid+"' and `subquestion_id`='"+formulaList1.getSk_subquestion_id()+"'");
+		log.info("getformulaid method");                  	           	
+		log.info("getformulaid method :"+"SELECT count(`sk_formula_map_id`),IFNULL(`sk_formula_map_id`, 'noformulaid') as formula_id FROM `mst_formula_map` WHERE `formula_id`='"+finalcount+"' and `question_id`='"+qid+"' and `subquestion_id`='"+formulaList1.getSk_subquestion_id()+"'");
 		return template.queryForObject(
 				"SELECT count(`sk_formula_map_id`),IFNULL(`sk_formula_map_id`, 'noformulaid') as formula_id FROM `mst_formula_map` WHERE `formula_id`='"+finalcount+"' and `question_id`='"+qid+"' and `subquestion_id`='"+formulaList1.getSk_subquestion_id()+"';",
 				new RowMapper<QuestionnaireBean>() {
 					public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 						qBean.setSk_formula_id(rs.getString("formula_id"));
+						log.info("getformulaid method return");                  	           	
 						return qBean;
 					}
 				});
 	}
 
 	public void uploadDependentWithsetofsubquestions(QuestionnaireBean qBean, String qid, List<QuestionnaireBean> superQuestions) {
-		
+		log.info("uploadDependentWithsetofsubquestions method");                  	           	
 		if (qBean.getUpload_file() == null) {
 			qBean.setUpload_file("no");
 		}
@@ -1577,7 +1631,7 @@ return qBean;
 			qBean.setSuper_question_section_id(superQuestionsList.getSuper_question_section_id());
 			qBean.setSuper_question_subsection_id(superQuestionsList.getSuper_question_subsection_id());
 			qBean.setSuper_question_answer(superQuestionsList.getSuper_question_answer());
-			//System.out.println("super question section id="+superQuestionsList.getSuper_question_section_id()+"super question subsection id="+superQuestionsList.getSuper_question_subsection_id()+"super question standard number="+superQuestionsList.getSuper_question_standard_number()+"super question answer="+superQuestionsList.getSuper_question_answer());
+			//log.info("super question section id="+superQuestionsList.getSuper_question_section_id()+"super question subsection id="+superQuestionsList.getSuper_question_subsection_id()+"super question standard number="+superQuestionsList.getSuper_question_standard_number()+"super question answer="+superQuestionsList.getSuper_question_answer());
 				getSuperQuestionId(qBean);
 				superQuestionIds+="##"+qBean.getSk_question_id();
 				superQuestionAnswers+="##"+qBean.getSuper_question_answer();
@@ -1587,18 +1641,18 @@ return qBean;
 			}
 			
 			}
-		System.out.println(superQuestionIds.substring(2));
-		System.out.println(superQuestionAnswers.substring(2));
+		log.info(superQuestionIds.substring(2));
+		log.info(superQuestionAnswers.substring(2));
 		
 		
 		
-		System.out.println("update mst_questionare set   `question`='"+qBean.getQuestion().replace("'", "\\'")+"' ,`question_optiontype`='"+qBean.getQuestion_optiontype()+"', `question_points`='"+qBean.getQuestion_points()+"', `question_code`='"+qBean.getQuestion_code()+"',super_question_id='"+superQuestionIds.substring(2)+"',super_question_answer='"+superQuestionAnswers.substring(2)+"',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='" +qBean.getUpload_file() + "'   where sk_question_id='"+qid+"' ");
+		log.info("uploadDependentWithsetofsubquestions method :"+"update mst_questionare set   `question`='"+qBean.getQuestion().replace("'", "\\'")+"' ,`question_optiontype`='"+qBean.getQuestion_optiontype()+"', `question_points`='"+qBean.getQuestion_points()+"', `question_code`='"+qBean.getQuestion_code()+"',super_question_id='"+superQuestionIds.substring(2)+"',super_question_answer='"+superQuestionAnswers.substring(2)+"',`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='" +qBean.getUpload_file() + "'   where sk_question_id='"+qid+"' ");
 		template.execute("update mst_questionare set   `question`='"+qBean.getQuestion().replace("'", "\\'")+"' , `question_optiontype`='"+qBean.getQuestion_optiontype()+"', `question_points`='"+qBean.getQuestion_points()+"', `question_code`='"+qBean.getQuestion_code()+"',super_question_id='"+superQuestionIds.substring(2)+"',super_question_answer='"+superQuestionAnswers.substring(2)+"' ,`comment_mandatory`='" + qBean.getComment_mandatory() + "',`upload_file`='" +qBean.getUpload_file() + "' where sk_question_id='"+qid+"'");	
 
 }
 
 	public List<QuestionnaireBean> questionsandoptions(QuestionnaireBean qBean, int pageid, int total, String encrypt_osc_shopper_id,String encrypt_dealer_id,String encrypt_NonOsc_shopper_id) {
-		
+		log.info("questionsandoptions method ");                  	           	
 		 String osc_shopper_id=Encryption.decrypt(encrypt_osc_shopper_id);
 		 String NonOsc_shopper_id=Encryption.decrypt(encrypt_NonOsc_shopper_id);
 		 String dealer_id=Encryption.decrypt(encrypt_dealer_id);
@@ -1611,8 +1665,8 @@ return qBean;
 				+ (pageid - 1) + "," + total + " ";
 		//String sql="SELECT mys_txn_answers.*,SUM(mys_txn_answers.question_points) as maxQues_points,SUM(mys_txn_answers.scored_points) AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers,mst_shopper_details,mys_score,mys_txn_formulaanswer,mst_questionare WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.shopper_id='9' AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id AND mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id AND mys_txn_answers.question_id=mst_questionare.sk_question_id GROUP BY mys_txn_answers.question_id  UNION SELECT mys_txn_answers.*,SUM(mys_txn_answers.question_points) as maxQues_points,SUM(mys_txn_answers.scored_points) AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points from mys_txn_answers,mst_shopper_details,mys_score,mys_txn_formulaanswer,mst_questionare WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.shopper_id='6' AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id AND mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id AND mys_txn_answers.question_id=mst_questionare.sk_question_id GROUP BY mys_txn_answers.question_id ORDER BY mode_of_contact ASC,standard_number_sequence ASC LIMIT 5,1";
 		//String sql="SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers,mst_shopper_details,mys_score,mys_txn_formulaanswer,mst_questionare WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.shopper_id='"+NoscShopper_id+"' AND mys_txn_answers.formula_flag=0 AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id AND mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id AND mys_txn_answers.question_id=mst_questionare.sk_question_id GROUP BY mys_txn_answers.question_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.formula_flag=1 AND mys_txn_answers.shopper_id='"+NoscShopper_id+"' GROUP BY mys_txn_answers.sk_answer_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.formula_flag=0 AND mys_txn_answers.shopper_id='"+shopper_id+"' GROUP BY mys_txn_answers.sk_answer_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.formula_flag=1 AND mys_txn_answers.shopper_id='"+shopper_id+"' GROUP BY mys_txn_answers.sk_answer_id  ORDER BY mode_of_contact ASC,standard_number_sequence ASC LIMIT " + (pageid - 1) + "," + total + " ";
-		System.out.println("dealer id in questionand options dao"+dealer_id);
-		System.out.println("Manoj d questions and options list=" + sql);
+		log.info("dealer id in questionand options dao"+dealer_id);
+		log.info("questionsandoptions method :" + sql);
 		//final String sid=NonOsc_shopper_id;
 		//final String oscsid=osc_shopper_id;
 		return template.query(sql, new RowMapper<QuestionnaireBean>() {
@@ -1625,7 +1679,7 @@ return qBean;
 				qBean.setSubsection_name(rs.getString("subsection_name"));
 				String Question_type=rs.getString("question_type");
 				qBean.setStorevisitId(rs.getString("shopper_id"));
-				System.out.println("Question type===="+Question_type);
+				log.info("Question type===="+Question_type);
 				  List<QuestionnaireBean> optionsList=getOLROptionsList(qBean,rs.getString("question_id"));
 				  qBean.setOptionsList(optionsList);
 				  List<QuestionnaireBean> subQuesList=getSubQuesList(qBean,rs.getString("question_id"));
@@ -1641,13 +1695,12 @@ return qBean;
 					  qBean.setSumOfQuesPoints(sumOfPoints.getSumOfQuesPoints());
 				  }
 				  
-				System.out.println("select option text====="+rs.getString("select_option_text"));
+				log.info("select option text====="+rs.getString("select_option_text"));
 				qBean.setAnswer_type(rs.getString("answer_type"));		
 				qBean.setParagraph(rs.getString("main_ques_comment"));
-				System.out.println();
 				qBean.setComment_criteria(rs.getString("main_ques_comment"));
 				qBean.setSelected_option_comment(rs.getString("select_option_comment"));
-				System.out.println("select option comment====="+rs.getString("select_option_comment"));
+				log.info("select option comment====="+rs.getString("select_option_comment"));
 				qBean.setParagraph(rs.getString("paragraph"));
 				qBean.setDate_code(rs.getString("date"));
 				qBean.setTime_code(rs.getString("dateandtime"));
@@ -1661,11 +1714,12 @@ return qBean;
 				if(rs.getString("formula_flag").equals("1")){
 				QuestionnaireBean getformulaPoint =getformulaPoints(qBean, rs.getString("shopper_id"),rs.getString("question_id"));
 				qBean.setFormulapoints(getformulaPoint.getFormulapoints());
-				System.out.println("formula Points in If condition===="+getformulaPoint.getFormulapoints());
+				log.info("formula Points in If condition===="+getformulaPoint.getFormulapoints());
 				}
 				qBean.setTotal_ques_points(rs.getString("totalQuesPoints"));
-				System.out.println("formula flag"+rs.getString("formula_flag")+"===="+rs.getString("standard_number")+"==="+rs.getString("question_points"));
-				System.out.println("first=" + rs.getString("mode_of_contact"));
+				log.info("formula flag"+rs.getString("formula_flag")+"===="+rs.getString("standard_number")+"==="+rs.getString("question_points"));
+				log.info("first=" + rs.getString("mode_of_contact"));
+				log.info("questionsandoptions method return");                  	           	
 				return qBean;
 			}
 
@@ -1673,35 +1727,38 @@ return qBean;
 	}
 public QuestionnaireBean getSumOfPointsForDepeQues(QuestionnaireBean qBean,String qid,String sid) {
 		
-		
-		System.out.println("SELECT SUM(scored_points) as sumofScoredPoints,SUM(question_points) as sumofQuesPoints FROM `mys_txn_answers` WHERE shopper_id='"+sid+"' AND question_id='"+qid+"'");
+	log.info("getSumOfPointsForDepeQues method");                  	           	
+		log.info("getSumOfPointsForDepeQues method :"+"SELECT SUM(scored_points) as sumofScoredPoints,SUM(question_points) as sumofQuesPoints FROM `mys_txn_answers` WHERE shopper_id='"+sid+"' AND question_id='"+qid+"'");
 		return template.queryForObject(
 				"SELECT SUM(scored_points) as sumofScoredPoints,SUM(question_points) as sumofQuesPoints FROM `mys_txn_answers` WHERE shopper_id='"+sid+"' AND question_id='"+qid+"'",
 				new RowMapper<QuestionnaireBean>() {
 					public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 						qBean.setSumOfScoredPoints(rs.getString("sumofScoredPoints"));
-						System.out.println("sumofScoredPoints===="+rs.getString("sumofScoredPoints"));
+						log.info("sumofScoredPoints===="+rs.getString("sumofScoredPoints"));
 						qBean.setSumOfQuesPoints(String.valueOf(rs.getInt("sumofQuesPoints")));
-						System.out.println("sumOfQuesPointsss===="+rs.getString("sumofQuesPoints"));
+						log.info("sumOfQuesPointsss===="+rs.getString("sumofQuesPoints"));
+						log.info("getSumOfPointsForDepeQues method return");                  	           	
 						return qBean;
 					}
 				});
 	}
 public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,String qid) {
 	
-	
-	System.out.println("SELECT * FROM `mys_txn_formulaanswer` WHERE `shopper_id`='"+sid+"' AND question_id='"+qid+"'");
+	log.info("getformulaPoints method");                  	           	
+	log.info("getformulaPoints method :"+"SELECT * FROM `mys_txn_formulaanswer` WHERE `shopper_id`='"+sid+"' AND question_id='"+qid+"'");
 	return template.queryForObject(
 			"SELECT * FROM `mys_txn_formulaanswer` WHERE `shopper_id`='"+sid+"' AND question_id='"+qid+"'",
 			new RowMapper<QuestionnaireBean>() {
 				public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 					qBean.setFormulapoints(rs.getString("points"));
+					log.info("getformulaPoints method return");                  	           	
 					return qBean;
 				}
 			});
 }
 	private List<QuestionnaireBean> getSubQuesList(QuestionnaireBean qBean, String qid) {
-		System.out.println(
+		log.info("getSubQuesList method");                  	           	
+		log.info("getSubQuesList method :"+
 				"SELECT * FROM `mst_questionare_subquestion` WHERE `question_id`='"+qid+"';");
 		return template.query(
 				"SELECT * FROM `mst_questionare_subquestion` WHERE `question_id`='"+qid+"'; ;",
@@ -1711,7 +1768,8 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 						QuestionnaireBean qBean=new QuestionnaireBean();
 						qBean.setSk_subquestion_id(rs.getString("sk_subquestion_id"));
 						qBean.setSubQuestion(rs.getString("subquestion"));
-						System.out.println("subQuestions==="+(rs.getString("subquestion")));
+						log.info("subQuestions==="+(rs.getString("subquestion")));
+						log.info("getSubQuesList method return");                  	           	
 						return qBean;
 
 					}
@@ -1720,7 +1778,8 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 				});
 	}
 	private List<QuestionnaireBean> getDepeSeleAnsList(QuestionnaireBean qBean, String qid,String shopper_id) {
-		System.out.println(
+		log.info("getDepeSeleAnsList method");                  	           	
+		log.info("getDepeSeleAnsList method :"+
 				"SELECT mys_txn_answers.question_id,mys_txn_answers.subquestion_id,mys_txn_answers.select_option_text,mys_txn_answers.sub_question_text,mys_txn_answers.select_option_comment,mys_txn_answers.paragraph,mys_txn_answers.date,mys_txn_answers.dateandtime,mys_txn_answers.answer_type FROM `mys_txn_answers` WHERE `question_id`='"+qid+"' AND shopper_id='"+shopper_id+"';");
 		return template.query(
 				"SELECT mys_txn_answers.question_id,mys_txn_answers.subquestion_id,mys_txn_answers.select_option_text,mys_txn_answers.sub_question_text,mys_txn_answers.select_option_comment,mys_txn_answers.paragraph,mys_txn_answers.date,mys_txn_answers.dateandtime,mys_txn_answers.answer_type FROM `mys_txn_answers` WHERE `question_id`='"+qid+"' AND shopper_id='"+shopper_id+"'; ",
@@ -1731,16 +1790,17 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 						qBean.setSk_subquestion_id(rs.getString("subquestion_id"));
 						qBean.setSubQuestion(rs.getString("sub_question_text"));
 						qBean.setComment_criteria(rs.getString("select_option_comment"));
-						System.out.println("selected option comment==="+(rs.getString("select_option_comment")));
+						log.info("selected option comment==="+(rs.getString("select_option_comment")));
 						qBean.setParagraph(rs.getString("paragraph"));
-						System.out.println("Paragraph==="+(rs.getString("paragraph")));
-						System.out.println("date==="+(rs.getString("date")));
+						log.info("Paragraph==="+(rs.getString("paragraph")));
+						log.info("date==="+(rs.getString("date")));
 						qBean.setDate_code(rs.getString("date"));
 						qBean.setTime_code(rs.getString("dateandtime"));
 						qBean.setSelectedanswerid(rs.getString("select_option_text"));
 						qBean.setSubQuestionAnswerType(rs.getString("answer_type"));
-						System.out.println("selected subQues Answer==="+(rs.getString("select_option_text")));
-						System.out.println("selected subQues AnswerTYPEEEE==="+(rs.getString("answer_type")));
+						log.info("selected subQues Answer==="+(rs.getString("select_option_text")));
+						log.info("selected subQues AnswerTYPEEEE==="+(rs.getString("answer_type")));
+						log.info("getDepeSeleAnsList method return");                  	           	
 						return qBean;
 
 					}
@@ -1750,51 +1810,55 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 	}
 	
 	public List<QuestionnaireBean> getIds( QuestionnaireBean qBean, String nonoscid,String oscId) {
+		log.info("getIds method");                  	           	
 		String sql = "select count(*) as count from (SELECT mys_txn_answers.*,SUM(mys_txn_answers.question_points) as maxQues_points,SUM(mys_txn_answers.scored_points) AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage from mys_txn_answers,mst_shopper_details,mys_score WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.shopper_id='"+nonoscid+"' AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id GROUP BY mys_txn_answers.question_id  UNION SELECT mys_txn_answers.*,SUM(mys_txn_answers.question_points) as maxQues_points,SUM(mys_txn_answers.scored_points) AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage from mys_txn_answers,mst_shopper_details,mys_score WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.shopper_id='"+oscId+"' AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id GROUP BY mys_txn_answers.question_id ORDER BY mode_of_contact ASC,standard_number_sequence ASC )as count";
 		//String sql= "select count(*) as count from (SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers,mst_shopper_details,mys_score,mys_txn_formulaanswer,mst_questionare WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.shopper_id='"+nonoscid+"' AND mys_txn_answers.formula_flag=0 AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id AND mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id AND mys_txn_answers.question_id=mst_questionare.sk_question_id GROUP BY mys_txn_answers.question_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.formula_flag=1 AND mys_txn_answers.shopper_id='"+nonoscid+"' GROUP BY mys_txn_answers.sk_answer_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.formula_flag=0 AND mys_txn_answers.shopper_id='"+oscId+"' GROUP BY mys_txn_answers.sk_answer_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.formula_flag=1 AND mys_txn_answers.shopper_id='"+oscId+"' GROUP BY mys_txn_answers.sk_answer_id  ORDER BY mode_of_contact ASC,standard_number_sequence ASC )as count";
-		System.out.println(sql);
+		log.info("getIds method :"+sql);
 		return template.query(sql, new RowMapper<QuestionnaireBean>() {
 			public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 				QuestionnaireBean qBean = new QuestionnaireBean();
 				qBean.setQuestionCount(rs.getString("count"));
-				System.out.println(rs.getString("count"));
+				log.info(rs.getString("count"));
+				log.info("getIds method return");                  	           	
 				return qBean;
 			}
 		});
 	}
 	/**manoj d for overall perf graph*/
 	public QuestionnaireBean getOutletsoverallperFilter1(QuestionnaireBean qBean,String did,String bid,String rid) {
-		
+		log.info("getOutletsoverallperFilter1 method");                  	           	
 		if(bid==null){
 			bid="all";
 		}
 		if(did==null){
 			did="all";
 		}
-		System.out.println("SELECT GROUP_CONCAT(sk_outlet_id) as outlets  FROM `mst_dealer_outlet` WHERE (`brand_id`='"+bid+"' or '"+bid+"'='all') AND (dealer_id='"+did+"' or '"+did+"'='all'");
+		log.info("getOutletsoverallperFilter1 method :"+"SELECT GROUP_CONCAT(sk_outlet_id) as outlets  FROM `mst_dealer_outlet` WHERE (`brand_id`='"+bid+"' or '"+bid+"'='all') AND (dealer_id='"+did+"' or '"+did+"'='all'");
 		return template.queryForObject(
 				"SELECT GROUP_CONCAT(sk_outlet_id) as outlets  FROM `mst_dealer_outlet` WHERE (`brand_id`='"+bid+"' or '"+bid+"'='all') AND (dealer_id='"+did+"' or '"+did+"'='all')",
 				new RowMapper<QuestionnaireBean>() {
 					public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 						qBean.setOutlets(rs.getString("outlets"));
+						log.info("getOutletsoverallperFilter1 method return");                  	           	
 						return qBean;
 					}
 				});
 	}
 	/**manoj d for overall perf graph*/
 	public QuestionnaireBean getshoppersByOutletMode(QuestionnaireBean qBean,GraphBean gBean,String mid) {
-		
+		log.info("getshoppersByOutletMode method");                  	           	
 		//int year=2019;
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		 if(mid==null || mid=="") {
 			 mid="all";
 		 }
-		System.out.println("SELECT GROUP_CONCAT(sk_shopper_id) as shopperIds FROM `mst_shopper_details` WHERE outlet_id IN("+ gBean.getOutlet_id() + ") AND visit_status='published' AND (month(visit_date)='"+mid+"' or '"+mid+"'='all') AND mode_of_contact!='Online Sales Channel'");
+		log.info("getshoppersByOutletMode method :"+"SELECT GROUP_CONCAT(sk_shopper_id) as shopperIds FROM `mst_shopper_details` WHERE outlet_id IN("+ gBean.getOutlet_id() + ") AND visit_status='published' AND (month(visit_date)='"+mid+"' or '"+mid+"'='all') AND mode_of_contact!='Online Sales Channel'");
 		return template.queryForObject(
 				"SELECT GROUP_CONCAT(sk_shopper_id) as shopperIds FROM `mst_shopper_details` WHERE outlet_id IN("+ gBean.getOutlet_id() + ") AND visit_status='published' AND (month(visit_date)='"+mid+"' or '"+mid+"'='all') AND mode_of_contact!='Online Sales Channel'",
 				new RowMapper<QuestionnaireBean>() {
 					public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 						qBean.setShopperIds(rs.getString("shopperIds"));
+						log.info("getshoppersByOutletMode method return");                  	           	
 						return qBean;
 					}
 				});
@@ -1802,6 +1866,7 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 	/**manoj d end for overall perf graph*/
 	/***manoj d start for crm compilance*/
 	public QuestionnaireBean crm(QuestionnaireBean qBean,String brand,String outlet,String dealer,String region,String month) {
+		log.info("crm method");                  	           	
 
 		//final String shopperIds= qBean.getShopperIds();
 		
@@ -1854,8 +1919,8 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 		 }
 		// int year=2019;
 		 int year = Calendar.getInstance().get(Calendar.YEAR);
-		//System.out.println("shopperIds in CRM====="+qBean.getShopperIds());
-		System.out.println(
+		//log.info("shopperIds in CRM====="+qBean.getShopperIds());
+		log.info("crm method :"+
 				"select (select count(select_option_text) from mys_txn_answers where mys_txn_answers.status='active' AND shopper_id in (select sk_shopper_id  from mst_shopper_details where sk_shopper_id in (SELECT sk_shopper_id FROM mst_shopper_details LEFT JOIN mst_dealer_outlet ON mst_shopper_details.outlet_id=mst_dealer_outlet.sk_outlet_id  WHERE year='"
 						+ year + "' and mst_shopper_details.brand_id='" + brand
 						+ "' and  mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mst_shopper_details.visit_status='published' AND (mst_shopper_details.dealer_id='"
@@ -1991,6 +2056,7 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 						qBean.setTotalquestions(rs.getString("total"));
 						qBean.setCount(rs.getString("count"));
 						qBean.setNorecords(rs.getString("norecords"));
+						log.info("crm method return");                  	           	
 						return qBean;
 					}
 				});
@@ -1998,8 +2064,8 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 	
 	public List<QuestionnaireBean> getcrmbargraph(QuestionnaireBean qBean,String brand,String outlet,String dealer,String region,String month) {
 		//final String shopperId = qBean.getShopperIds();
-		//System.out.println("shopper Ids in crmbbargraph==="+shopperId);
-		
+		//log.info("shopper Ids in crmbbargraph==="+shopperId);
+		log.info("getcrmbargraph method");                  	           	
 		    HttpSession session = request.getSession(true);
 			String dealers = (String) session.getAttribute("dealers");
 			String roleId = (String) session.getAttribute("role_id");
@@ -2054,7 +2120,7 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 			final String did= dealer;
 			final String rid = region;
 			final String mid = month;
-		System.out.println(
+		log.info("getcrmbargraph method :"+
 				"select distinct MONTHNAME(visit_date) as month from mst_shopper_details where sk_shopper_id in (select sk_shopper_id  from mst_shopper_details where sk_shopper_id in (SELECT sk_shopper_id FROM mst_shopper_details LEFT JOIN mst_dealer_outlet ON mst_shopper_details.outlet_id=mst_dealer_outlet.sk_outlet_id  WHERE year='"
 						+ year + "' and mst_shopper_details.brand_id='" + brand
 						+ "' and  mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mst_shopper_details.visit_status='published' AND (mst_shopper_details.dealer_id='"
@@ -2079,34 +2145,37 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
                         
 								qBean.setYes(data.getYes());
 								qBean.setNo(data.getNo());
-								System.out.println("here" + qBean.getMonth());
+								log.info("here" + qBean.getMonth());
+								log.info("getcrmbargraph method return");                  	           	
 								return qBean;
 							}
 						});
 	}
 	
 	public List<QuestionnaireBean> getcrmbargraphm(QuestionnaireBean qBean) {
+		log.info("getcrmbargraphm method");                  	           	
 		String month= qBean.getMonth();
 		if(month==null || month==""){
 			month="all";
 		}
-		System.out.println("select sk_shopper_id from mst_shopper_details where month(visit_date)='"
+		log.info("getcrmbargraphm method :"+"select sk_shopper_id from mst_shopper_details where month(visit_date)='"
 				+ qBean.getMonth() + "' and sk_shopper_id in (" + qBean.getShopperIds() + ")");
 		return template.query("select sk_shopper_id from mst_shopper_details where month(visit_date)='"
 				+ qBean.getMonth() + "' and sk_shopper_id in (" + qBean.getShopperIds() + ")",
 				new RowMapper<QuestionnaireBean>() {
 					public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 						QuestionnaireBean qBean = new QuestionnaireBean();
-						System.out.println("hellooooo");
+						log.info("hellooooo");
 						qBean.setShopperId(rs.getString("sk_shopper_id"));
+						log.info("getcrmbargraphm method return");                  	           	
 						return qBean;
 					}
 				});
 	}
 	
 	public QuestionnaireBean getmonthbargraphcrm(QuestionnaireBean qBean,String brand,String outlet,String dealer,String region,String month) {
-		
-		System.out.println("This is CRM bar Graph========CRM");
+		log.info("getmonthbargraphcrm method");                  	           	
+		log.info("This is CRM bar Graph========CRM");
 		if(dealer==null || dealer=="") {
 			dealer="all";
 		 }
@@ -2124,7 +2193,7 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 		 }
 		// int year=2019;
 		 int year = Calendar.getInstance().get(Calendar.YEAR);
-		System.out.println(
+		log.info("getmonthbargraphcrm method :"+
 				"select (select count(select_option_text) from mys_txn_answers where mys_txn_answers.status='active' AND shopper_id in (select sk_shopper_id  from mst_shopper_details where sk_shopper_id in (SELECT sk_shopper_id FROM mst_shopper_details LEFT JOIN mst_dealer_outlet ON mst_shopper_details.outlet_id=mst_dealer_outlet.sk_outlet_id  WHERE year='"
 						+ year + "' and mst_shopper_details.brand_id='" + brand
 						+ "' and  mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mst_shopper_details.visit_status='published' AND (mst_shopper_details.dealer_id='"
@@ -2174,6 +2243,7 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 								* 100;
 						qBean.setYes(String.valueOf(f.format(Double.parseDouble(String.valueOf(yes)))));
 						qBean.setNo(String.valueOf(f.format(Double.parseDouble(String.valueOf(no)))));
+						log.info("getmonthbargraphcrm method return");                  	           	
 						return qBean;
 					}
 				});
@@ -2182,7 +2252,7 @@ public QuestionnaireBean getformulaPoints(QuestionnaireBean qBean,String sid,Str
 	
 	/*********for discount analysis********/
 public GraphBean getOutletsoverallperFilter(GraphBean rgBean,String did,String bid,String rid) {
-		
+	log.info("getOutletsoverallperFilter method");                  	           	
 		if(bid==null){
 			bid="1";
 		}
@@ -2192,12 +2262,14 @@ public GraphBean getOutletsoverallperFilter(GraphBean rgBean,String did,String b
 		if(did==null){
 			did="all";
 		}
-		System.out.println("SELECT GROUP_CONCAT(sk_outlet_id) as outlets  FROM `mst_dealer_outlet` WHERE (`brand_id`='"+bid+"' or '"+bid+"'='all') AND (`region_id`='"+rid+"' or '"+rid+"'='all') AND (dealer_id='"+did+"' or '"+did+"'='all'");
+		log.info("getOutletsoverallperFilter method :"+
+				"SELECT GROUP_CONCAT(sk_outlet_id) as outlets  FROM `mst_dealer_outlet` WHERE (`brand_id`='"+bid+"' or '"+bid+"'='all') AND (`region_id`='"+rid+"' or '"+rid+"'='all') AND (dealer_id='"+did+"' or '"+did+"'='all'");
 		return template.queryForObject(
 				"SELECT GROUP_CONCAT(sk_outlet_id) as outlets  FROM `mst_dealer_outlet` WHERE (`brand_id`='"+bid+"' or '"+bid+"'='all') AND (`region_id`='"+rid+"' or '"+rid+"'='all') AND (dealer_id='"+did+"' or '"+did+"'='all')",
 				new RowMapper<GraphBean>() {
 					public GraphBean mapRow(ResultSet rs, int row) throws SQLException {
 						rgBean.setOutlets(rs.getString("outlets"));
+						log.info("getOutletsoverallperFilter method return");                  	           	
 						return rgBean;
 					}
 				});
@@ -2208,18 +2280,19 @@ public GraphBean getOutletsoverallperFilter(GraphBean rgBean,String did,String b
  * 
  */
 public QuestionnaireBean getshoppersByOutlet(QuestionnaireBean qBean,GraphBean gBean,String mid) {
-	
+	log.info("getshoppersByOutlet method");                  	           	
 	//int year=2019;
 	int year = Calendar.getInstance().get(Calendar.YEAR);
 	 if(mid==null || mid=="") {
 		 mid="all";
 	 }
-	System.out.println("SELECT GROUP_CONCAT(sk_shopper_id) as shopperIds FROM `mst_shopper_details` WHERE outlet_id IN("+ gBean.getOutlet_id() + ") AND visit_status='published' AND (month(visit_date)='"+mid+"' or '"+mid+"'='all') ");
+	log.info("getshoppersByOutlet method :"+"SELECT GROUP_CONCAT(sk_shopper_id) as shopperIds FROM `mst_shopper_details` WHERE outlet_id IN("+ gBean.getOutlet_id() + ") AND visit_status='published' AND (month(visit_date)='"+mid+"' or '"+mid+"'='all') ");
 	return template.queryForObject(
 			"SELECT GROUP_CONCAT(sk_shopper_id) as shopperIds FROM `mst_shopper_details` WHERE outlet_id IN("+ gBean.getOutlet_id() + ") AND visit_status='published' AND (month(visit_date)='"+mid+"' or '"+mid+"'='all') ",
 			new RowMapper<QuestionnaireBean>() {
 				public QuestionnaireBean mapRow(ResultSet rs, int row) throws SQLException {
 					qBean.setShopperIds(rs.getString("shopperIds"));
+					log.info("getshoppersByOutlet method return");                  	           	
 					return qBean;
 				}
 			});
@@ -2228,7 +2301,7 @@ public QuestionnaireBean getshoppersByOutlet(QuestionnaireBean qBean,GraphBean g
  * olr download manoj d
  */
 public List<QuestionnaireBean> questionsandoptions(QuestionnaireBean qBean,String osc_shopper_id,String dealer_id,String NonOsc_shopper_id) {
-	
+	log.info("questionsandoptions method");                  	           	
 		/*
 		 * String sql =
 		 * "SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mst_questionare.question_points as totalQuesPoints from mys_txn_answers,mst_shopper_details,mys_score,mst_questionare WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.shopper_id='"
@@ -2245,8 +2318,8 @@ public List<QuestionnaireBean> questionsandoptions(QuestionnaireBean qBean,Strin
 			+ "' AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id AND mys_score.shopper_id=mys_txn_answers.shopper_id AND mys_txn_answers.question_id=mst_questionare.sk_question_id AND mys_txn_answers.status='active' and mst_questionare.question_status='active' GROUP BY mys_txn_answers.question_id  ORDER BY mode_of_contact DESC, CAST(standard_number_sequence as decimal(10,2)) ASC ";
 	//String sql="SELECT mys_txn_answers.*,SUM(mys_txn_answers.question_points) as maxQues_points,SUM(mys_txn_answers.scored_points) AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers,mst_shopper_details,mys_score,mys_txn_formulaanswer,mst_questionare WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.shopper_id='9' AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id AND mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id AND mys_txn_answers.question_id=mst_questionare.sk_question_id GROUP BY mys_txn_answers.question_id  UNION SELECT mys_txn_answers.*,SUM(mys_txn_answers.question_points) as maxQues_points,SUM(mys_txn_answers.scored_points) AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points from mys_txn_answers,mst_shopper_details,mys_score,mys_txn_formulaanswer,mst_questionare WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.shopper_id='6' AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id AND mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id AND mys_txn_answers.question_id=mst_questionare.sk_question_id GROUP BY mys_txn_answers.question_id ORDER BY mode_of_contact ASC,standard_number_sequence ASC LIMIT 5,1";
 	//String sql="SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers,mst_shopper_details,mys_score,mys_txn_formulaanswer,mst_questionare WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.shopper_id='"+NoscShopper_id+"' AND mys_txn_answers.formula_flag=0 AND mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id AND mys_txn_answers.subsection_id=mys_score.subsection_id AND mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id AND mys_txn_answers.question_id=mst_questionare.sk_question_id GROUP BY mys_txn_answers.question_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact!='Online Sales Channel' AND mys_txn_answers.formula_flag=1 AND mys_txn_answers.shopper_id='"+NoscShopper_id+"' GROUP BY mys_txn_answers.sk_answer_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.formula_flag=0 AND mys_txn_answers.shopper_id='"+shopper_id+"' GROUP BY mys_txn_answers.sk_answer_id UNION SELECT mys_txn_answers.*,mys_txn_answers.question_points as maxQues_points,mys_txn_answers.scored_points AS maxScore_points,mst_shopper_details.mode_of_contact,mys_score.percentage,mys_txn_formulaanswer.points as formulapoints,mst_questionare.question_points as totalQuesPoints from mys_txn_answers LEFT JOIN mst_shopper_details ON mys_txn_answers.shopper_id=mst_shopper_details.sk_shopper_id LEFT JOIN mys_score ON mys_txn_answers.subsection_id=mys_score.subsection_id LEFT JOIN mys_txn_formulaanswer ON mys_txn_answers.shopper_id=mys_txn_formulaanswer.shopper_id LEFT JOIN mst_questionare on mys_txn_answers.question_id=mst_questionare.sk_question_id WHERE mst_shopper_details.mode_of_contact='Online Sales Channel' AND mys_txn_answers.formula_flag=1 AND mys_txn_answers.shopper_id='"+shopper_id+"' GROUP BY mys_txn_answers.sk_answer_id  ORDER BY mode_of_contact ASC,standard_number_sequence ASC LIMIT " + (pageid - 1) + "," + total + " ";
-	System.out.println("dealer id in questionand options dao"+dealer_id);
-	System.out.println("Manoj d questions and options list=" + sql);
+	log.info("dealer id in questionand options dao"+dealer_id);
+	log.info("questionsandoptions method :" + sql);
 	//final String sid=NonOsc_shopper_id;
 	//final String oscsid=osc_shopper_id;
 	return template.query(sql, new RowMapper<QuestionnaireBean>() {
@@ -2259,7 +2332,7 @@ public List<QuestionnaireBean> questionsandoptions(QuestionnaireBean qBean,Strin
 			qBean.setSubsection_name(rs.getString("subsection_name"));
 			String Question_type=rs.getString("question_type");
 			qBean.setStorevisitId(rs.getString("shopper_id"));
-			System.out.println("Question type===="+Question_type);
+			log.info("Question type===="+Question_type);
 			  List<QuestionnaireBean> optionsList=getOLROptionsList(qBean,rs.getString("question_id"));
 			  qBean.setOptionsList(optionsList);
 			  List<QuestionnaireBean> subQuesList=getSubQuesList(qBean,rs.getString("question_id"));
@@ -2275,13 +2348,12 @@ public List<QuestionnaireBean> questionsandoptions(QuestionnaireBean qBean,Strin
 				  qBean.setSumOfQuesPoints(sumOfPoints.getSumOfQuesPoints());
 			  }
 			  
-			System.out.println("select option text====="+rs.getString("select_option_text"));
+			log.info("select option text====="+rs.getString("select_option_text"));
 			qBean.setAnswer_type(rs.getString("answer_type"));		
 			qBean.setParagraph(rs.getString("main_ques_comment"));
-			System.out.println();
 			qBean.setComment_criteria(rs.getString("main_ques_comment"));
 			qBean.setSelected_option_comment(rs.getString("select_option_comment"));
-			System.out.println("select option comment====="+rs.getString("select_option_comment"));
+			log.info("select option comment====="+rs.getString("select_option_comment"));
 			qBean.setParagraph(rs.getString("paragraph"));
 			qBean.setDate_code(rs.getString("date"));
 			qBean.setTime_code(rs.getString("dateandtime"));
@@ -2295,11 +2367,12 @@ public List<QuestionnaireBean> questionsandoptions(QuestionnaireBean qBean,Strin
 			if(rs.getString("formula_flag").equals("1")){
 			QuestionnaireBean getformulaPoint =getformulaPoints(qBean, rs.getString("shopper_id"),rs.getString("question_id"));
 			qBean.setFormulapoints(getformulaPoint.getFormulapoints());
-			System.out.println("formula Points in If condition===="+getformulaPoint.getFormulapoints());
+			log.info("formula Points in If condition===="+getformulaPoint.getFormulapoints());
 			}
 			qBean.setTotal_ques_points(rs.getString("totalQuesPoints"));
-			System.out.println("formula flag"+rs.getString("formula_flag")+"===="+rs.getString("standard_number")+"==="+rs.getString("question_points"));
-			System.out.println("first=" + rs.getString("mode_of_contact"));
+			log.info("formula flag"+rs.getString("formula_flag")+"===="+rs.getString("standard_number")+"==="+rs.getString("question_points"));
+			log.info("first=" + rs.getString("mode_of_contact"));
+			log.info("questionsandoptions method return");                  	           	
 			return qBean;
 		}
 

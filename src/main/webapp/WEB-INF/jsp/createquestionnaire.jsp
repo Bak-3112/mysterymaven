@@ -1085,6 +1085,7 @@ function checkSubQuestionType(val,row){
 	  var subsection_id=$("#super_subsection_id").val();
 	  $( "#super_standard_Number_1").empty();
 	  $( "#superquestionanswer_1").empty();
+	  alert(section_id+"="+brand_id +"="+ modeOfContact+"="+ +"="+subsection_id)
   console.log(section_id+"="+brand_id +"="+ modeOfContact+"="+ +"="+subsection_id)
 	$.ajax({
        url: "<%=dashboardURL%>getStandardNumberByIds",

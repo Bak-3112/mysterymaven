@@ -3,6 +3,8 @@ package com.mystery.dao;
 import java.util.Random;
 
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,9 +18,14 @@ import org.springframework.stereotype.Repository;
 
 import com.mystery.beans.MysteryShoppingVisitsBean;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class HelperDao {
 	@Autowired
     JdbcTemplate template;
+	
+	private static final Logger log= LoggerFactory.getLogger(HelperDao.class);
 	
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
@@ -40,7 +47,7 @@ public class HelperDao {
 			String ext2 = FilenameUtils.getExtension(filename); // returns "exe"
 			 
 			  String renamedfilename = alpha+"."+ext2;
-			System.out.println("rename filename name :"+renamedfilename);
+			log.info("rename filename name :"+renamedfilename);
 			 data = renamedfilename;
 			
 		}
@@ -57,7 +64,7 @@ public class HelperDao {
 	
 public MysteryShoppingVisitsBean getScoreWeightage(MysteryShoppingVisitsBean mvBean, String year) {
 		try {
-		System.out.println("SELECT(select `weightage` from mst_score_weightage WHERE section_id=2 and year='"+year+"' ) as pe,(select `weightage` from mst_score_weightage WHERE section_id=3 and year='"+year+"' ) as ct,(select `weightage` from mst_score_weightage WHERE section_id in (4,5) AND year='"+year+"' ) as osc from mst_score_weightage WHERE year='"+year+"' and `status`='active' GROUP by year");
+		log.info("SELECT(select `weightage` from mst_score_weightage WHERE section_id=2 and year='"+year+"' ) as pe,(select `weightage` from mst_score_weightage WHERE section_id=3 and year='"+year+"' ) as ct,(select `weightage` from mst_score_weightage WHERE section_id in (4,5) AND year='"+year+"' ) as osc from mst_score_weightage WHERE year='"+year+"' and `status`='active' GROUP by year");
 		return template.queryForObject("SELECT(select `weightage` from mst_score_weightage WHERE section_id=2 and year='"+year+"' ) as pe,(select `weightage` from mst_score_weightage WHERE section_id=3 and year='"+year+"' ) as ct,(select `weightage` from mst_score_weightage WHERE section_id in (4,5) AND year='"+year+"' ) as osc from mst_score_weightage WHERE year='"+year+"' and `status`='active' GROUP by year",
 				new RowMapper<MysteryShoppingVisitsBean>() {
 					public MysteryShoppingVisitsBean mapRow(ResultSet rs, int row) throws SQLException {
@@ -71,7 +78,7 @@ public MysteryShoppingVisitsBean getScoreWeightage(MysteryShoppingVisitsBean mvB
 		// TODO Auto-generated method stub
 		}catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("catch expection in helper dao"+e);
+			log.info("catch expection in helper dao"+e);
 		}
 		return mvBean;
 	}

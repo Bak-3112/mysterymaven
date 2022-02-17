@@ -200,7 +200,7 @@ String dashboardURL=resource.getString("dashboardURL");
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="Closed">
                            
-
+                            <div class='table-responsive'>
                              <table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
@@ -237,6 +237,7 @@ String dashboardURL=resource.getString("dashboardURL");
                                 </c:forEach>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                           <!-- EXCEPTIONS -->
                                         

@@ -446,7 +446,7 @@ String dashboardURL=resource.getString("dashboardURL");
 <script>
 function RoleBasedEnable(user_type){
 	var roleId=$("#sk_role_id").val();
-	//alert(roleId);
+	 /* alert(roleId); */
 	if((roleId == 2)||(roleId == 4) || (roleId == 5))
 	{
 		$("#region_id").attr("disabled", true);

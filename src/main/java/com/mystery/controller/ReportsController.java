@@ -45,6 +45,9 @@ import com.mystery.dao.MysteryShoppingVisitsDao;
 import com.mystery.dao.QuestionnaireDao;
 import com.mystery.dao.ReportsDao;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class ReportsController {
 	@Autowired
@@ -67,8 +70,9 @@ public class ReportsController {
 	
 	@RequestMapping("OverallPerformance")
 	public ModelAndView OverallPerformance(HttpServletRequest request, HttpServletResponse response,GraphBean gBean,RegionBean rgBean,QuestionnaireBean qBean ){
-	ModelAndView mv=new ModelAndView("OverallPerformance");
-	System.out.println("jsdkjsdfjsd="+gBean.getMonth());
+	log.info("/OverallPerformance api"+new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView("OverallPerformance");
+	log.info("jsdkjsdfjsd="+gBean.getMonth());
 
 	HttpSession session = request.getSession(true);
 	String role_for = (String) session.getAttribute("role_for");
@@ -85,7 +89,7 @@ public class ReportsController {
 	
 	gBean.setMonth(gBean.getMonth());
 	gBean.setBrand_id(gBean.getBrand_id());
-	System.out.println("brand "+gBean.getBrand_id());
+	log.info("brand "+gBean.getBrand_id());
 	gBean.setRegion_id(gBean.getRegion_id());;
 	gBean.setDealer_id(gBean.getDealer_id());
 	gBean.setOutlet_id(gBean.getOutlet_id());
@@ -106,11 +110,11 @@ public class ReportsController {
 	  List<GraphBean> activeoutletsbyid =rDao.getoutlets(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id());
 	  mv.addObject("activeoutletsbyid", activeoutletsbyid); 
 	 
-	  System.out.println("dealer id=="+gBean.getDealer_id());
-	  System.out.println("brand id=="+gBean.getBrand_id());
-	  System.out.println("region id=="+gBean.getRegion_id());
-	  System.out.println("outlet id=="+gBean.getOutlet_id());
-	  System.out.println("month=="+gBean.getMonth());
+	  log.info("dealer id=="+gBean.getDealer_id());
+	  log.info("brand id=="+gBean.getBrand_id());
+	  log.info("region id=="+gBean.getRegion_id());
+	  log.info("outlet id=="+gBean.getOutlet_id());
+	  log.info("month=="+gBean.getMonth());
 	  String did = gBean.getDealer_id();
 		String bid = gBean.getBrand_id();
 		String rid = gBean.getRegion_id();
@@ -133,7 +137,7 @@ public class ReportsController {
 			gBean.setOutlet_id(outlets.getOutlet_id());
 		}
 		//gBean.setOutlet_id(outlets.getOutlet_id());
-		//System.out.println("outlet in overallperformance==="+outlets.getOutlet_id());
+		//log.info("outlet in overallperformance==="+outlets.getOutlet_id());
 		String monthData = "";
 		if (gBean.getMonth() == null || gBean.getMonth().equals("") || gBean.getMonth().equals("all")) {
 
@@ -147,10 +151,10 @@ public class ReportsController {
 	    Date date = DateUtils.addDays(new Date(), -1);
 		sd.setTimeZone(TimeZone.getTimeZone("IST"));
 		List<GraphBean> getMonthsData = rDao.getMonthsForYtdMtd(gBean, monthData);
-		// System.out.println(gson.toJson(getMonthsData)+":"+getMonthsData.size());
+		// log.info(gson.toJson(getMonthsData)+":"+getMonthsData.size());
 		List<GraphBean> ytdmtd = new ArrayList<GraphBean>();
 		for (int i = 0; i < getMonthsData.size(); i++) {
-			System.out.println(getMonthsData.get(i).getMonth());
+			log.info(getMonthsData.get(i).getMonth());
 			int month = Integer.parseInt(getMonthsData.get(i).getMonth());
 			YearMonth yearMonthObject = YearMonth.of(year, month);
 			int daysInMonth = yearMonthObject.lengthOfMonth();
@@ -161,8 +165,8 @@ public class ReportsController {
 			if (sd.format(date).compareTo(EndData) < 0 && i == getMonthsData.size()) {
 				EndData = sd.format(date);
 			}
-			System.out.println("start date for ytdmtd===="+StartData);
-			System.out.println("start date for ytdmtd===="+EndData);
+			log.info("start date for ytdmtd===="+StartData);
+			log.info("start date for ytdmtd===="+EndData);
 			ytdmtd.addAll(rDao.getytdmtd(qBean,gBean,oid, StartData, EndData, getMonthsData.get(i).getMonth_name(),did));
 		}
 		mv.addObject("ytdmtd", ytdmtd);
@@ -178,7 +182,7 @@ public class ReportsController {
 		List<GraphBean> getCustomerPercentage = rDao.getOverallPerformanceSectionWiseScore(qBean,gBean, section, mid, oid, bid, did, rid);
 		 String jsonArray1 = gson.toJson(getCustomerPercentage);
 		 request.setAttribute("jsonArray1", jsonArray1);
-		 System.out.println("Customer percentage ====="+getCustomerPercentage);
+		 log.info("Customer percentage ====="+getCustomerPercentage);
 
 		 section = "1";
 		List<GraphBean> getOnlineSalesChannel = rDao.getOverallPerformanceSectionWiseScoreData(qBean,gBean, section, mid, oid, bid, did, rid);
@@ -215,7 +219,7 @@ public class ReportsController {
 				request.setAttribute("offer_followup", f.format(Double.parseDouble(qBean.getAvg())));
 				
 				// 6. Consider Buying a Vehicle
-				System.out.println("hello here we are");
+				log.info("hello here we are");
 				rDao.getOverallperformanceFormula4(qBean, "6.2", "Yes",bid,oid,did,rid,mid);
 				request.setAttribute("Buy_vehicle", f.format(Double.parseDouble(qBean.getAvg())));
 				
@@ -295,7 +299,7 @@ public class ReportsController {
 				 * Retail Standards
 				 * 
 				 */
-				System.out.println("month for mode=============="+(request.getParameter("month")));
+				log.info("month for mode=============="+(request.getParameter("month")));
 				if (request.getParameter("month") != null) {
 					if (!request.getParameter("month").equals("")) {
 						GraphBean getMode = rDao.getModeByMonth(gBean);
@@ -316,7 +320,8 @@ public class ReportsController {
 	}
 	@RequestMapping("CrmCompilance")
 	public ModelAndView CrmCompilance(HttpServletRequest request, HttpServletResponse response,GraphBean gBean,ReportsBean rBean,RegionBean rgBean,QuestionnaireBean qBean){
-	ModelAndView mv=new ModelAndView("CRM-compilance");
+	log.info("/CrmCompilance api"+new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView("CRM-compilance");
 	HttpSession session = request.getSession(true);
 	String role_for = (String) session.getAttribute("role_for");
 	String dealers = (String) session.getAttribute("dealers");
@@ -341,11 +346,11 @@ public class ReportsController {
 	  mv.addObject("activedealersbyid", activedealersbyid); 
 	  List<GraphBean> activeoutletsbyid =rDao.getoutlets(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id());
 	  mv.addObject("activeoutletsbyid", activeoutletsbyid);
-	  System.out.println("dealer id=="+gBean.getDealer_id());
-	  System.out.println("brand id=="+gBean.getBrand_id());
-	  System.out.println("region id=="+gBean.getRegion_id());
-	  System.out.println("outlet id=="+gBean.getOutlet_id());
-	  System.out.println("month=="+gBean.getMonth());
+	  log.info("dealer id=="+gBean.getDealer_id());
+	  log.info("brand id=="+gBean.getBrand_id());
+	  log.info("region id=="+gBean.getRegion_id());
+	  log.info("outlet id=="+gBean.getOutlet_id());
+	  log.info("month=="+gBean.getMonth());
 	  String did = gBean.getDealer_id();
 		String bid = gBean.getBrand_id();
 		String rid = gBean.getRegion_id();
@@ -369,7 +374,7 @@ public class ReportsController {
 				String upto = data.getUpto2days();
 				String more = data.getMore2days();
 				String name = data.getName();
-				System.out.println(more);
+				log.info(more);
 				String email = data.getEmail();
 				String total = data.getTotalquestions();
 				String count = data.getCount();
@@ -380,9 +385,9 @@ public class ReportsController {
 						.format(((Double.parseDouble(upto) + Double.parseDouble(more)) / Double.parseDouble(count)) * 100);
 				String nodelay_per = f.format((Double.parseDouble(nodelay) / Double.parseDouble(total)) * 100);
 				String upto_percentage = f.format((Double.parseDouble(upto) / Double.parseDouble(total)) * 100);
-				System.out.println("upto===="+upto_percentage);
+				log.info("upto===="+upto_percentage);
 				String more_percentage = f.format((Double.parseDouble(more) / Double.parseDouble(total)) * 100);
-				System.out.println(Double.parseDouble(more)+"cthgjvkbnrxfchgvjb"+Double.parseDouble(total));
+				log.info(Double.parseDouble(more)+"cthgjvkbnrxfchgvjb"+Double.parseDouble(total));
 				String email_percentage = f.format((Double.parseDouble(email) / Double.parseDouble(count)) * 100);
 				String name_percentage = f.format((Double.parseDouble(name) / Double.parseDouble(count)) * 100);
 				String noncom_percentage = f.format((Double.parseDouble(norecords) / Double.parseDouble(count)) * 100);
@@ -416,8 +421,8 @@ public class ReportsController {
 				request.setAttribute("noncom_percentage", noncom_percentage);
 				request.setAttribute("timely_percentage", timely_percentage);
 				List<QuestionnaireBean> list = qDao.getcrmbargraph(qBean,bid,oid,did,rid,mid);
-				System.out.println(list.size());
-				// System.out.println(list.iterator().next().getMonth());
+				log.info("list.size()"+list.size());
+				// log.info(list.iterator().next().getMonth());
 				String yes = "";
 				String no = "";
 				String month = "";
@@ -431,7 +436,7 @@ public class ReportsController {
 				// month="'"+month.replaceAll(",", "', '")+"'";
 				yes = yes.startsWith(",") ? yes.substring(1) : yes;
 				no = no.startsWith(",") ? no.substring(1) : no;
-				System.out.println(month);
+				log.info(month);
 				request.setAttribute("yes", yes);
 				request.setAttribute("no", no);
 				request.setAttribute("months", month);
@@ -445,13 +450,14 @@ public class ReportsController {
 	}
 	@RequestMapping("conquestContactdynamic")
 	public ModelAndView conquestContactdynamic(HttpServletRequest request,GraphBean gBean,RegionBean rgBean){
-	ModelAndView mv=new ModelAndView();
+		log.info("/conquestContactdynamic api"+new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView();
 	try {
 		  mv=new ModelAndView("ConquestAndLoyaltyContact");
-	System.out.println("jsdkjsdfjsd="+gBean.getMonth());
+	log.info("jsdkjsdfjsd="+gBean.getMonth());
 	gBean.setMonth(gBean.getMonth());
 	gBean.setBrand_id(gBean.getBrand_id());
-	System.out.println("get brand"+gBean.getBrand_id());
+	log.info("get brand"+gBean.getBrand_id());
 	HttpSession session = request.getSession(true);
 	String role_for = (String) session.getAttribute("role_for");
 	String dealers = (String) session.getAttribute("dealers");
@@ -516,7 +522,9 @@ public class ReportsController {
 	  request.setAttribute("meetthestandardsjson", meetthestandardsjson);
 	  
 	}catch (Exception e) {
-		  mv=new ModelAndView("redirect:/");
+		e.printStackTrace();
+		log.info("Exception /conquestContactdynamic api"+e);
+		mv=new ModelAndView("redirect:/");
 	}
 	  
 	return mv;
@@ -525,6 +533,7 @@ public class ReportsController {
 	@RequestMapping(value = "/getmonths")
 	public @ResponseBody Object getmonths(HttpServletRequest request, HttpServletResponse response,
 			GraphBean gBean) {
+		log.info("/getmonths api"+new Gson().toJson(gBean));
 		gBean.setMode_of_contact("Email/Website");
 		String bid = request.getParameter("bid");
 		List<GraphBean> getMonths = rDao.getMonthsByMode(gBean, bid);
@@ -533,7 +542,7 @@ public class ReportsController {
 	@RequestMapping(value = "/getmonthsforOvper")
 	public @ResponseBody Object getmonthsOvper(HttpServletRequest request, HttpServletResponse response,
 			GraphBean gBean) {
-		
+		log.info("/getmonthsforOvper api"+new Gson().toJson(gBean));
 		String bid = request.getParameter("bid");
 		List<GraphBean> getMonths = rDao.getMonthsNames(gBean, bid);
 		return getMonths;
@@ -542,17 +551,19 @@ public class ReportsController {
 	@RequestMapping(value = "/getDealers")
 	public @ResponseBody Object getDealers(HttpServletRequest request, HttpServletResponse response,
 			GraphBean gBean) {
+		log.info("/getDealers api"+new Gson().toJson(gBean));
 		String bid = request.getParameter("bid");
 		String rid = request.getParameter("region_id");
 		String did = request.getParameter("dealer_id");
 		List<GraphBean> getDealers = rDao.getDealers1(gBean, bid,rid,did);
 		 Gson gson = new Gson(); 
-		System.out.println(gson.toJson(getDealers));
+		log.info(gson.toJson(getDealers));
 		return getDealers;
 	}
 	@RequestMapping(value = "/getDealersbyid")
 	public @ResponseBody Object getDealersbyid(HttpServletRequest request, HttpServletResponse response,
 			GraphBean gBean) {
+		log.info("/getDealersbyid api"+new Gson().toJson(gBean));
 		String rid = request.getParameter("region_id");
 		List<GraphBean> getDealers = rDao.getDealersbyid(gBean,rid);
 		return getDealers;
@@ -560,6 +571,7 @@ public class ReportsController {
 	@RequestMapping(value = "/getDealersforOvper")
 	public @ResponseBody Object getDealersforOvper(HttpServletRequest request, HttpServletResponse response,
 			GraphBean gBean) {
+		log.info("/getDealersforOvper api"+new Gson().toJson(gBean));
 		String bid = request.getParameter("bid");
 		String rid = request.getParameter("region_id");
 		List<GraphBean> getDealers = rDao.getDealersforOverp(gBean, bid,rid);
@@ -568,6 +580,7 @@ public class ReportsController {
 	@RequestMapping(value = "/getoutlets")
 	public @ResponseBody Object getoutlets(HttpServletRequest request, HttpServletResponse response,
 			GraphBean gBean) {
+		log.info("/getoutlets api"+new Gson().toJson(gBean));
 		String did = request.getParameter("did");
 		String bid = request.getParameter("bid");
 		String rid = request.getParameter("region_id");
@@ -577,6 +590,7 @@ public class ReportsController {
 	@RequestMapping(value = "/getoutletsforOvper")
 	public @ResponseBody Object getoutletsforOvper(HttpServletRequest request, HttpServletResponse response,
 			GraphBean gBean) {
+		log.info("/getoutletsforOvper api"+new Gson().toJson(gBean));
 		String did = request.getParameter("did");
 		String bid = request.getParameter("bid");
 		List<GraphBean> getMonths = rDao.getoutletsforOverp(gBean, did,bid);
@@ -588,7 +602,8 @@ public class ReportsController {
 	@RequestMapping("conquestContactTele")
 	public ModelAndView conquestContactTele(ReportsBean rBean,GraphBean gBean,HttpServletRequest request,RegionBean rgBean){
 		ModelAndView mv=new ModelAndView();
-	HttpSession session = request.getSession(true);
+		log.info("/conquestContactTele api"+new Gson().toJson(gBean));
+		HttpSession session = request.getSession(true);
 	String role_for = (String) session.getAttribute("role_for");
 	String dealers = (String) session.getAttribute("dealers");
 	String roleId = (String) session.getAttribute("role_id");
@@ -615,7 +630,7 @@ public class ReportsController {
 	request.setAttribute("region_id", gBean.getRegion_id());
 	request.setAttribute("year", gBean.getYear());
 	request.setAttribute("role_id", gBean.getRole_id());
-    System.out.println("gbean year"+gBean.getYear());
+    log.info("gbean year"+gBean.getYear());
     
 	gBean.setMode_of_contact("Telephone");
 	List<GraphBean> BrandList = rDao.getBrands(gBean);
@@ -633,7 +648,7 @@ public class ReportsController {
 	  mv.addObject("stepstotakegraph", stepstotakegraph); 
 	  Gson gson = new Gson(); 
 	   if(stepstotakegraph.isEmpty()) { 
-		   System.out.println("list is empty");
+		   log.info("list is empty");
 		   int year1 = Calendar.getInstance().get(Calendar.YEAR);
 		   String year=String.valueOf(year1);
 		   request.setAttribute("selected_year", year);
@@ -655,6 +670,8 @@ public class ReportsController {
 	  String anyoneatdealershipjson = gson.toJson(anyoneatdealership);
 	  request.setAttribute("anyoneatdealershipjson", anyoneatdealershipjson);
 	}catch (Exception e) {
+		e.printStackTrace();
+		log.info("Exception /conquestContactTele api"+e);
 		  mv=new ModelAndView("redirect:/");
 	}
 	return mv;
@@ -662,13 +679,14 @@ public class ReportsController {
 	@RequestMapping("conquestContactFocus")
 	public ModelAndView conquestContactFocus(ReportsBean rBean,GraphBean gBean,HttpServletRequest request,RegionBean rgBean){
 		ModelAndView mv=new ModelAndView();
+		log.info("/conquestContactFocus api"+new Gson().toJson(gBean));
 		HttpSession session = request.getSession(true);
 		String dealers = (String) session.getAttribute("dealers");
 		String roleId = (String) session.getAttribute("role_id");
 		String region = (String) session.getAttribute("region");
 		
 		String role_for = (String) session.getAttribute("role_for");
-		System.out.println("role_for==="+roleId);
+		log.info("role_for==="+roleId);
 	  
 		
 try {
@@ -694,7 +712,7 @@ try {
 	request.setAttribute("region_id", gBean.getRegion_id());
 	request.setAttribute("year", gBean.getYear());
 	request.setAttribute("role_id", gBean.getRole_id());
-   System.out.println("gbean year"+ gBean.getYear());
+   log.info("gbean year"+ gBean.getYear());
 	//gBean.setMode_of_contact("Telephone");
 	List<GraphBean> BrandList = rDao.getBrands(gBean);
 	mv.addObject("BrandList", BrandList);
@@ -710,7 +728,7 @@ try {
 	  List<GraphBean> contactdetailsspeltcorrectly =rDao.getcontactdetailsspeltcorrectly(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id(),gBean.getOutlet_id(),gBean.getMonth());
 	  mv.addObject("contactdetailsspeltcorrectly", contactdetailsspeltcorrectly); 
 	  if(contactdetailsspeltcorrectly.isEmpty()) { 
-		   System.out.println("list is empty");
+		   log.info("list is empty");
 		   int year1 = Calendar.getInstance().get(Calendar.YEAR);
 		   String year=String.valueOf(year1);
 		   request.setAttribute("selected_year", year);
@@ -748,6 +766,8 @@ try {
 	  String correspondingtimeframegson = gson.toJson(correspondingtimeframe);
 	  request.setAttribute("correspondingtimeframegson", correspondingtimeframegson);
 		}catch (Exception e) {
+			e.printStackTrace();
+			log.info("Exception /conquestContactFocus api"+e);
 			  mv=new ModelAndView("redirect:/");
 		}
 	  
@@ -758,7 +778,8 @@ try {
 	
 	@RequestMapping("DiscountAnalysis")
 	public ModelAndView DiscountAnalysis(ReportsBean rBean,HttpServletRequest request, HttpServletResponse response,GraphBean gBean,RegionBean rgBean,QuestionnaireBean qBean ){
-	ModelAndView mv=new ModelAndView();
+		log.info("/DiscountAnalysis api"+new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView();
 //	HttpSession session = request.getSession(true);
 //	String role_for = (String) session.getAttribute("role_for");
 //	String dealers = (String) session.getAttribute("dealers");
@@ -808,11 +829,11 @@ try {
 	  mv.addObject("activeoutletsbyid", activeoutletsbyid);
 	  
 	
-	  System.out.println("dealer id=="+gBean.getDealer_id());
-	  System.out.println("brand id=="+gBean.getBrand_id());
-	  System.out.println("region id=="+gBean.getRegion_id());
-	  System.out.println("outlet id=="+gBean.getOutlet_id());
-	  System.out.println("month=="+gBean.getMonth());
+	  log.info("dealer id=="+gBean.getDealer_id());
+	  log.info("brand id=="+gBean.getBrand_id());
+	  log.info("region id=="+gBean.getRegion_id());
+	  log.info("outlet id=="+gBean.getOutlet_id());
+	  log.info("month=="+gBean.getMonth());
 	  String did = gBean.getDealer_id();
 		String bid = gBean.getBrand_id();
 		String rid = gBean.getRegion_id();
@@ -832,18 +853,18 @@ try {
 			}
 			List<GraphBean> getDiscountPrices = rDao.getDiscountPrices(gBean,bid,mid,did,oid,rid);
 			List<GraphBean> list = rDao.getdiscountbrands1(gBean,bid,mid,did,oid,rid);
-			System.out.println("list data"+list);
+			log.info("list data"+list);
 			Gson gson = new Gson(); 
 		    String data = gson.toJson(list);
-		    System.out.println("list data manoj d discount analysis"+data);
+		    log.info("list data manoj d discount analysis"+data);
 		    request.setAttribute("data", list);
 		    GraphBean piechart = rDao.getBranddiscountpiechart(gBean,mid);
 		    request.setAttribute("yess", piechart.getYes());
 			request.setAttribute("nooo", piechart.getNo());
 			request.setAttribute("amount", piechart.getStatus());
-			System.out.println("pie-chart amount===="+piechart.getStatus());
-			System.out.println("pie-chart no===="+piechart.getNo());
-			System.out.println("pie-chart yes===="+piechart.getYes());
+			log.info("pie-chart amount===="+piechart.getStatus());
+			log.info("pie-chart no===="+piechart.getNo());
+			log.info("pie-chart yes===="+piechart.getYes());
 			mv.addObject("getDiscountPrices", getDiscountPrices);
 			request.setAttribute("brand_id", gBean.getBrand_id());
 			request.setAttribute("month", gBean.getMonth());
@@ -851,13 +872,16 @@ try {
 			request.setAttribute("outlet_id", gBean.getOutlet_id());
 			request.setAttribute("region_id", gBean.getRegion_id());
 	}catch (Exception e) {
+		e.printStackTrace();
+		log.info("Exception /DiscountAnalysis api"+e);
 		  mv=new ModelAndView("redirect:/");
 	}
 	return mv;
 	}
 	@RequestMapping("CompetitionOverview")
 	public ModelAndView CompetitionOverview(ReportsBean rBean,GraphBean gBean,HttpServletRequest request,RegionBean rgBean){
-	ModelAndView mv=new ModelAndView();
+		log.info("/CompetitionOverview api"+new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView();
 	try {
 		  mv=new ModelAndView("competitionOverview");
 	HttpSession session = request.getSession(true);
@@ -871,8 +895,8 @@ try {
 	String bid = gBean.getBrand_id();
 	String rid = gBean.getRegion_id();
 	String oid = gBean.getOutlet_id();
-	System.out.println("dealer_id in competition"+did);
-	System.out.println("dealers brand"+gBean.getDealer_id());
+	log.info("dealer_id in competition"+did);
+	log.info("dealers brand"+gBean.getDealer_id());
 	rgBean.setRegion_id(gBean.getRegion_id());
 	gBean.setRegion_id(gBean.getRegion_id());
 	gBean.setDealer_id(gBean.getDealer_id());
@@ -892,16 +916,22 @@ try {
     
 	//gBean.setMode_of_contact("Telephone");
 	List<GraphBean> BrandList = rDao.getBrands(gBean);
+	log.info("BrandList===="+BrandList);
 	mv.addObject("BrandList", BrandList);
 	List<GraphBean> getMonths = rDao.getMonthsforconquestcontactFocus(gBean);
+	log.info("getMonths===="+getMonths);
 	mv.addObject("getMonths", getMonths);
 	  List<RegionBean> activeRegionList = dbDao.getRegionList(rgBean,region,roleId);
+	  log.info("activeRegionList"+activeRegionList);
 	  mv.addObject("activeRegionList", activeRegionList); 
 	  List<GraphBean> activedealersbyid = rDao.getDealersByRegionid(gBean,gBean.getBrand_id(),region,dealers);
+	  log.info("activedealersbyid"+activedealersbyid);
 	  mv.addObject("activedealersbyid", activedealersbyid); 
 	  List<GraphBean> activeoutletsbyid =rDao.getoutlets(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id());
+	  log.info("activeoutletsbyid"+activeoutletsbyid);
 	  mv.addObject("activeoutletsbyid", activeoutletsbyid);
 	  
+	  log.info("getOutletsoverallperFilterCompetition====");
 	  GraphBean outlets = rDao.getOutletsoverallperFilterCompetition(gBean,oid,rid,bid,did);
 
 	  gBean.setOutlets(outlets.getOutlets());
@@ -914,7 +944,7 @@ try {
 		List<GraphBean> getShoppingScore = rDao.getShoppingScore(gBean);
 		mv.addObject("getShoppingScore", getShoppingScore);
 		Gson gson = new Gson();
-		System.out.println(gson.toJson(getShoppingScore));
+		log.info(gson.toJson(getShoppingScore));
 		request.setAttribute("dataarray", gson.toJson(getShoppingScore));
 		
 		request.setAttribute("dealer", gBean.getDealer_id());
@@ -922,13 +952,16 @@ try {
 		request.setAttribute("region", gBean.getRegion_id());
 
 	}catch (Exception e) {
+		e.printStackTrace();
+		log.info("Exception /CompetitionOverview api"+e);
 		  mv=new ModelAndView("redirect:/");
 	}
 	return mv;
 	}
 	@RequestMapping("lifeStyleAnalysis")
 	public ModelAndView LifeStyleAnalysis(ReportsBean rBean,GraphBean gBean,HttpServletRequest request,RegionBean rgBean){
-	ModelAndView mv=new ModelAndView();
+		log.info("/lifeStyleAnalysis api"+new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView();
 	try {
 		  mv=new ModelAndView("LifeStyleAnalysis");
 	HttpSession session = request.getSession(true);
@@ -984,13 +1017,17 @@ try {
 	  String Whattakehomematerialgson = gson.toJson(Whattakehomematerial);
 	  request.setAttribute("Whattakehomematerialgson", Whattakehomematerialgson);
 	}catch (Exception e) {
+		e.printStackTrace();
+		log.info("Exception /lifeStyleAnalysis api"+e);
 		  mv=new ModelAndView("redirect:/");
 	}
 	return mv;
 	}
 	@RequestMapping("TrainingNeedAnalysis")
 	public ModelAndView TrainingNeedAnalysis(ReportsBean rBean,HttpServletRequest request, HttpServletResponse response,GraphBean gBean,RegionBean rgBean,QuestionnaireBean qBean ){
-	ModelAndView mv=new ModelAndView();
+		log.info("/TrainingNeedAnalysis api"+new Gson().toJson(gBean));
+
+		ModelAndView mv=new ModelAndView();
 //	HttpSession session = request.getSession(true);
 //	String role_for = (String) session.getAttribute("role_for");
 //	String dealers = (String) session.getAttribute("dealers");
@@ -1039,11 +1076,11 @@ try {
 	  List<GraphBean> activeoutletsbyid =rDao.getoutlets(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id());
 	  mv.addObject("activeoutletsbyid", activeoutletsbyid);
 	
-	  System.out.println("dealer id=="+gBean.getDealer_id());
-	  System.out.println("brand id=="+gBean.getBrand_id());
-	  System.out.println("region id=="+gBean.getRegion_id());
-	  System.out.println("outlet id=="+gBean.getOutlet_id());
-	  System.out.println("month=="+gBean.getMonth());
+	  log.info("dealer id=="+gBean.getDealer_id());
+	  log.info("brand id=="+gBean.getBrand_id());
+	  log.info("region id=="+gBean.getRegion_id());
+	  log.info("outlet id=="+gBean.getOutlet_id());
+	  log.info("month=="+gBean.getMonth());
 	  String did = gBean.getDealer_id();
 		String bid = gBean.getBrand_id();
 		String rid = gBean.getRegion_id();
@@ -1099,13 +1136,16 @@ try {
 		request.setAttribute("outlet_id", gBean.getOutlet_id());
 		request.setAttribute("region_id", gBean.getRegion_id());
 	}catch (Exception e) {
+		e.printStackTrace();
+		log.info("/TrainingNeedAnalysis api"+e);
 		  mv=new ModelAndView("redirect:/");
 	}
 	return mv;
 	}
 	@RequestMapping("financialServiceAnalysis")
 	public ModelAndView FinancialServiceAnalysis(ReportsBean rBean,GraphBean gBean,HttpServletRequest request,RegionBean rgBean){
-	ModelAndView mv=new ModelAndView();
+		log.info("/financialServiceAnalysis api"+new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView();
 	try {
 		  mv=new ModelAndView("financialServiceAnalysis");
 	HttpSession session = request.getSession(true);
@@ -1151,7 +1191,7 @@ try {
 	 // String year=bmwfinancialservice.get(0).getYear();
 	  //request.setAttribute("selected_year", year);
 	  if(bmwfinancialservice.isEmpty()) { 
-		   System.out.println("list is empty");
+		   log.info("list is empty");
 		   int year1 = Calendar.getInstance().get(Calendar.YEAR);
 		   String year=String.valueOf(year1);
 		   request.setAttribute("selected_year", year);
@@ -1179,6 +1219,8 @@ try {
 	  request.setAttribute("handoverfinanceoffergson", handoverfinanceoffergson);
 	  
 	}catch (Exception e) {
+		e.printStackTrace();
+		log.info("Exception /financialServiceAnalysis api"+e);
 		  mv=new ModelAndView("redirect:/");
 	}
 
@@ -1189,7 +1231,8 @@ try {
 
 	@RequestMapping("bpsAnalysis")
 	public ModelAndView BpsAnalysis(ReportsBean rBean,GraphBean gBean,HttpServletRequest request,RegionBean rgBean){
-	ModelAndView mv=new ModelAndView();
+		log.info("/bpsAnalysis api"+new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView();
 	try {
 		  mv=new ModelAndView("bpsAnalysis");
 	HttpSession session = request.getSession(true);
@@ -1246,6 +1289,8 @@ try {
 	  String currentcustomervehiclegson = gson.toJson(currentcustomervehicle);
 	  request.setAttribute("currentcustomervehiclegson", currentcustomervehiclegson);
 	}catch (Exception e) {
+		e.printStackTrace();
+		log.info("Exception /bpsAnalysis api"+e);
 		  mv=new ModelAndView("redirect:/");
 	}
 	return mv;
@@ -1259,7 +1304,7 @@ try {
 	/******Reports*******/
 	@RequestMapping("Reports")
 	  public ModelAndView Reports(ReportsBean rBean,RegionBean rgBean,DatabaseManagementBean dbBean,DealerBean dBean,MysteryShoppingVisitsBean mvBean){
-	    
+		log.info("/Reports api"+new Gson().toJson(mvBean));
 	  ModelAndView mv=new ModelAndView("reports_landing");
 	  List<DatabaseManagementBean> activebrandList = dbDao.getBrandList(dbBean);
 	  mv.addObject("activebrandList", activebrandList);
@@ -1275,6 +1320,7 @@ try {
 	@RequestMapping(value = "/reportspost", method = RequestMethod.POST)
 	public ModelAndView viewquestion( DatabaseManagementBean dbBean,DealerBean dBean,MysteryShoppingVisitsBean mvBean,RegionBean rBean,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("/reportspost api"+new Gson().toJson(mvBean));
 		ModelAndView mv =null;
 		if(mvBean.getReport_type().contentEquals("MSMResult")) {
 			 mv= new ModelAndView("redirect:/msmresult/"+mvBean.getReport_type()+"/"+mvBean.getYear()+"/"+mvBean.getMonth()+"/"+mvBean.getRegion_id()+"/"+mvBean.getDealer_id()+"/"+mvBean.getOutlet_id()+"/"+mvBean.getBrand_id()+"/0");
@@ -1290,15 +1336,15 @@ try {
 if (mvBean.getReport_type().equals("output_level_report")) {
 			
 	
-	System.out.println("outletId iss"+dbBean.getOutlet_id());
+	log.info("outletId iss"+dbBean.getOutlet_id());
 	String encrypt_oid= Encryption.encrypt(dbBean.getOutlet_id());
-	System.out.println("dealer Id iss"+dbBean.getDealer_id());
+	log.info("dealer Id iss"+dbBean.getDealer_id());
 	String encrypt_did= Encryption.encrypt(dbBean.getDealer_id());
-	System.out.println("Month iss"+dbBean.getMonth());
+	log.info("Month iss"+dbBean.getMonth());
 	String encrypt_mid= Encryption.encrypt(dbBean.getMonth());
-	System.out.println("Year iss"+dbBean.getYear());
+	log.info("Year iss"+dbBean.getYear());
 	String encrypt_year= Encryption.encrypt(dbBean.getYear());
-	System.out.println("Brand iss"+dbBean.getBrand_id());
+	log.info("Brand iss"+dbBean.getBrand_id());
 	String encrypt_mode = Encryption.encrypt(mvBean.getMode_of_contact());
 	int brand=dbBean.getBrand_id();
 	//int encrypt_brand= Encryption.encrypt(brand);
@@ -1316,10 +1362,10 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping("LowScoringOutlet/{report_type}/{year}/{month}/{region}/{dealer}/{outlet}/{brand}/{limit}")
 	  public ModelAndView lowscoringoutlet(@PathVariable String report_type,@PathVariable String year,@PathVariable String month,@PathVariable String region,@PathVariable String dealer,@PathVariable String outlet,@PathVariable String brand,@PathVariable String limit, DatabaseManagementBean dbBean,DealerBean dBean,MysteryShoppingVisitsBean mvBean,RegionBean rBean,
 				HttpServletRequest request, HttpServletResponse response) throws ParseException{
-
+		log.info("/LowScoringOutlet/{report_type}/{year}/{month}/{region}/{dealer}/{outlet}/{brand}/{limit} api"+new Gson().toJson(mvBean));
 		ModelAndView mv=new ModelAndView("LowScoringOutlet");
 		int total = 5;
-		System.out.println("LowScoringOutlet");
+		log.info("LowScoringOutlet");
 		 String mon="";
 		if(mvBean.getMonth().contentEquals("all")) {
 			 mon=mvBean.getMonth();
@@ -1355,7 +1401,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		  request.setAttribute("brand_id", mvBean.getBrand_id());
 		  request.setAttribute("limit", mvBean.getLimit());
 		  
-		  System.out.println("month"+mon);
+		  log.info("month"+mon);
 		  
 		  
 		  List<DatabaseManagementBean> dealerListByRegionId =rDao. getDealersbySubregion(dbBean, mvBean.getRegion_id(),mvBean.getBrand_id());
@@ -1381,7 +1427,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping("LowScoringOutletdownload/{year}/{month}/{region}/{dealer}/{outlet}/{brand}")
 	  public ModelAndView LowScoringOutletdownload(@PathVariable String year,@PathVariable String month,@PathVariable String region,@PathVariable String dealer,@PathVariable String outlet,@PathVariable String brand, DatabaseManagementBean dbBean,DealerBean dBean,MysteryShoppingVisitsBean mvBean,RegionBean rBean,
 				HttpServletRequest request, HttpServletResponse response) throws ParseException{
-
+		log.info("/LowScoringOutletdownload/{year}/{month}/{region}/{dealer}/{outlet}/{brand} api"+new Gson().toJson(mvBean));
 		ModelAndView mv=new ModelAndView("lowScoringOutletdownload");
 		int total = 5;
 		 String mon="";
@@ -1417,7 +1463,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			  request.setAttribute("brand_id", mvBean.getBrand_id());
 			  request.setAttribute("limit", mvBean.getLimit());
 			  
-			  System.out.println("month"+mon);
+			  log.info("month"+mon);
 		  
 		  
 		  List<DatabaseManagementBean> dealerListByRegionId =rDao. getDealersbySubregion(dbBean, mvBean.getRegion_id(),mvBean.getBrand_id());
@@ -1440,6 +1486,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping(value = "/getmsmresultcountIds")
 	public @ResponseBody Object getIds(HttpServletRequest request, HttpServletResponse response,
 			MysteryShoppingVisitsBean mBean) {
+		log.info("/getmsmresultcountIds api"+new Gson().toJson(mBean));
 		String report_type = request.getParameter("report_type");
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
@@ -1456,6 +1503,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping(value = "/getlowscoringcountIds")
 	public @ResponseBody Object getlowscoringcountIds(HttpServletRequest request, HttpServletResponse response,
 			MysteryShoppingVisitsBean mBean) {
+		log.info("/getlowscoringcountIds api"+new Gson().toJson(mBean));
 		String report_type = request.getParameter("report_type");
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
@@ -1470,6 +1518,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping(value = "/getsummarycountIds")
 	public @ResponseBody Object getsummarycountIds(HttpServletRequest request, HttpServletResponse response,
 			MysteryShoppingVisitsBean mBean) {
+		log.info("/getsummarycountIds api"+new Gson().toJson(mBean));
 		String report_type = request.getParameter("report_type");
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
@@ -1489,21 +1538,23 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping("/allgraphs")
 	public ModelAndView allgraphs(DatabaseManagementBean dbBean,DealerBean dDBean,MysteryShoppingVisitsBean mvBean,DashboardBean dBean,QuestionnaireBean qBean,GraphBean gBean,RegionBean rgBean,
 			MenuBean mBean,HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
+		log.info("/allgraphs api"+new Gson().toJson(gBean));
 		ModelAndView mv= null;
 		try {
 			
 		mv = new ModelAndView("mlrReport");
 		
-		System.out.println("hello in all graphs +++++++");
+		log.info("hello in all graphs +++++++");
 		HttpSession session = request.getSession(true);
 		request.setAttribute("role_name", (String) session.getAttribute("role_name"));
 		String callingname = request.getRequestURL().toString();
 		String getName = callingname.substring(callingname.lastIndexOf("/") + 1);
-		System.out.println("getName"+getName);
+		log.info("getName"+getName);
 		try {
 		//checkaccessEY(getName, request, response);
 		}catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			log.info("Exception /allgraphs api"+e);
 		}
 
 		Calendar now = Calendar.getInstance();
@@ -1556,7 +1607,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 
 		while (checkClosedVisits.getCount().equals("0")) {
 			i = i + 1;
-			System.out.println("month" + currentmonth);
+			log.info("month" + currentmonth);
 			currentmonth = sdf.format(now.getTime());
 			now.add(Calendar.MONTH, -1);
 			/*
@@ -1616,18 +1667,19 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	                            .collect(Collectors.toList());  // collecting as list  
 	         
 		    String jsonArray = gson.toJson(productPriceList);
-		    System.out.println(jsonArray);
+		    log.info(jsonArray);
 		
 		
 		
 		mv.addObject("getdashboardTabledata", productPriceList);
 		
 		
-		System.out.println("role id"+roleId);
+		log.info("role id"+roleId);
 		try {
 		dDao.getroleMenuById(mBean, roleId);
 		}catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			log.info("Exception dDao.getroleMenuById"+e);
 		}
 		String menu_list = mBean.getMenu();
 		List<MenuBean> mainMenu = dDao.getMainMenu(mBean);
@@ -1640,7 +1692,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			Iterator<MenuBean> iterator = mainMenu.iterator();
 			while (iterator.hasNext()) {
 				String menu_id = iterator.next().getMenu_id();
-				System.out.println("Hi menu ids" + menu_id);
+				log.info("Hi menu ids" + menu_id);
 				subMenu.add(dDao.getSubMenuById(mBean, menu_id, ""));
 			}
 			mv.addObject("subMenuList", subMenu);
@@ -1659,11 +1711,11 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			  mv.addObject("activedealersbyid", activedealersbyid); 
 			  List<GraphBean> activeoutletsbyid =rDao.getoutlets(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id());
 			  mv.addObject("activeoutletsbyid", activeoutletsbyid); 
-			  System.out.println("dealer id=="+gBean.getDealer_id());
-			  System.out.println("brand id=="+gBean.getBrand_id());
-			  System.out.println("region id=="+gBean.getRegion_id());
-			  System.out.println("outlet id=="+gBean.getOutlet_id());
-			  System.out.println("month=="+gBean.getMonth());
+			  log.info("dealer id=="+gBean.getDealer_id());
+			  log.info("brand id=="+gBean.getBrand_id());
+			  log.info("region id=="+gBean.getRegion_id());
+			  log.info("outlet id=="+gBean.getOutlet_id());
+			  log.info("month=="+gBean.getMonth());
 			
 				gBean.setDealer_id(gBean.getDealer_id());
 				gBean.setRegion_id(gBean.getRegion_id());
@@ -1671,10 +1723,10 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 				gBean.setMonth(gBean.getMonth());
 				gBean.setBrand_id(gBean.getBrand_id());
 				//request.setAttribute("year", gBean.getYear());
-				   //System.out.println("gbean year"+ gBean.getYear());
+				   //log.info("gbean year"+ gBean.getYear());
 			  GraphBean outlets = rDao.getOutletsoverallperFilterForYtdMtd(gBean);
 				gBean.setOutlet_id(outlets.getOutlet_id());
-				System.out.println("outlet in overallperformance==="+outlets.getOutlet_id());
+				log.info("outlet in overallperformance==="+outlets.getOutlet_id());
 				String monthData = "";
 				if (gBean.getMonth() == null || gBean.getMonth().equals("") || gBean.getMonth().equals("all")) {
 
@@ -1688,10 +1740,10 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			    Date date = DateUtils.addDays(new Date(), -1);
 				sd.setTimeZone(TimeZone.getTimeZone("IST"));
 				List<GraphBean> getMonthsData = rDao.getMonthsForYtdMtd(gBean, monthData);
-				// System.out.println(gson.toJson(getMonthsData)+":"+getMonthsData.size());
+				// log.info(gson.toJson(getMonthsData)+":"+getMonthsData.size());
 				List<GraphBean> ytdmtd = new ArrayList<GraphBean>();
 				for (int j = 0; j < getMonthsData.size(); j++) {
-					System.out.println(getMonthsData.get(j).getMonth());
+					log.info(getMonthsData.get(j).getMonth());
 					int month = Integer.parseInt(getMonthsData.get(j).getMonth());
 					YearMonth yearMonthObject = YearMonth.of(yearr, month);
 					int daysInMonth = yearMonthObject.lengthOfMonth();
@@ -1702,8 +1754,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 					if (sd.format(date).compareTo(EndData) < 0 && j == getMonthsData.size()) {
 						EndData = sd.format(date);
 					}
-					System.out.println("start date for ytdmtd===="+StartData);
-					System.out.println("start date for ytdmtd===="+EndData);
+					log.info("start date for ytdmtd===="+StartData);
+					log.info("start date for ytdmtd===="+EndData);
 					ytdmtd.addAll(rDao.getytdmtd(qBean,gBean,oid, StartData, EndData, getMonthsData.get(j).getMonth_name(),did));
 				}
 				mv.addObject("ytdmtd", ytdmtd);
@@ -1719,7 +1771,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 				List<GraphBean> getCustomerPercentage = rDao.getOverallPerformanceSectionWiseScore(qBean,gBean, section, mid, oid, bid, did, rid);
 				 String jsonArray1 = gson.toJson(getCustomerPercentage);
 				 request.setAttribute("jsonArray1", jsonArray1);
-				 System.out.println("Customer percentage ====="+getCustomerPercentage);
+				 log.info("Customer percentage ====="+getCustomerPercentage);
 
 				 section = "1";
 				List<GraphBean> getOnlineSalesChannel = rDao.getOverallPerformanceSectionWiseScoreData(qBean,gBean, section, mid, oid, bid, did, rid);
@@ -1756,7 +1808,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 						request.setAttribute("offer_followup", f.format(Double.parseDouble(qBean.getAvg())));
 						
 						// 6. Consider Buying a Vehicle
-						System.out.println("hello here we are");
+						log.info("hello here we are");
 						rDao.getOverallperformanceFormula4(qBean, "6.2", "Yes",bid,oid,did,rid,mid);
 						request.setAttribute("Buy_vehicle", f.format(Double.parseDouble(qBean.getAvg())));
 						
@@ -1836,7 +1888,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 						 * Retail Standards
 						 * 
 						 */
-						System.out.println("month for mode=============="+(request.getParameter("month")));
+						log.info("month for mode=============="+(request.getParameter("month")));
 						if (request.getParameter("month") != null) {
 							if (!request.getParameter("month").equals("")) {
 								GraphBean getMode = rDao.getModeByMonth(gBean);
@@ -1867,7 +1919,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 							String upto = data.getUpto2days();
 							String more = data.getMore2days();
 							String name = data.getName();
-							System.out.println(more);
+							log.info(more);
 							String email = data.getEmail();
 							String total = data.getTotalquestions();
 							String count = data.getCount();
@@ -1878,9 +1930,9 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 									.format(((Double.parseDouble(upto) + Double.parseDouble(more)) / Double.parseDouble(count)) * 100);
 							String nodelay_per = f2.format((Double.parseDouble(nodelay) / Double.parseDouble(total)) * 100);
 							String upto_percentage = f2.format((Double.parseDouble(upto) / Double.parseDouble(total)) * 100);
-							System.out.println();
+							log.info();
 							String more_percentage = f2.format((Double.parseDouble(more) / Double.parseDouble(total)) * 100);
-							System.out.println(Double.parseDouble(more)+"cthgjvkbnrxfchgvjb"+Double.parseDouble(total));
+							log.info(Double.parseDouble(more)+"cthgjvkbnrxfchgvjb"+Double.parseDouble(total));
 							String email_percentage = f2.format((Double.parseDouble(email) / Double.parseDouble(count)) * 100);
 							String name_percentage = f2.format((Double.parseDouble(name) / Double.parseDouble(count)) * 100);
 							String noncom_percentage = f2.format((Double.parseDouble(norecords) / Double.parseDouble(count)) * 100);
@@ -1914,8 +1966,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 							request.setAttribute("noncom_percentage", noncom_percentage);
 							request.setAttribute("timely_percentage", timely_percentage);
 							List<QuestionnaireBean> list = qDao.getcrmbargraph(qBean,bid,oid,did,rid,mid);
-							System.out.println(list.size());
-							// System.out.println(list.iterator().next().getMonth());
+							log.info(list.size());
+							// log.info(list.iterator().next().getMonth());
 							String yes = "";
 							String noo = "";
 							String month = "";
@@ -1929,7 +1981,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 							// month="'"+month.replaceAll(",", "', '")+"'";
 							yes = yes.startsWith(",") ? yes.substring(1) : yes;
 							noo = noo.startsWith(",") ? noo.substring(1) : noo;
-							System.out.println(month);
+							log.info(month);
 							request.setAttribute("yes", yes);
 							request.setAttribute("no", noo);
 							request.setAttribute("months", month); */
@@ -1938,7 +1990,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 						String upto = data.getUpto2days();
 						String more = data.getMore2days();
 						String name = data.getName();
-						System.out.println(more);
+						log.info(more);
 						String email = data.getEmail();
 						String total = data.getTotalquestions();
 						String count = data.getCount();
@@ -1949,9 +2001,9 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 								.format(((Double.parseDouble(upto) + Double.parseDouble(more)) / Double.parseDouble(count)) * 100);
 						String nodelay_per = f2.format((Double.parseDouble(nodelay) / Double.parseDouble(total)) * 100);
 						String upto_percentage = f2.format((Double.parseDouble(upto) / Double.parseDouble(total)) * 100);
-						System.out.println("upto===="+upto_percentage);
+						log.info("upto===="+upto_percentage);
 						String more_percentage = f2.format((Double.parseDouble(more) / Double.parseDouble(total)) * 100);
-						System.out.println(Double.parseDouble(more)+"cthgjvkbnrxfchgvjb"+Double.parseDouble(total));
+						log.info(Double.parseDouble(more)+"cthgjvkbnrxfchgvjb"+Double.parseDouble(total));
 						String email_percentage = f2.format((Double.parseDouble(email) / Double.parseDouble(count)) * 100);
 						String name_percentage = f2.format((Double.parseDouble(name) / Double.parseDouble(count)) * 100);
 						String noncom_percentage = f2.format((Double.parseDouble(norecords) / Double.parseDouble(count)) * 100);
@@ -1985,8 +2037,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 						request.setAttribute("noncom_percentage", noncom_percentage);
 						request.setAttribute("timely_percentage", timely_percentage);
 						List<QuestionnaireBean> list = qDao.getcrmbargraph(qBean,bid,oid,did,rid,mid);
-						System.out.println(list.size());
-						// System.out.println(list.iterator().next().getMonth());
+						log.info("list.size()"+list.size());
+						// log.info(list.iterator().next().getMonth());
 						String yes = "";
 						String noo = "";
 						String month = "";
@@ -2000,7 +2052,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 						// month="'"+month.replaceAll(",", "', '")+"'";
 						yes = yes.startsWith(",") ? yes.substring(1) : yes;
 						noo = noo.startsWith(",") ? noo.substring(1) : noo;
-						System.out.println(month);
+						log.info(month);
 						request.setAttribute("yes", yes);
 						request.setAttribute("no", noo);
 						request.setAttribute("months", month);
@@ -2091,7 +2143,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 						  List<GraphBean> contactdetailsspeltcorrectly =rDao.getcontactdetailsspeltcorrectly(gBean, gBean.getDealer_id(),gBean.getBrand_id(),gBean.getRegion_id(),oid,gBean.getMonth());
 						  mv.addObject("contactdetailsspeltcorrectly", contactdetailsspeltcorrectly); 
 						  if(contactdetailsspeltcorrectly.isEmpty()) { 
-							   System.out.println("list is empty");
+							   log.info("list is empty");
 							   int year11 = Calendar.getInstance().get(Calendar.YEAR);
 							   String year22=String.valueOf(year11);
 							   request.setAttribute("selected_year", year22);
@@ -2134,18 +2186,18 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			/************Srart Discount analysis*************/
 						 List<GraphBean> getDiscountPrices = rDao.getDiscountPrices(gBean,bid,mid,did,oid,rid);
 						List<GraphBean> list1 = rDao.getdiscountbrands1(gBean,bid,mid,did,oid,rid);
-						System.out.println("list data"+list1);
+						log.info("list data"+list1);
 						//Gson gson = new Gson(); 
 					    String data1 = gson.toJson(list1);
-					    System.out.println("list data manoj d discount analysis"+data1);
+					    log.info("list data manoj d discount analysis"+data1);
 					    request.setAttribute("data", list1);
 					    GraphBean piechart = rDao.getBranddiscountpiechart(gBean,mid);
 					    request.setAttribute("yess", piechart.getYes());
 						request.setAttribute("nooo", piechart.getNo());
 						request.setAttribute("amount", piechart.getStatus());
-						System.out.println("pie-chart amount===="+piechart.getStatus());
-						System.out.println("pie-chart no===="+piechart.getNo());
-						System.out.println("pie-chart yes===="+piechart.getYes());
+						log.info("pie-chart amount===="+piechart.getStatus());
+						log.info("pie-chart no===="+piechart.getNo());
+						log.info("pie-chart yes===="+piechart.getYes());
 						mv.addObject("getDiscountPrices", getDiscountPrices); 
 			 /************End  Discount analysis*************/
 							
@@ -2162,7 +2214,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 						List<GraphBean> getShoppingScore = rDao.getShoppingScore(gBean);
 						mv.addObject("getShoppingScore", getShoppingScore);
 						
-						System.out.println(gson.toJson(getShoppingScore));
+						log.info(gson.toJson(getShoppingScore));
 						request.setAttribute("dataarray", gson.toJson(getShoppingScore)); 
 			/********** End competition Overview******/
 								
@@ -2245,6 +2297,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	                   	  request.setAttribute("currentcustomervehiclegson", currentcustomervehiclegson);  
 			/**********End Bps Analysis*********/
 		}catch (Exception e) {
+			e.printStackTrace();
+			log.info("Exception allgraphs"+e);
 			  mv = new ModelAndView("redirect:/");
 		}			
 		 return mv;
@@ -2255,9 +2309,10 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping("msmresult/{report_type}/{year}/{month}/{region}/{dealer}/{outlet}/{brand}/{limit}")
 	  public ModelAndView msmresult(@PathVariable String report_type,@PathVariable String year,@PathVariable String month,@PathVariable String region,@PathVariable String dealer,@PathVariable String outlet,@PathVariable String brand,@PathVariable String limit, DatabaseManagementBean dbBean,DealerBean dBean,MysteryShoppingVisitsBean mvBean,RegionBean rBean,
 				HttpServletRequest request, HttpServletResponse response){
+		log.info("/msmresult/{report_type}/{year}/{month}/{region}/{dealer}/{outlet}/{brand}/{limit} api"+new Gson().toJson(mvBean));
 
 		ModelAndView mv=new ModelAndView("msmresult");
-		System.out.println("jsadhhsdkj");
+		log.info("jsadhhsdkj");
 		int total = 5;
 		 List<DatabaseManagementBean> activebrandList = dbDao.getBrandList(dbBean);
 		  mv.addObject("activebrandList", activebrandList);
@@ -2297,14 +2352,14 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		  
 		 
 		  
-		  System.out.println("report_type="+mvBean.getReport_type());
-		  System.out.println("year="+mvBean.getYear());
-		  System.out.println("month="+mvBean.getMonth());
-		  System.out.println("region="+mvBean.getRegion_id());
-		  System.out.println("dealer="+mvBean.getDealer_id());
-		  System.out.println("location="+mvBean.getOutlet_id());
-		  System.out.println("brand_id="+mvBean.getBrand_id());
-		  System.out.println("limit="+mvBean.getLimit());
+		  log.info("report_type="+mvBean.getReport_type());
+		  log.info("year="+mvBean.getYear());
+		  log.info("month="+mvBean.getMonth());
+		  log.info("region="+mvBean.getRegion_id());
+		  log.info("dealer="+mvBean.getDealer_id());
+		  log.info("location="+mvBean.getOutlet_id());
+		  log.info("brand_id="+mvBean.getBrand_id());
+		  log.info("limit="+mvBean.getLimit());
 		  
 		//  List<MysteryShoppingVisitsBean> allMSResultAns = rDao.getMSNResultAns1(mvBean,mvBean.getYear(),mvBean.getMonth(),mvBean.getRegion_id(),mvBean.getOutlet_id(),mvBean.getBrand_id(),mvBean.getDealer_id());
 		//	mv.addObject("allMSResultAns", allMSResultAns);
@@ -2348,7 +2403,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping("msmdownload/{year}/{month}/{region}/{dealer}/{outlet}/{brand}")
 	  public ModelAndView msmdownload(@PathVariable String year,@PathVariable String month,@PathVariable String region,@PathVariable String dealer,@PathVariable String outlet,@PathVariable String brand, DatabaseManagementBean dbBean,DealerBean dBean,MysteryShoppingVisitsBean mvBean,RegionBean rBean,
 				HttpServletRequest request, HttpServletResponse response){
-
+		log.info("/msmdownload/{year}/{month}/{region}/{dealer}/{outlet}/{brand} api"+new Gson().toJson(mvBean));
 		ModelAndView mv=new ModelAndView("msmdownload");
 		 List<DatabaseManagementBean> activebrandList = dbDao.getBrandList(dbBean);
 		  mv.addObject("activebrandList", activebrandList);
@@ -2384,14 +2439,14 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		  
 		 
 		  
-		  System.out.println("report_type="+mvBean.getReport_type());
-		  System.out.println("year="+mvBean.getYear());
-		  System.out.println("month="+mvBean.getMonth());
-		  System.out.println("region="+mvBean.getRegion_id());
-		  System.out.println("dealer="+mvBean.getDealer_id());
-		  System.out.println("location="+mvBean.getOutlet_id());
-		  System.out.println("brand_id="+mvBean.getBrand_id());
-		  System.out.println("limit="+mvBean.getLimit());
+		  log.info("report_type="+mvBean.getReport_type());
+		  log.info("year="+mvBean.getYear());
+		  log.info("month="+mvBean.getMonth());
+		  log.info("region="+mvBean.getRegion_id());
+		  log.info("dealer="+mvBean.getDealer_id());
+		  log.info("location="+mvBean.getOutlet_id());
+		  log.info("brand_id="+mvBean.getBrand_id());
+		  log.info("limit="+mvBean.getLimit());
 		  
 		  List<MysteryShoppingVisitsBean> MSNResult = rDao.getMSNResultHeadders(mvBean,mvBean.getBrand_id(),mvBean.getYear());
 		  mv.addObject("MSNResult", MSNResult);
@@ -2399,7 +2454,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		  
 		  List<MysteryShoppingVisitsBean> allMSResultAns = rDao.getMSNResultAns1(mvBean,mvBean.getYear(),mvBean.getMonth(),mvBean.getRegion_id(),mvBean.getOutlet_id(),mvBean.getBrand_id(),mvBean.getDealer_id());
 			mv.addObject("allMSResultAns", allMSResultAns);
-			System.out.println("msm result final");
+			log.info("msm result final");
 		   
 	  return mv;
 	  }
@@ -2412,9 +2467,9 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping("summary/{report_type}/{year}/{month}/{region}/{dealer}/{outlet}/{brand}/{limit}")
 	  public ModelAndView summary(@PathVariable String report_type,@PathVariable String year,@PathVariable String month,@PathVariable String region,@PathVariable String dealer,@PathVariable String outlet,@PathVariable String brand,@PathVariable String limit, DatabaseManagementBean dbBean,DealerBean dBean,MysteryShoppingVisitsBean mvBean,RegionBean rBean,
 				HttpServletRequest request, HttpServletResponse response){
-
+		log.info("/summary/{report_type}/{year}/{month}/{region}/{dealer}/{outlet}/{brand}/{limit} api"+new Gson().toJson(mvBean));
 		ModelAndView mv=new ModelAndView("summary");
-		System.out.println("jsadhhsdkj");
+		log.info("jsadhhsdkj");
 		int total = 5;
 		 List<DatabaseManagementBean> activebrandList = dbDao.getBrandList(dbBean);
 		  mv.addObject("activebrandList", activebrandList);
@@ -2468,10 +2523,10 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 //		         })
 //		         // .distinct() // if you want to remove duplicate rankings.
 //		         .collect(Collectors.toList());
-//		     System.out.println(ranking);
+//		     log.info(ranking);
 //		     
 //			    String jsonArray = gson.toJson(ranking);
-//			    System.out.println(jsonArray);
+//			    log.info(jsonArray);
 //		  
 		  mv.addObject("summaryScore", summaryScore);
 		  
@@ -2492,7 +2547,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping("summarydownload/{year}/{month}/{region}/{dealer}/{outlet}/{brand}")
 	  public ModelAndView summarydownload(@PathVariable String year,@PathVariable String month,@PathVariable String region,@PathVariable String dealer,@PathVariable String outlet,@PathVariable String brand, DatabaseManagementBean dbBean,DealerBean dBean,MysteryShoppingVisitsBean mvBean,RegionBean rBean,
 				HttpServletRequest request, HttpServletResponse response){
-
+		log.info("/summarydownload/{year}/{month}/{region}/{dealer}/{outlet}/{brand} api"+new Gson().toJson(mvBean));
 		ModelAndView mv=new ModelAndView("summarysheetdownload");
 		 List<DatabaseManagementBean> activebrandList = dbDao.getBrandList(dbBean);
 		  mv.addObject("activebrandList", activebrandList);
@@ -2545,10 +2600,10 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 //		         })
 //		         // .distinct() // if you want to remove duplicate rankings.
 //		         .collect(Collectors.toList());
-//		     System.out.println(ranking);
+//		     log.info(ranking);
 //		     
 //			    String jsonArray = gson.toJson(ranking);
-//			    System.out.println(jsonArray);
+//			    log.info(jsonArray);
 		  mv.addObject("summaryScore", summaryScore);
 
 
@@ -2568,6 +2623,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping(value = "/getDealersbySubregion")
 	public @ResponseBody Object getRegionsByDealerId(HttpServletRequest request, HttpServletResponse response,
 			DatabaseManagementBean dbBean) {
+		log.info("/getDealersbySubregion api");
 		String region_id = request.getParameter("regionId");
 		String brand_id = request.getParameter("brand");
 		List<DatabaseManagementBean> dealerList = rDao.getDealersbySubregion(dbBean, region_id,brand_id);
@@ -2577,6 +2633,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping(value = "/getOutletsbyDealers")
 	public @ResponseBody Object getOutletsbyDealers(HttpServletRequest request, HttpServletResponse response,
 			DatabaseManagementBean dbBean) {
+		log.info("/getOutletsbyDealers api");
 		String dealer_id = request.getParameter("sk_dealer_id");
 		String brand_id = request.getParameter("brand_id");
 		List<DatabaseManagementBean> outletList = rDao.getOutletsbyDealers(dbBean, dealer_id,brand_id);
@@ -2588,7 +2645,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	public ModelAndView performance(@PathVariable String encrypt_oid,@PathVariable String encrypt_did, @PathVariable String encrypt_year, @PathVariable String page,
 			@PathVariable String brand,@PathVariable String encrypt_month, @PathVariable String mode, ReportsBean rBean,MysteryShoppingVisitsBean mvBean,HttpServletRequest request) throws java.text.ParseException{
 	//ModelAndView mv=new ModelAndView("performance1");
-		  ModelAndView model = null;
+		log.info("/performance/{encrypt_oid}/{encrypt_did}/{encrypt_month}/{encrypt_year}/{brand}/{mode}/{page} api"+new Gson().toJson(mvBean));  
+		ModelAndView model = null;
 		  try {
 			
 		  if (page.equals("1")) {
@@ -2597,11 +2655,11 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 				  model = new ModelAndView("performance2");
 				  }
 		MysteryShoppingVisitsBean mvBean1= new MysteryShoppingVisitsBean();
-		System.out.println("in performance contrlr===="+brand);
+		log.info("in performance contrlr===="+brand);
 		String oid=Encryption.decrypt(encrypt_oid);
 		String did=Encryption.decrypt(encrypt_did);
 		String month=Encryption.decrypt(encrypt_month);
-		System.out.println("month============"+month);
+		log.info("month============"+month);
 		String year=Encryption.decrypt(encrypt_year);
 		String dec_mode=Encryption.decrypt(mode);
 		mvBean.setOutlet_id(oid);
@@ -2609,7 +2667,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		mvBean.setMonth(month);
 		mvBean.setBrand_id(brand);
 		mvBean.setDealer_id(did);
-		System.out.println("dealer id is==="+did);
+		log.info("dealer id is==="+did);
 		request.setAttribute("outlet", encrypt_oid);
 		request.setAttribute("dealer", encrypt_did);
 		request.setAttribute("month", encrypt_month);
@@ -2622,13 +2680,14 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		  request.setAttribute("NonOsc_shopper_id", encrypted_shopper_id); 
 			
 		  
+		 
 			//MysteryShoppingVisitsBean getShopperid2 =   mvDao.getShopperIdByOid1(mvBean,did,brand);
 			mvBean1 =   mvDao.getShopperIdByOid1(mvBean,did,brand, dec_mode);
 			String shopper_Id= mvBean1.getOsc_shopper_id();
 			String encrypted_OSCshopper_id = Encryption.encrypt(shopper_Id);
-			System.out.println("This is Ecrypted SId"+encrypted_OSCshopper_id);
+			log.info("This is Ecrypted SId"+encrypted_OSCshopper_id);
 		  request.setAttribute("osc_shopper_id", encrypted_OSCshopper_id);
-		  System.out.println("kashdjasjdasd"+mvBean1.getSk_shopper_id());
+		  log.info("kashdjasjdasd"+mvBean1.getSk_shopper_id());
 		  
 		 
 		  rDao.getNonOscScore(rBean,mvBean1.getSk_shopper_id(),oid,year,month,brand);
@@ -2660,10 +2719,10 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		
 		  
 		 
-		  System.out.println("before month111=======");
+		  log.info("before month111=======");
 		  int mon=Integer.parseInt(month);
 			int premonth=mon-1;
-			System.out.println("before month222=======");
+			log.info("before month222=======");
 		  int monthNumber = premonth;
 		  int year3 = Integer.parseInt(year);
 		  int prevYear = year3;
@@ -2671,17 +2730,17 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			  
 			  monthNumber = 12;
 			  int Currentyear = Calendar.getInstance().get(Calendar.YEAR);
-				System.out.println("current year==="+Currentyear);
+				log.info("current year==="+Currentyear);
 				 String year1=Encryption.decrypt(encrypt_year);
 					int year2 = Integer.parseInt(year1);
 					 prevYear = year2 - 1;
-				System.out.println("prev Year==="+prevYear);
+				log.info("prev Year==="+prevYear);
 		  }
 		  request.setAttribute("prevYear", prevYear);
 		  String prevmon= Month.of(monthNumber).name().toLowerCase().substring(0, 1).toUpperCase() + Month.of(monthNumber).name().toLowerCase().substring(1);
 		  request.setAttribute("pre_monthname",  prevmon);
 		  
-		  System.out.println("month222======="+prevmon);
+		  log.info("month222======="+prevmon);
 		  	List<ReportsBean> getNonOscSection = rDao.getNonOscSection(rBean,mvBean1.getSk_shopper_id(),month,year,brand,oid);
 		  
 		  model.addObject("getNonOscSection", getNonOscSection);
@@ -2700,8 +2759,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 
 		  int century = (calendar.get(Calendar.YEAR) / 100) +1;
 		  
-		  System.out.println("century==="+century);
-		  System.out.println("hi============");
+		  log.info("century==="+century);
+		  log.info("hi============");
 		  List<MysteryShoppingVisitsBean> getDealerPerformananceDetails = mvDao.getDealerPerformananceDetails(mvBean);
 		  
 		  /*********manoj d*****************/
@@ -2795,14 +2854,14 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			 *  End Retail Standards
 			 */
 		  /*********manoj d*****************/
-			System.out.println("This is Ecrypted OSCSId"+encrypted_OSCshopper_id);
-			System.out.println("This is Ecrypted SId"+encrypted_shopper_id);
-			System.out.println("This is derypted Oid"+oid);
-			System.out.println("This is derypted Did"+did);
+			log.info("This is Ecrypted OSCSId"+encrypted_OSCshopper_id);
+			log.info("This is Ecrypted SId"+encrypted_shopper_id);
+			log.info("This is derypted Oid"+oid);
+			log.info("This is derypted Did"+did);
 		  model.addObject("getDealerPerformananceDetails", getDealerPerformananceDetails);
 		  } catch (Exception e) {
-				// TODO: handle exception
-			  System.out.println("exception block"+e);
+			  e.printStackTrace();
+			  log.info("exception block"+e);
 			  model = new ModelAndView("redirect:/500");
 			}
 		 return model;
@@ -2812,7 +2871,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	public @ResponseBody Object performance3(HttpServletRequest request, HttpServletResponse response,
 			DatabaseManagementBean dbBean,QuestionnaireBean qBean,MysteryShoppingVisitsBean mvBean,@PathVariable String osc_shopper_id,@PathVariable String dealer,@PathVariable String NonOsc_shopper_id,@PathVariable int pageid) {
 		 ModelAndView model = null;
-		 
+			log.info("//performance3/{NonOsc_shopper_id}/{osc_shopper_id}/{dealer}/{pageid} api"+new Gson().toJson(mvBean));  
+
 		 try {
 			
 		
@@ -2829,30 +2889,32 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			request.setAttribute("NoscShopper_id", NonOsc_shopper_id);
 			request.setAttribute("shopper_id", osc_shopper_id);
 			request.setAttribute("dealer", dealer);
-			System.out.println("osc id in p3=="+NonOsc_shopper_id);
-			System.out.println("non osc id in p3=="+osc_shopper_id);
+			log.info("osc id in p3=="+NonOsc_shopper_id);
+			log.info("non osc id in p3=="+osc_shopper_id);
 		 List<QuestionnaireBean> questionsandoptions = qDao.questionsandoptions(qBean, pageid, total, osc_shopper_id,dealer,NonOsc_shopper_id);
 		 model.addObject("questionsandoptions", questionsandoptions);
 		 request.setAttribute("pageNumber", questionsandoptions.size());
 			request.setAttribute("pageid", pageid);
 		 } catch (Exception e) {
-				// TODO: handle exception
+			e.printStackTrace();
+			log.info("Exception block"+e);
 			 model = new ModelAndView("redirect:/500");
 			}
 		return model;
 	}
 	@RequestMapping("/getIdss")
 	public @ResponseBody Object questionCount(HttpServletRequest request, HttpServletResponse response, MysteryShoppingVisitsBean mvBean,QuestionnaireBean qBean) {
-		System.out.println("dsfsdf======IN getIds");
+		log.info("/getIdss api");
+		log.info("dsfsdf======IN getIds");
 		
 		String encrypt_nonoscid = request.getParameter("nonOscId");
 		String encrypt_oscId = request.getParameter("oscId");
 		String nonoscid=Encryption.decrypt(encrypt_nonoscid);
 		String oscId=Encryption.decrypt(encrypt_oscId);
-		System.out.println("non oscid in getidss=="+nonoscid);
-		System.out.println("oscid in getidss=="+oscId);
+		log.info("non oscid in getidss=="+nonoscid);
+		log.info("oscid in getidss=="+oscId);
 		List<QuestionnaireBean> questionsList = qDao.getIds(qBean, nonoscid,oscId);
-		System.out.println("count data"+questionsList);
+		log.info("count data"+questionsList);
 		return questionsList;
 	}
 	
@@ -2864,18 +2926,18 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	public ModelAndView performancedownload(@PathVariable String encrypt_oid, @PathVariable String encrypt_year,
 			@PathVariable String encrypt_month,@PathVariable String brand,@PathVariable String encrypt_did,@PathVariable String mode, ReportsBean rBean,MysteryShoppingVisitsBean mvBean, HttpServletRequest request, HttpServletResponse response, QuestionnaireBean qBean)
 			throws ParseException {
-
+		log.info("/performance/{encrypt_oid}/{encrypt_month}/{encrypt_year}/{brand}/{encrypt_did}/{mode}/download api"+new Gson().toJson(mvBean));  
 		ModelAndView model = null;
 		try {
 			
 		
 		model = new ModelAndView("olrdownload");
 		MysteryShoppingVisitsBean mvBean1= new MysteryShoppingVisitsBean();
-		System.out.println("in performance contrlr===="+brand);
+		log.info("in performance contrlr===="+brand);
 			/*
 			 * mvBean.setOutlet_id(oid); mvBean.setYear(year); mvBean.setMonth(month);
 			 * mvBean.setBrand_id(brand); mvBean.setDealer_id(did);
-			 * System.out.println("dealer id is==="+did); request.setAttribute("outlet",
+			 * log.info("dealer id is==="+did); request.setAttribute("outlet",
 			 * oid); request.setAttribute("dealer", did); request.setAttribute("year",
 			 * year); request.setAttribute("month", month); request.setAttribute("brand",
 			 * brand);
@@ -2890,7 +2952,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		mvBean.setMonth(month);
 		mvBean.setBrand_id(brand);
 		mvBean.setDealer_id(did);
-		System.out.println("dealer id is==="+did);
+		log.info("dealer id is==="+did);
 		request.setAttribute("outlet", encrypt_oid);
 		request.setAttribute("dealer", encrypt_did);
 		request.setAttribute("month", encrypt_month);
@@ -2902,9 +2964,9 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		  mvBean1=   mvDao.getShopperIdByOid1(mvBean,did,brand,dec_mode);
 		  String shopper_Id= mvBean1.getOsc_shopper_id();
 			String encrypted_OSCshopper_id = Encryption.encrypt(shopper_Id);
-			System.out.println("This is Ecrypted SId"+encrypted_OSCshopper_id);
+			log.info("This is Ecrypted SId"+encrypted_OSCshopper_id);
 		  request.setAttribute("osc_shopper_id",encrypted_OSCshopper_id);
-		  System.out.println("kashdjasjdasd"+mvBean1.getSk_shopper_id());
+		  log.info("kashdjasjdasd"+mvBean1.getSk_shopper_id());
 		  
 		  rDao.getNonOscScore(rBean,mvBean1.getSk_shopper_id(),oid,year,month,brand);
 		  request.setAttribute("ytd", rBean.getNonosc_ytd_score());
@@ -2940,10 +3002,10 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		  //int mon=Integer.parseInt(month);
 			//int premonth=mon-1;
 		  //int monthNumber = premonth;
-		  System.out.println("before month111=======");
+		  log.info("before month111=======");
 		  int mon=Integer.parseInt(month);
 			int premonth=mon-1;
-			System.out.println("before month222=======");
+			log.info("before month222=======");
 		  int monthNumber = premonth;
 		  int year3 = Integer.parseInt(year);
 		  int prevYear = year3;
@@ -2951,11 +3013,11 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 			  
 			  monthNumber = 12;
 			  int Currentyear = Calendar.getInstance().get(Calendar.YEAR);
-				System.out.println("current year==="+Currentyear);
+				log.info("current year==="+Currentyear);
 				String year1=Encryption.decrypt(encrypt_year);
 				int year2 = Integer.parseInt(year1);
 				 prevYear = year2 - 1;
-				System.out.println("prev Year==="+prevYear);
+				log.info("prev Year==="+prevYear);
 		  }
 		  request.setAttribute("prevYear", prevYear);
 		  String prevmon= Month.of(monthNumber).name().toLowerCase().substring(0, 1).toUpperCase() + Month.of(monthNumber).name().toLowerCase().substring(1);
@@ -2980,7 +3042,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 
 		  int century = (calendar.get(Calendar.YEAR) / 100) +1;
 		  
-		  System.out.println("century==="+century);
+		  log.info("century==="+century);
 		  List<MysteryShoppingVisitsBean> getDealerPerformananceDetails = mvDao.getDealerPerformananceDetails(mvBean);
 		  
 		  /*********manoj d*****************/
@@ -3081,8 +3143,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 		 model.addObject("questionsandoptions", questionsandoptions);
 		 request.setAttribute("pageNumber", questionsandoptions.size());
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("exception in olr download"+e);
+			e.printStackTrace();
+			log.info("exception in olr download"+e);
 			model = new ModelAndView("redirect:/500");
 		}
 		return model;
@@ -3099,7 +3161,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping(value = "/getlowscoringdata")
 	  public @ResponseBody Object getlowscoringdata(HttpServletRequest request, HttpServletResponse response,
 	      MysteryShoppingVisitsBean mvBean) {
-	    String year = request.getParameter("year");
+	    log.info("/getlowscoringdata"+ new Gson().toJson(mvBean));
+		String year = request.getParameter("year");
 	    String month = request.getParameter("month");
 	    String dealer_id = request.getParameter("sk_dealer_id");
 	    String outlet_id = request.getParameter("sk_outlet_id");
@@ -3113,7 +3176,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping(value = "/getpaginglowscoringdata")
     public @ResponseBody Object getpaginglowscoringdata(HttpServletRequest request, HttpServletResponse response,
         MysteryShoppingVisitsBean mvBean) {
-      String year = request.getParameter("year");
+	    log.info("/getpaginglowscoringdata"+ new Gson().toJson(mvBean));
+		String year = request.getParameter("year");
       String month = request.getParameter("month");
       String dealer_id = request.getParameter("sk_dealer_id");
       String outlet_id = request.getParameter("sk_outlet_id");
@@ -3131,6 +3195,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	 */
 	@RequestMapping("/500")
 	public ModelAndView model() {
+	    log.info("/500");
 		ModelAndView model = null;
 		model = new ModelAndView("500");
 		return model;
@@ -3143,6 +3208,7 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	@RequestMapping(value = "/getoutletsforcompitation")
 	public @ResponseBody Object getoutletsforcompitation(HttpServletRequest request, HttpServletResponse response,
 			GraphBean gBean) {
+	    log.info("/getoutletsforcompitation"+ new Gson().toJson(gBean));
 		String did = request.getParameter("did");
 		String rid = request.getParameter("region_id");
 		List<GraphBean> getMonths = rDao.getoutletsforcompitation(gBean, did,rid);
@@ -3151,7 +3217,8 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	
 	@RequestMapping("ctanalysis")
 	public ModelAndView ctanalysis(ReportsBean rBean,GraphBean gBean,HttpServletRequest request,RegionBean rgBean){
-	ModelAndView mv=new ModelAndView();
+	    log.info("/ctanalysis"+ new Gson().toJson(gBean));
+		ModelAndView mv=new ModelAndView();
 	try {
 		  mv=new ModelAndView("ctanalysis");
 	HttpSession session = request.getSession(true);
@@ -3192,12 +3259,14 @@ if (mvBean.getReport_type().equals("output_level_report")) {
 	  String detractordata=promotorDectractorData.get(0).getDetractorCountpercentage();
 	  String passivedata=promotorDectractorData.get(0).getPassiveCountpercentage();
 	  String year=promotorDectractorData.get(0).getYear();
-	  System.out.println("year in ct analysis"+year);
+	  log.info("year in ct analysis"+year);
 	  request.setAttribute("selected_year", year);
 	  String promotorDectractorDatagson = gson.toJson(promotorDectractorData);
 	  request.setAttribute("promotorDectractorDatagson", promotorDectractorDatagson);
 	  
 	}catch (Exception e) {
+		e.printStackTrace();
+		log.info("Exception /ctanalysis"+ e);
 		  mv=new ModelAndView("redirect:/");
 	}
 

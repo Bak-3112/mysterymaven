@@ -37,15 +37,23 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 </bean>     
    -->
 
-    <!-- <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-
+ <!--    <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 <property name="url" value="jdbc:mysql://localhost:3306/mystery_new?useUnicode=true&amp;characterEncoding=utf8"></property>
 <property name="username" value="root"></property>
 <property name="password" value="Codebele01!"></property>
-</bean>  -->  
+</bean> -->
   
-
+ <!--  <bean id="ds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://db.codebele.com/mystery_new?useUnicode=true&amp;characterEncoding=utf8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="Birds01!Eye"></property>
+	</bean>  -->
+  
 
  <bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">
 <property name="dataSource" ref="ds"></property>
